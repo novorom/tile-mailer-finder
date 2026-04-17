@@ -1,0 +1,25 @@
+name: Tile Mailer Finder
+
+on:
+  schedule:
+    - cron: '0 2 * * *'  # Каждый день в 2:00 МСК (ночью)
+  workflow_dispatch:
+
+jobs:
+  finder:
+    runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r requirements.txt
+      - name: Поиск emails
+        env:
+          SHEET_ID: ${{ secrets.SHEET_ID }}
+          GOOGLE_CREDS: ${{ secrets.GOOGLE_CREDS }}
+          TWOGIS_API_KEY: ${{ secrets.TWOGIS_API_KEY }}
+          HUNTER_API_KEY: ${{ secrets.HUNTER_API_KEY }}
+        run: python finder-agent.py
