@@ -210,6 +210,40 @@ def search_duckduckgo(category, location, num=5):
         return []
 
 # ══════════════════════════════════════════════════════
+#  GEMINI LEAD GENERATION (План "Б")
+# ══════════════════════════════════════════════════════
+
+def search_gemini_leads(category, location, num=10):
+    """Генерация списка компаний через Gemini, если поиск не дал результатов"""
+    if not GEMINI_API_KEY:
+        return []
+    
+    log.info(f"     [Gemini AI] генерация списка компаний: {category}...")
+    try:
+        genai.configure(api_key=GEMINI_API_KEY)
+        model = genai.GenerativeModel('gemini-1.5-flash')
+        
+        prompt = (
+            f"Составь список из {num} известных компаний в сфере '{category}' в городе {location}. "
+            "Для каждой компании укажи её название и, если знаешь, официальный сайт. "
+            "Верни результат в формате JSON: [{\"name\": \"...\", \"website\": \"...\"}]"
+        )
+        
+        response = model.generate_content(prompt)
+        res_text = response.text.strip()
+        # Извлекаем JSON из ответа
+        if '```json' in res_text:
+            res_text = res_text.split('```json')[1].split('```')[0].strip()
+        
+        data = json_module.loads(res_text)
+        for item in data:
+            item['source'] = 'Gemini AI'
+        return data
+    except Exception as e:
+        log.debug(f"Gemini Lead Gen error: {e}")
+        return []
+
+# ══════════════════════════════════════════════════════
 #  GOOGLE GEMINI (Умное извлечение email)
 # ══════════════════════════════════════════════════════
 
@@ -390,7 +424,12 @@ def main():
         o_res = scrape_orgpage(category)
         candidates.extend(o_res)
         
-        log.info(f"   Результаты сборов: Maps({len(p_res)}), Web({len(w_res)}), DDG({len(d_res)}), Zoon({len(z_res)}), Org({len(o_res)})")
+        g_res = []
+        if len(candidates) == 0:
+            g_res = search_gemini_leads(category, 'Санкт-Петербург')
+            candidates.extend(g_res)
+        
+        log.info(f"   Результаты сборов: Maps({len(p_res)}), Web({len(w_res)}), DDG({len(d_res)}), Zoon({len(z_res)}), Org({len(o_res)}), Gemini({len(g_res)})")
         
         # Уникализация по имени
         unique = {}
