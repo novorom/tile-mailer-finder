@@ -133,20 +133,26 @@ def search_google_places(category, location):
             return companies
         else:
             log.error(f"     [Google Maps] ошибка API: {res.status_code} {res.text[:100]}")
-            # Если New API не включен, пробуем старый Text Search
+            # Пытаемся использовать старый Text Search как основной резерв
+            log.info("     [Google Maps] пробуем старый API (Text Search)...")
             old_url = "https://maps.googleapis.com/maps/api/place/textsearch/json"
             params = {"query": f"{category} {location}", "key": GOOGLE_API_KEY, "language": "ru"}
-            res = requests.get(old_url, params=params, timeout=10)
-            results = res.json().get('results', [])
-            companies = []
-            for p in results:
-                companies.append({
-                    'name': p.get('name'),
-                    'website': '', 
-                    'place_id': p.get('place_id'),
-                    'source': 'Google Maps'
-                })
-            return companies
+            res_old = requests.get(old_url, params=params, timeout=10)
+            if res_old.status_code == 200:
+                data = res_old.json()
+                old_companies = []
+                for item in data.get('results', []):
+                    old_companies.append({
+                        'name': item.get('name'),
+                        'website': None, 
+                        'place_id': item.get('place_id'),
+                        'source': 'Google Maps (Old)'
+                    })
+                log.info(f"     [Google Maps Old] найдено: {len(old_companies)}")
+                return old_companies
+            else:
+                log.error(f"     [Google Maps Old] тоже ошибка: {res_old.status_code}")
+                return []
     except Exception as e:
         log.debug(f"Google Places error: {e}")
         return []
@@ -231,6 +237,22 @@ def search_gemini_leads(category, location, num=10):
         
         response = model.generate_content(prompt)
         res_text = response.text.strip()
+        log.debug(f"Gemini Raw Response: {res_text[:200]}...")
+        
+        # Если это не JSON, пробуем просто распарсить по строкам
+        if '[' not in res_text:
+            log.info("     [Gemini AI] ответ не в JSON, пробуем текст...")
+            companies = []
+            for line in res_text.split('\n'):
+                if '.' in line and ('http' in line or '.ru' in line or '.com' in line):
+                    parts = line.split('-') if '-' in line else [line, ""]
+                    companies.append({
+                        'name': parts[0].strip(),
+                        'website': parts[1].strip() if 'http' in parts[1] else None,
+                        'source': 'Gemini AI (Text)'
+                    })
+            return companies
+        
         # Извлекаем JSON из ответа
         if '```json' in res_text:
             res_text = res_text.split('```json')[1].split('```')[0].strip()
@@ -238,9 +260,10 @@ def search_gemini_leads(category, location, num=10):
         data = json_module.loads(res_text)
         for item in data:
             item['source'] = 'Gemini AI'
+        log.info(f"     [Gemini AI] создано лидов: {len(data)}")
         return data
     except Exception as e:
-        log.debug(f"Gemini Lead Gen error: {e}")
+        log.error(f"     [Gemini AI] ошибка: {e}")
         return []
 
 # ══════════════════════════════════════════════════════
