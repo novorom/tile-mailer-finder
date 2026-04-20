@@ -224,9 +224,22 @@ def search_gemini_leads(category, location, num=10):
     log.info(f"     [Gemini AI] генерация списка компаний: {category}...")
     try:
         genai.configure(api_key=GEMINI_API_KEY)
-        # Используем актуальную модель gemini-3-flash
-        model_name = 'gemini-3-flash'
-        model = genai.GenerativeModel(model_name)
+        # Пробуем доступные модели по очереди
+        models_to_try = ['gemini-3.1-flash-lite-preview', 'gemini-1.5-flash', 'gemini-pro']
+        model = None
+        for m_name in models_to_try:
+            try:
+                model = genai.GenerativeModel(m_name)
+                # Пробный запрос
+                model.generate_content("test", generation_config={"max_output_tokens": 1})
+                log.info(f"     [Gemini AI] использую модель: {m_name}")
+                break
+            except:
+                continue
+        
+        if not model:
+            log.error("     [Gemini AI] не удалось найти доступную модель")
+            return []
         
         prompt = (
             f"Составь список из {num} известных компаний в сфере '{category}' в городе {location}. "
