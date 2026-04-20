@@ -3,11 +3,10 @@
 """
 Tile Mailer Finder — Автоматический парсинг emails компаний
 ═══════════════════════════════════════════════════════════════
-• Находит компании через 2GIS API (бесплатно)
+• Находит компании через 2GIS API + DuckDuckGo
 • Парсит emails с сайтов компаний (BeautifulSoup)
-• Проверяет emails через Hunter.io API (парсинг корпоративных адресов)
+• Проверяет emails через Hunter.io API
 • Сохраняет в Google Sheets
-• Запускается по расписанию (каждый день ночью)
 """
 
 import requests
@@ -17,9 +16,10 @@ import time
 import logging
 import json as json_module
 from bs4 import BeautifulSoup
-from datetime import datetime, timezone, timedelta
+from datetime import datetime
 import gspread
 from google.oauth2.service_account import Credentials
+from urllib.parse import urljoin
 
 logging.basicConfig(
     level=logging.INFO,
@@ -32,63 +32,45 @@ log = logging.getLogger(__name__)
 #  КОНФИГУРАЦИЯ
 # ══════════════════════════════════════════════════════
 
-# Google Sheets
-SHEET_ID = os.environ.get('SHEET_ID', '')
-CREDS_JSON = os.environ.get('GOOGLE_CREDS', '')
-
-# 2GIS API
+SHEET_ID      = os.environ.get('SHEET_ID', '')
+CREDS_JSON    = os.environ.get('GOOGLE_CREDS', '')
 TWOGIS_API_KEY = os.environ.get('TWOGIS_API_KEY', '')
-TWOGIS_API_URL = 'https://catalog.api.2gis.com/3.0/items'
-
-# Yandex Search API (https://developer.tech.yandex.ru/ - Поиск по организациям)
-YANDEX_API_KEY = os.environ.get('YANDEX_API_KEY', '')
-YANDEX_API_URL = 'https://search-maps.yandex.ru/v1/'
-
-# Hunter.io API
 HUNTER_API_KEY = os.environ.get('HUNTER_API_KEY', '')
-HUNTER_API_URL = 'https://api.hunter.io/v2/domain-search'
 
-# User Agent для парсинга
 HEADERS = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
 }
 
 # ══════════════════════════════════════════════════════
-#  КАТЕГОРИИ И ПОИСКИ
+#  ПОИСКОВЫЕ ЗАПРОСЫ ДЛЯ DUCKDUCKGO
 # ══════════════════════════════════════════════════════
 
-SEARCH_CATEGORIES = [
-    'строительная компания',
-    'дизайн-студия',
-    'архитектурное бюро',
-    'ремонт квартир',
-    'магазин плитки',
-    'строительный магазин',
-    'управляющая компания',
-    'гостиница',
-    'ресторан',
-    'спортивный клуб',
-    'салон красоты',
-    'отделочные работы',
-    'укладка плитки',
-    'застройщик',
-    'девелопер',
-    'ландшафтный дизайн',
-    'торговый центр',
-    'бизнес-центр'
-]
-
-LOCATIONS = [
-    'Санкт-Петербург',
-    'Всеволожск',
-    'Кировск',
-    'Павловск',
-    'Пушкин',
-    'Гатчина',
-    'Петергоф',
-    'Сестрорецк',
-    'Выборг',
-    'Кингисепп'
+SEARCH_QUERIES = [
+    'строительная компания Санкт-Петербург сайт email',
+    'дизайн-студия интерьера СПб контакты',
+    'архитектурное бюро Санкт-Петербург',
+    'ремонт квартир СПб компания email',
+    'плитка керамогранит магазин СПб',
+    'строительный магазин Санкт-Петербург',
+    'управляющая компания СПб контакты',
+    'гостиница отель Санкт-Петербург email',
+    'ресторан кафе СПб официальный сайт',
+    'спортивный клуб фитнес Санкт-Петербург',
+    'салон красоты СПб сайт контакты',
+    'отделочные работы Санкт-Петербург',
+    'укладка плитки СПб мастера',
+    'застройщик новостройки СПб контакты',
+    'девелопер Ленинградская область',
+    'торговый центр СПб администрация',
+    'бизнес-центр Санкт-Петербург аренда',
+    'дизайнер интерьера Всеволожск Гатчина',
+    'строительство домов ЛО компания',
+    'проектная организация СПб email',
+    'ремонт ванной плитка СПб',
+    'плиточник укладка кафель СПб',
+    'мебельная компания Санкт-Петербург сайт',
+    'сантехника ванные комнаты СПб контакты',
+    'хостел мини-отель Санкт-Петербург',
 ]
 
 # ══════════════════════════════════════════════════════
@@ -96,7 +78,6 @@ LOCATIONS = [
 # ══════════════════════════════════════════════════════
 
 def get_sheet():
-    """Подключается к Google Sheets"""
     try:
         creds_dict = json_module.loads(CREDS_JSON)
         credentials = Credentials.from_service_account_info(
@@ -108,335 +89,242 @@ def get_sheet():
         )
         gc = gspread.authorize(credentials)
         sheet = gc.open_by_key(SHEET_ID).sheet1
+        log.info('✅ Google Sheets подключён')
         return sheet
     except Exception as ex:
-        log.error(f'Google Sheets error: {ex}')
+        log.error(f'❌ Google Sheets error: {ex}')
         return None
 
-def add_company_to_sheet(sheet, company_name, website, email, source, category):
-    """Добавляет компанию в Sheets с проверкой на дубликаты"""
+def get_existing_emails(sheet):
     try:
-        # Простая проверка на дубликат по email (читаем первый столбец B)
-        # В идеале нужно хранить список в памяти, если таблица большая
-        existing_emails = sheet.col_values(2) # Email в колонке B
-        if email in existing_emails:
-            log.info(f'× Пропуск (уже есть): {email}')
-            return False
+        values = sheet.col_values(2)
+        return set(e.lower().strip() for e in values if '@' in e)
+    except:
+        return set()
 
+def add_to_sheet(sheet, name, website, email, source):
+    try:
         sheet.append_row([
-            company_name,      # Название
-            email or '',       # Email
-            website or '',     # Сайт
-            source,            # Источник
-            category,          # Категория
-            datetime.now().isoformat(),  # Дата добавления
-            'new',             # Статус
-            ''                 # Примечания
+            name,
+            email,
+            website,
+            source,
+            datetime.now().isoformat()[:10],
+            'new',
+            '',
+            ''
         ])
-        log.info(f'✓ Добавлено: {company_name} ({email})')
+        log.info(f'  ✓ {name} → {email}')
         return True
     except Exception as ex:
-        log.error(f'Add to sheet error: {ex}')
+        log.error(f'  ❌ Sheet error: {ex}')
         return False
 
 # ══════════════════════════════════════════════════════
-#  ПОИСК ЧЕРЕЗ 2GIS API
+#  ПОИСК ЧЕРЕЗ 2GIS API (правильный endpoint)
 # ══════════════════════════════════════════════════════
 
-def get_2gis_region_id(location):
-    """Пытается получить region_id для города в 2GIS"""
-    try:
-        params = {'q': location, 'key': TWOGIS_API_KEY, 'type': 'adm_div.city'}
-        res = requests.get('https://catalog.api.2gis.com/3.0/items', params=params, timeout=5)
-        data = res.json()
-        for item in data.get('result', {}).get('items', []):
-            if item.get('subtype') == 'city' or item.get('type') == 'adm_div':
-                return item.get('id')
-    except:
-        pass
-    return None
-
-def search_2gis(category, location):
-    """
-    Ищет компании в 2GIS
-    """
+def search_2gis(query):
+    """Ищет компании через 2GIS API v3"""
     if not TWOGIS_API_KEY:
-        log.warning('2GIS API key not set')
         return []
-    
     try:
-        # Пытаемся найти ID региона для более точного поиска
-        region_id = get_2gis_region_id(location)
-        
         params = {
-            'q': category,
+            'q': query,
             'key': TWOGIS_API_KEY,
-            'fields': 'items.contact_groups',
-            'limit': 50
+            'fields': 'items.contact_groups,items.links',
+            'page_size': 50,
         }
-        if region_id:
-            params['region_id'] = region_id
-        else:
-            params['q'] = f"{category} {location}"
-        
-        response = requests.get(TWOGIS_API_URL, params=params, timeout=10)
-        response.raise_for_status()
-        data = response.json()
-        
-        # В 3.0 API результаты могут быть в 'result' или 'items' напрямую
+        res = requests.get(
+            'https://catalog.api.2gis.com/3.0/items/search',
+            params=params, timeout=10
+        )
+        data = res.json()
         items = data.get('result', {}).get('items', [])
-        if not items and 'items' in data:
-            items = data['items']
-            
+
         companies = []
         for item in items:
+            name = item.get('name', '')
             website = ''
-            phone = ''
             for group in item.get('contact_groups', []):
                 for contact in group.get('contacts', []):
                     if contact.get('type') == 'website':
                         website = contact.get('value', '')
-                    elif contact.get('type') == 'phone':
-                        phone = contact.get('value', '')
-            
-            companies.append({
-                'name': item.get('name'),
-                'website': website,
-                'phone': phone,
-                'address': item.get('address_name', ''),
-                'category': category
-            })
-        
-        if companies:
-            log.info(f'2GIS: найдено {len(companies)} компаний. Первая: {companies[0]["name"]}')
-        else:
-            log.info(f'2GIS: найдено 0 компаний ({category} в {location}, region_id: {region_id})')
+                        break
+            if not website:
+                for link in item.get('links', []):
+                    if link.get('type') == 'website':
+                        website = link.get('value', '')
+                        break
+            if name:
+                companies.append({'name': name, 'website': website})
+
+        log.info(f'  2GIS: {len(companies)} компаний по запросу "{query}"')
         return companies
     except Exception as ex:
-        log.error(f'2GIS search error: {ex}')
+        log.error(f'  2GIS error: {ex}')
         return []
 
 # ══════════════════════════════════════════════════════
-#  ПОИСК ЧЕРЕЗ YANDEX API
+#  ПОИСК ЧЕРЕЗ DUCKDUCKGO
 # ══════════════════════════════════════════════════════
 
-def search_yandex(category, location):
-    """
-    Ищет компании через Яндекс Поиск по организациям
-    """
-    if not YANDEX_API_KEY:
-        log.warning('Yandex API key not set (YANDEX_API_KEY)')
-        return []
-    
+def search_duckduckgo(query):
+    """Ищет сайты через DuckDuckGo"""
     try:
-        query = f"{category} {location}"
-        params = {
-            'apikey': YANDEX_API_KEY,
-            'text': query,
-            'lang': 'ru_RU',
-            'type': 'biz',
-            'results': 50
-        }
-        
-        response = requests.get(YANDEX_API_URL, params=params, timeout=10)
-        response.raise_for_status()
-        data = response.json()
-        
-        companies = []
-        for feature in data.get('features', []):
-            props = feature.get('properties', {}).get('CompanyMetaData', {})
-            
-            website = props.get('url', '')
-            phone = ''
-            phones = props.get('Phones', [])
-            if phones:
-                phone = phones[0].get('formatted', '')
-                
-            companies.append({
-                'name': props.get('name'),
-                'website': website,
-                'phone': phone,
-                'address': props.get('address', ''),
-                'category': category
-            })
-            
-        log.info(f'Yandex: найдено {len(companies)} компаний по запросу "{query}"')
-        return companies
+        url = f'https://html.duckduckgo.com/html/?q={requests.utils.quote(query)}'
+        res = requests.get(url, headers=HEADERS, timeout=12)
+        soup = BeautifulSoup(res.text, 'html.parser')
+        links = []
+        for a in soup.find_all('a', href=True):
+            href = a['href']
+            if href.startswith('http') and 'duckduckgo' not in href:
+                links.append(href)
+        unique = list(dict.fromkeys(links))[:6]
+        log.info(f'  DuckDuckGo: {len(unique)} сайтов')
+        return unique
     except Exception as ex:
-        log.error(f'Yandex search error: {ex}')
+        log.error(f'  DuckDuckGo error: {ex}')
         return []
 
 # ══════════════════════════════════════════════════════
 #  ПАРСИНГ EMAIL СО САЙТА
 # ══════════════════════════════════════════════════════
 
-def extract_emails_from_url(url):
-    """Извлекает emails со сайта (главная + страница контактов)"""
-    if not url.startswith('http'):
-        url = 'http://' + url
-        
-    def find_in_page(page_url):
-        try:
-            res = requests.get(page_url, headers=HEADERS, timeout=10)
-            res.raise_for_status()
-            text = res.text
-            soup = BeautifulSoup(text, 'html.parser')
-            
-            found = set()
-            # Поиск в тексте
-            for email in re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', soup.get_text()):
-                found.add(email.lower())
-            
-            # Поиск в mailto
-            for a in soup.find_all('a', href=re.compile(r'^mailto:', re.I)):
-                email = a['href'].replace('mailto:', '').split('?')[0].strip().lower()
-                if '@' in email:
-                    found.add(email)
-            return found, soup
-        except:
-            return set(), None
+SKIP_EMAILS = {'noreply', 'no-reply', 'test', 'example', 'domain',
+               'email', 'postmaster', 'webmaster', 'mailer-daemon'}
 
-    emails, soup = find_in_page(url)
-    
+def is_good_email(email):
+    local = email.split('@')[0].lower()
+    if any(s in local for s in SKIP_EMAILS):
+        return False
+    if len(email) < 6 or len(email) > 60:
+        return False
+    if not re.match(r'^[\w.+\-]+@[\w\-]+\.[\w.]{2,}$', email):
+        return False
+    return True
+
+def parse_emails_from_page(url):
+    """Парсит emails с одной страницы"""
+    try:
+        res = requests.get(url, headers=HEADERS, timeout=8, allow_redirects=True)
+        res.raise_for_status()
+        soup = BeautifulSoup(res.text, 'html.parser')
+        emails = set()
+        for e in re.findall(r'[\w.+\-]+@[\w\-]+\.[\w.]{2,}', soup.get_text()):
+            emails.add(e.lower())
+        for a in soup.find_all('a', href=re.compile(r'^mailto:', re.I)):
+            e = a['href'].replace('mailto:', '').split('?')[0].strip().lower()
+            if '@' in e:
+                emails.add(e)
+        return [e for e in emails if is_good_email(e)], soup
+    except:
+        return [], None
+
+def extract_emails_from_url(url):
+    """Ищет emails на сайте — главная + страница контактов"""
+    if not url.startswith('http'):
+        url = 'https://' + url
+
+    emails, soup = parse_emails_from_page(url)
+
     # Если на главной пусто — ищем страницу контактов
     if not emails and soup:
-        contact_links = []
         for a in soup.find_all('a', href=True):
             href = a['href'].lower()
             text = a.get_text().lower()
-            if any(k in href or k in text for k in ['contact', 'контакт', 'about', 'о-нас', 'feedback']):
-                full_url = href
-                if not href.startswith('http'):
-                    from urllib.parse import urljoin
-                    full_url = urljoin(url, href)
-                contact_links.append(full_url)
-        
-        for link in list(set(contact_links))[:3]: # Проверяем максимум 3 ссылки
-            extra_emails, _ = find_in_page(link)
-            emails.update(extra_emails)
+            if any(k in href or k in text for k in ['contact', 'контакт', 'about', 'feedback']):
+                full_url = href if href.startswith('http') else urljoin(url, href)
+                extra, _ = parse_emails_from_page(full_url)
+                emails.extend(extra)
+                if emails:
+                    break
 
-    # Фильтруем заведомо мусорные emails
-    filtered = []
-    garbage = {'noreply@', 'test@', 'example@', 'domain@', 'email@'}
-    for email in emails:
-        if not any(g in email for g in garbage):
-            # Простейшая валидация длины и символов
-            if 5 < len(email) < 50 and '.' in email.split('@')[1]:
-                filtered.append(email)
-    
-    return list(set(filtered))
+    return list(set(emails))
 
 # ══════════════════════════════════════════════════════
-#  ПОИСК EMAIL ЧЕРЕЗ HUNTER.IO
+#  HUNTER.IO API
 # ══════════════════════════════════════════════════════
 
-def find_email_hunter(domain, company_name):
-    """
-    Ищет корпоративные emails через Hunter.io Domain Search
-    """
-    if not HUNTER_API_KEY:
+def find_email_hunter(website):
+    if not HUNTER_API_KEY or not website:
         return None
-    
     try:
-        # Извлекаем домен
-        if '://' in domain:
-            domain = domain.split('://')[1].split('/')[0]
-        domain = domain.replace('www.', '')
-        
-        params = {
-            'domain': domain,
-            'api_key': HUNTER_API_KEY,
-            'limit': 10
-        }
-        
-        response = requests.get(HUNTER_API_URL, params=params, timeout=10)
-        response.raise_for_status()
-        data = response.json()
-        
-        emails = data.get('data', {}).get('emails', [])
-        if emails:
-            # Возвращаем первый найденный email
-            return emails[0].get('value')
-        
-        return None
-    
-    except Exception as ex:
-        log.debug(f'Hunter.io error: {ex}')
+        domain = website.split('://')[1].split('/')[0].replace('www.', '') if '://' in website else website
+        res = requests.get(
+            'https://api.hunter.io/v2/domain-search',
+            params={'domain': domain, 'api_key': HUNTER_API_KEY, 'limit': 5},
+            timeout=10
+        )
+        emails = res.json().get('data', {}).get('emails', [])
+        return emails[0].get('value') if emails else None
+    except:
         return None
 
 # ══════════════════════════════════════════════════════
-#  ГЛАВНЫЙ ПРОЦЕСС
+#  ГЛАВНЫЙ ЦИКЛ
 # ══════════════════════════════════════════════════════
 
 def main():
     log.info('═════════════════════════════════════════════')
-    log.info(' Tile Mailer Finder — запуск поиска')
+    log.info(' Tile Mailer Finder — запуск')
     log.info('═════════════════════════════════════════════')
-    
+
     sheet = get_sheet()
     if not sheet:
-        log.error('❌ Не могу подключиться к Google Sheets')
         return
-    
-    total_found = 0
-    
-    # Ищем по каждой категории и местоположению
-    for location in LOCATIONS:
-        for category in SEARCH_CATEGORIES:
-            log.info(f'\n🔍 Ищу: {category} в {location}')
-            
-            # Способ 1: 2GIS API
-            companies_2gis = search_2gis(category, location)
-            
-            # Способ 2: Yandex API
-            companies_yandex = search_yandex(category, location)
-            
-            # Объединяем результаты (убираем дубли по сайту, если он есть)
-            all_companies = companies_2gis + companies_yandex
-            unique_companies = []
-            seen_sites = set()
-            
-            for c in all_companies:
-                site = c['website'].lower().strip('/') if c['website'] else None
-                if site:
-                    if site not in seen_sites:
-                        seen_sites.add(site)
-                        unique_companies.append(c)
-                else:
-                    unique_companies.append(c)
 
-            for company in unique_companies:
-                time.sleep(1)  # Rate limit
-                
-                # Пытаемся найти email на сайте
-                email = None
-                if company['website']:
-                    emails = extract_emails_from_url(company['website'])
-                    if emails:
-                        email = emails[0]
-                
-                # Если email не найден на сайте — ищем через Hunter.io
-                if not email and company['website']:
-                    email = find_email_hunter(company['website'], company['name'])
-                
-                # Добавляем в Sheets если нашли email
-                if email:
-                    add_company_to_sheet(
-                        sheet,
-                        company['name'],
-                        company['website'],
-                        email,
-                        source='Search API',
-                        category=category
-                    )
-                    total_found += 1
-                else:
-                    log.info(f'⚠ Email не найден: {company["name"]}')
-            
-            time.sleep(2)  # Rate limit между поисками
-    
+    existing = get_existing_emails(sheet)
+    log.info(f'📊 В базе уже: {len(existing)} emails')
+    total = 0
+
+    for query in SEARCH_QUERIES:
+        log.info(f'\n🔍 {query}')
+
+        # Источник 1: 2GIS
+        companies = search_2gis(query + ' Санкт-Петербург')
+
+        # Источник 2: DuckDuckGo — парсим сайты напрямую
+        links = search_duckduckgo(query)
+        for link in links:
+            domain = link.split('://')[1].split('/')[0] if '://' in link else link
+            companies.append({'name': domain, 'website': link})
+
+        # Обрабатываем все найденные компании
+        seen = set()
+        for company in companies:
+            website = company.get('website', '')
+            if not website or website in seen:
+                continue
+            seen.add(website)
+
+            time.sleep(1)
+
+            # Ищем email на сайте
+            email = None
+            emails = extract_emails_from_url(website)
+            if emails:
+                # Берём первый email не из базы
+                for e in emails:
+                    if e not in existing:
+                        email = e
+                        break
+
+            # Если не нашли на сайте — ищем через Hunter
+            if not email:
+                candidate = find_email_hunter(website)
+                if candidate and candidate not in existing:
+                    email = candidate
+
+            if email:
+                add_to_sheet(sheet, company['name'], website, email, 'Web+2GIS')
+                existing.add(email)
+                total += 1
+
+        time.sleep(2)
+
     log.info('\n═════════════════════════════════════════════')
-    log.info(f'✅ Найдено {total_found} компаний с email')
+    log.info(f'✅ Добавлено новых: {total}')
     log.info('═════════════════════════════════════════════')
 
 if __name__ == '__main__':
