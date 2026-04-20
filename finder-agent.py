@@ -183,6 +183,33 @@ def search_google_web(category, location, num=10):
         return []
 
 # ══════════════════════════════════════════════════════
+#  DUCKDUCKGO SEARCH (Бесплатный резерв)
+# ══════════════════════════════════════════════════════
+
+def search_duckduckgo(category, location, num=5):
+    """Поиск сайтов через DuckDuckGo (без ключей)"""
+    log.info(f"     [DuckDuckGo] поиск: {category}...")
+    try:
+        query = f"{category} {location} спб контакты"
+        url = f"https://html.duckduckgo.com/html/?q={requests.utils.quote(query)}"
+        res = requests.get(url, headers=HEADERS, timeout=10)
+        soup = BeautifulSoup(res.text, 'html.parser')
+        companies = []
+        for link in soup.select('a.result__a')[:num]:
+            href = link['href']
+            if 'http' in href and 'duckduckgo.com' not in href:
+                companies.append({
+                    'name': link.get_text(strip=True),
+                    'website': href,
+                    'source': 'DuckDuckGo'
+                })
+        log.info(f"     [DuckDuckGo] найдено: {len(companies)}")
+        return companies
+    except Exception as e:
+        log.debug(f"DuckDuckGo error: {e}")
+        return []
+
+# ══════════════════════════════════════════════════════
 #  GOOGLE GEMINI (Умное извлечение email)
 # ══════════════════════════════════════════════════════
 
@@ -352,13 +379,18 @@ def main():
         w_res = search_google_web(category, 'Санкт-Петербург')
         candidates.extend(w_res)
         
+        d_res = []
+        if len(w_res) == 0:
+            d_res = search_duckduckgo(category, 'Санкт-Петербург')
+            candidates.extend(d_res)
+        
         z_res = scrape_zoon(category)
         candidates.extend(z_res)
         
         o_res = scrape_orgpage(category)
         candidates.extend(o_res)
         
-        log.info(f"   Результаты сборов: Maps({len(p_res)}), Web({len(w_res)}), Zoon({len(z_res)}), Org({len(o_res)})")
+        log.info(f"   Результаты сборов: Maps({len(p_res)}), Web({len(w_res)}), DDG({len(d_res)}), Zoon({len(z_res)}), Org({len(o_res)})")
         
         # Уникализация по имени
         unique = {}
