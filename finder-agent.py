@@ -15,6 +15,7 @@ import re
 import os
 import time
 import logging
+import json as json_module
 from bs4 import BeautifulSoup
 from datetime import datetime, timezone, timedelta
 import gspread
@@ -42,9 +43,6 @@ TWOGIS_API_URL = 'https://catalog.api.2gis.com/3.0/items/search'
 # Hunter.io API (бесплатно 50 запросов/день, нужна регистрация)
 HUNTER_API_KEY = os.environ.get('HUNTER_API_KEY', '')
 HUNTER_API_URL = 'https://api.hunter.io/v2/email-finder'
-
-# RocketReach API (альтернатива, платная но точнее)
-ROCKETREACH_API_KEY = os.environ.get('ROCKETREACH_API_KEY', '')
 
 # User Agent для парсинга
 HEADERS = {
@@ -85,8 +83,14 @@ LOCATIONS = [
 def get_sheet():
     """Подключается к Google Sheets"""
     try:
-        creds_dict = eval(CREDS_JSON)  # или json.loads если JSON строка
-        credentials = Credentials.from_service_account_info(creds_dict)
+        creds_dict = json_module.loads(CREDS_JSON)
+        credentials = Credentials.from_service_account_info(
+            creds_dict,
+            scopes=[
+                'https://www.googleapis.com/auth/spreadsheets',
+                'https://www.googleapis.com/auth/drive'
+            ]
+        )
         gc = gspread.authorize(credentials)
         sheet = gc.open_by_key(SHEET_ID).sheet1
         return sheet
