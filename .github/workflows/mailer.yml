@@ -1,0 +1,26 @@
+name: Tile Mailer Agent (Отправка писем)
+
+on:
+  schedule:
+    # Запуск каждый будний день в 10:00 UTC (13:00 МСК)
+    - cron: '0 10 * * 1-5'
+  workflow_dispatch:
+
+jobs:
+  mailer:
+    runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r requirements.txt
+      - name: Рассылка писем
+        env:
+          SHEET_ID: ${{ secrets.SHEET_ID }}
+          GOOGLE_CREDS: ${{ secrets.GOOGLE_CREDS }}
+          BREVO_USER: ${{ secrets.BREVO_USER }}
+          BREVO_PASS: ${{ secrets.BREVO_PASS }}
+        run: python mailer-agent.py
