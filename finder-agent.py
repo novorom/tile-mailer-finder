@@ -224,8 +224,8 @@ def search_gemini_leads(category, location, num=10):
     log.info(f"     [Gemini AI] генерация списка компаний: {category}...")
     try:
         genai.configure(api_key=GEMINI_API_KEY)
-        # Пробуем несколько вариантов названия модели для надежности
-        model_name = 'gemini-1.5-flash'
+        # Используем актуальную модель gemini-3-flash
+        model_name = 'gemini-3-flash'
         model = genai.GenerativeModel(model_name)
         
         prompt = (
