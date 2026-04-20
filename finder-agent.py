@@ -216,7 +216,7 @@ def search_duckduckgo(category, location, num=5):
 #  GEMINI LEAD GENERATION (План "Б")
 # ══════════════════════════════════════════════════════
 
-def search_gemini_leads(category, location, num=10):
+def search_gemini_leads(category, location, num=40):
     """Генерация списка компаний через Gemini, если поиск не дал результатов"""
     if not GEMINI_API_KEY:
         return []
