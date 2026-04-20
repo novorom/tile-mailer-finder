@@ -80,21 +80,18 @@ def get_sheet():
         log.error(f'❌ Google Sheets error: {ex}')
         return None
 
-def add_company_to_sheet(sheet, name, website, email, source, category):
+def add_company_to_sheet(sheet, email):
     if not sheet:
-        log.info(f'[NO SHEET] Found: {name} | {email} | {website} | {source}')
+        log.info(f'[NO SHEET] Found: {email}')
         return False
     try:
-        # Проверка на дубликат по email в колонке B
-        existing_emails = sheet.col_values(2)
+        # Проверка на дубликат по email в колонке A
+        existing_emails = sheet.col_values(1)
         if email in existing_emails:
             return False
 
-        sheet.append_row([
-            name, email, website or '', source, category,
-            datetime.now().isoformat(), 'new', ''
-        ])
-        log.info(f'✓ Добавлено: {name} ({email})')
+        sheet.append_row([email])
+        log.info(f'✓ Добавлено: {email}')
         return True
     except Exception as ex:
         log.error(f'❌ Add to sheet error: {ex}')
@@ -480,7 +477,7 @@ def main():
                 if email: log.info(f'     [OK] Email (Hunter): {email}')
             
             if email:
-                if add_company_to_sheet(sheet, company['name'], site, email, company['source'], category):
+                if add_company_to_sheet(sheet, email):
                     total += 1
             else:
                 log.info('     [!] Email не найден')
