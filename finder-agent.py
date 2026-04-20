@@ -106,7 +106,9 @@ def add_company_to_sheet(sheet, name, website, email, source, category):
 
 def search_google_places(category, location):
     if not GOOGLE_API_KEY:
+        log.debug("Google API Key not set")
         return []
+    log.info(f"     [Google Maps] поиск: {category}...")
     try:
         # Пытаемся использовать New Places API (searchText)
         url = "https://places.googleapis.com/v1/places:searchText"
@@ -130,6 +132,7 @@ def search_google_places(category, location):
                 })
             return companies
         else:
+            log.error(f"     [Google Maps] ошибка API: {res.status_code} {res.text[:100]}")
             # Если New API не включен, пробуем старый Text Search
             old_url = "https://maps.googleapis.com/maps/api/place/textsearch/json"
             params = {"query": f"{category} {location}", "key": GOOGLE_API_KEY, "language": "ru"}
@@ -153,11 +156,11 @@ def search_google_web(category, location, num=10):
     if not GOOGLE_API_KEY or not GOOGLE_CSE_ID:
         return []
     
-    log.info(f"     [Google Web] поиск: {category} {location}...")
+    log.info(f"     [Google Web] поиск: {category}...")
     try:
         url = "https://www.googleapis.com/customsearch/v1"
         params = {
-            'q': f"{category} {location} контакты email",
+            'q': f"{category} {location}",
             'key': GOOGLE_API_KEY,
             'cx': GOOGLE_CSE_ID,
             'num': num,
@@ -173,9 +176,10 @@ def search_google_web(category, location, num=10):
                 'website': item.get('link'),
                 'source': 'Google Search'
             })
+        log.info(f"     [Google Web] найдено: {len(companies)}")
         return companies
     except Exception as e:
-        log.error(f"Google Web Search error: {e}")
+        log.error(f"     [Google Web] ошибка: {e}")
         return []
 
 # ══════════════════════════════════════════════════════
@@ -342,10 +346,19 @@ def main():
         candidates = []
         
         # Собираем со всех источников
-        candidates.extend(search_google_places(category, 'Санкт-Петербург'))
-        candidates.extend(search_google_web(category, 'Санкт-Петербург'))
-        candidates.extend(scrape_zoon(category))
-        candidates.extend(scrape_orgpage(category))
+        p_res = search_google_places(category, 'Санкт-Петербург')
+        candidates.extend(p_res)
+        
+        w_res = search_google_web(category, 'Санкт-Петербург')
+        candidates.extend(w_res)
+        
+        z_res = scrape_zoon(category)
+        candidates.extend(z_res)
+        
+        o_res = scrape_orgpage(category)
+        candidates.extend(o_res)
+        
+        log.info(f"   Результаты сборов: Maps({len(p_res)}), Web({len(w_res)}), Zoon({len(z_res)}), Org({len(o_res)})")
         
         # Уникализация по имени
         unique = {}
