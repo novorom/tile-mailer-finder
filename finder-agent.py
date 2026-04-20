@@ -38,7 +38,7 @@ CREDS_JSON = os.environ.get('GOOGLE_CREDS', '')
 
 # 2GIS API
 TWOGIS_API_KEY = os.environ.get('TWOGIS_API_KEY', '')
-TWOGIS_API_URL = 'https://catalog.api.2gis.com/3.0/items/search'
+TWOGIS_API_URL = 'https://catalog.api.2gis.com/3.0/items'
 
 # Yandex Search API (https://developer.tech.yandex.ru/ - Поиск по организациям)
 YANDEX_API_KEY = os.environ.get('YANDEX_API_KEY', '')
@@ -183,12 +183,13 @@ def search_2gis(category, location):
         response.raise_for_status()
         data = response.json()
         
-        if 'error' in data:
-            log.error(f"2GIS API error: {data.get('error', {}).get('message', 'Unknown error')}")
-            return []
+        # В 3.0 API результаты могут быть в 'result' или 'items' напрямую
+        items = data.get('result', {}).get('items', [])
+        if not items and 'items' in data:
+            items = data['items']
             
         companies = []
-        for item in data.get('result', {}).get('items', []):
+        for item in items:
             website = ''
             phone = ''
             for group in item.get('contact_groups', []):
@@ -206,7 +207,10 @@ def search_2gis(category, location):
                 'category': category
             })
         
-        log.info(f'2GIS: найдено {len(companies)} компаний ({category} в {location}, region_id: {region_id})')
+        if companies:
+            log.info(f'2GIS: найдено {len(companies)} компаний. Первая: {companies[0]["name"]}')
+        else:
+            log.info(f'2GIS: найдено 0 компаний ({category} в {location}, region_id: {region_id})')
         return companies
     except Exception as ex:
         log.error(f'2GIS search error: {ex}')
