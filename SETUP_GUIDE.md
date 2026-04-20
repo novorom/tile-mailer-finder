@@ -43,9 +43,40 @@ https://github.com/new
 
 **Сохрани ключ: `HUNTER_API_KEY`**
 
+**Сохрани ключ: `HUNTER_API_KEY`**
+
 ---
 
-### C) Google Sheets & Service Account (как раньше)
+### C) Google Custom Search API (Поиск сайтов в интернете)
+
+**Что это:** Позволяет искать сайты компаний напрямую в Google (100 бесплатных запросов в день).
+
+1. Перейди в [Google Cloud Console](https://console.cloud.google.com/).
+2. Создай проект (или выбери существующий).
+3. Включи **Custom Search API**.
+4. Создай API Ключ в разделе "Credentials" (если еще нет). **Это твой `GOOGLE_API_KEY`**.
+5. Перейди в [Programmable Search Engine](https://programmablesearchengine.google.com/).
+6. Нажми "Add", введи любое имя.
+7. В поле "What to search" выбери "Search the entire web".
+8. В настройках найди **Search Engine ID**.
+
+**Сохрани ID: `GOOGLE_CSE_ID`**
+
+---
+
+### D) Google Gemini API (Умный парсинг страниц)
+
+**Что это:** Нейросеть, которая находит email в тексте страницы, даже если они скрыты.
+
+1. Перейди в [Google AI Studio](https://aistudio.google.com/).
+2. Нажми **"Get API key"**.
+3. Создай API key в новом проекте.
+
+**Сохрани ключ: `GEMINI_API_KEY`**
+
+---
+
+### E) Google Sheets & Service Account
 
 Если ещё не сделал — повтори как в старом проекте:
 
@@ -96,7 +127,9 @@ Settings → Secrets and variables → Actions → New repository secret
 |------------|----------|----------|
 | `SHEET_ID` | ID твоей Google Sheets таблицы | URL таблицы (между /d/ и /edit) |
 | `GOOGLE_CREDS` | JSON service account | Google Cloud Console |
-| `TWOGIS_API_KEY` | API ключ 2GIS | https://dev.2gis.com |
+| `GOOGLE_API_KEY` | API ключ Google Cloud | Google Cloud → Credentials |
+| `GOOGLE_CSE_ID` | ID поисковой машины | Programmable Search Engine |
+| `GEMINI_API_KEY` | Ключ Gemini | Google AI Studio |
 | `HUNTER_API_KEY` | API ключ Hunter.io | https://hunter.io → Settings → API |
 
 ---

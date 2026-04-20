@@ -20,6 +20,8 @@ jobs:
         env:
           SHEET_ID: ${{ secrets.SHEET_ID }}
           GOOGLE_CREDS: ${{ secrets.GOOGLE_CREDS }}
-          TWOGIS_API_KEY: ${{ secrets.TWOGIS_API_KEY }}
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          GOOGLE_CSE_ID: ${{ secrets.GOOGLE_CSE_ID }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           HUNTER_API_KEY: ${{ secrets.HUNTER_API_KEY }}
         run: python finder-agent.py

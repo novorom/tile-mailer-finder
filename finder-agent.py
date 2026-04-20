@@ -3,9 +3,10 @@
 """
 Tile Mailer Finder — Автоматический парсинг emails компаний
 ═══════════════════════════════════════════════════════════════
-• Находит компании через 2GIS API + DuckDuckGo
-• Парсит emails с сайтов компаний (BeautifulSoup)
-• Проверяет emails через Hunter.io API
+• Находит компании через Google Places API, Google Web и Прямой парсинг каталогов
+• Каталоги: Zoon.ru, Orgpage.ru, Flamp.ru, Yell.ru
+• Парсит emails с сайтов компаний (BeautifulSoup + Google Gemini AI)
+• Проверяет/ищет через Hunter.io API
 • Сохраняет в Google Sheets
 """
 
@@ -19,6 +20,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 import gspread
 from google.oauth2.service_account import Credentials
+import google.generativeai as genai
 from urllib.parse import urljoin
 
 logging.basicConfig(
@@ -32,60 +34,43 @@ log = logging.getLogger(__name__)
 #  КОНФИГУРАЦИЯ
 # ══════════════════════════════════════════════════════
 
-SHEET_ID      = os.environ.get('SHEET_ID', '')
-CREDS_JSON    = os.environ.get('GOOGLE_CREDS', '')
-TWOGIS_API_KEY = os.environ.get('TWOGIS_API_KEY', '')
+SHEET_ID = os.environ.get('SHEET_ID', '')
+CREDS_JSON = os.environ.get('GOOGLE_CREDS', '')
+GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY', '')
+GOOGLE_CSE_ID = os.environ.get('GOOGLE_CSE_ID', '')   # Для Google Custom Search
+GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', '') # Для умного поиска email
 HUNTER_API_KEY = os.environ.get('HUNTER_API_KEY', '')
 
 HEADERS = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
 }
 
-# ══════════════════════════════════════════════════════
-#  ПОИСКОВЫЕ ЗАПРОСЫ ДЛЯ DUCKDUCKGO
-# ══════════════════════════════════════════════════════
-
-SEARCH_QUERIES = [
-    'строительная компания Санкт-Петербург сайт email',
-    'дизайн-студия интерьера СПб контакты',
-    'архитектурное бюро Санкт-Петербург',
-    'ремонт квартир СПб компания email',
-    'плитка керамогранит магазин СПб',
-    'строительный магазин Санкт-Петербург',
-    'управляющая компания СПб контакты',
-    'гостиница отель Санкт-Петербург email',
-    'ресторан кафе СПб официальный сайт',
-    'спортивный клуб фитнес Санкт-Петербург',
-    'салон красоты СПб сайт контакты',
-    'отделочные работы Санкт-Петербург',
-    'укладка плитки СПб мастера',
-    'застройщик новостройки СПб контакты',
-    'девелопер Ленинградская область',
-    'торговый центр СПб администрация',
-    'бизнес-центр Санкт-Петербург аренда',
-    'дизайнер интерьера Всеволожск Гатчина',
-    'строительство домов ЛО компания',
-    'проектная организация СПб email',
-    'ремонт ванной плитка СПб',
-    'плиточник укладка кафель СПб',
-    'мебельная компания Санкт-Петербург сайт',
-    'сантехника ванные комнаты СПб контакты',
-    'хостел мини-отель Санкт-Петербург',
+SEARCH_CATEGORIES = [
+    'строительство домов',
+    'дизайн интерьера',
+    'архитектурное проектирование',
+    'ремонт квартир под ключ',
+    'керамическая плитка спб',
+    'сантехника оптом',
+    'магазин напольных покрытий'
 ]
+
+LOCATIONS = ['Санкт-Петербург']
 
 # ══════════════════════════════════════════════════════
 #  GOOGLE SHEETS
 # ══════════════════════════════════════════════════════
 
 def get_sheet():
+    if not SHEET_ID or not CREDS_JSON:
+        log.warning('Google Sheets credentials not set (SHEET_ID or GOOGLE_CREDS)')
+        return None
     try:
         creds_dict = json_module.loads(CREDS_JSON)
         credentials = Credentials.from_service_account_info(
             creds_dict,
-            scopes=[
-                'https://www.googleapis.com/auth/spreadsheets',
-                'https://www.googleapis.com/auth/drive'
-            ]
+            scopes=['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive']
         )
         gc = gspread.authorize(credentials)
         sheet = gc.open_by_key(SHEET_ID).sheet1
@@ -95,237 +80,306 @@ def get_sheet():
         log.error(f'❌ Google Sheets error: {ex}')
         return None
 
-def get_existing_emails(sheet):
+def add_company_to_sheet(sheet, name, website, email, source, category):
+    if not sheet:
+        log.info(f'[NO SHEET] Found: {name} | {email} | {website} | {source}')
+        return False
     try:
-        values = sheet.col_values(2)
-        return set(e.lower().strip() for e in values if '@' in e)
-    except:
-        return set()
+        # Проверка на дубликат по email в колонке B
+        existing_emails = sheet.col_values(2)
+        if email in existing_emails:
+            return False
 
-def add_to_sheet(sheet, name, website, email, source):
-    try:
         sheet.append_row([
-            name,
-            email,
-            website,
-            source,
-            datetime.now().isoformat()[:10],
-            'new',
-            '',
-            ''
+            name, email, website or '', source, category,
+            datetime.now().isoformat(), 'new', ''
         ])
-        log.info(f'  ✓ {name} → {email}')
+        log.info(f'✓ Добавлено: {name} ({email})')
         return True
     except Exception as ex:
-        log.error(f'  ❌ Sheet error: {ex}')
+        log.error(f'❌ Add to sheet error: {ex}')
         return False
 
 # ══════════════════════════════════════════════════════
-#  ПОИСК ЧЕРЕЗ 2GIS API (правильный endpoint)
+#  GOOGLE SEARCH APIs
 # ══════════════════════════════════════════════════════
 
-def search_2gis(query):
-    """Ищет компании через 2GIS API v3"""
-    if not TWOGIS_API_KEY:
+def search_google_places(category, location):
+    if not GOOGLE_API_KEY:
         return []
     try:
-        params = {
-            'q': query,
-            'key': TWOGIS_API_KEY,
-            'fields': 'items.contact_groups,items.links',
-            'page_size': 50,
+        # Пытаемся использовать New Places API (searchText)
+        url = "https://places.googleapis.com/v1/places:searchText"
+        headers = {
+            "Content-Type": "application/json",
+            "X-Goog-Api-Key": GOOGLE_API_KEY,
+            "X-Goog-FieldMask": "places.displayName,places.formattedAddress,places.websiteUri"
         }
-        res = requests.get(
-            'https://catalog.api.2gis.com/3.0/items/search',
-            params=params, timeout=10
-        )
-        data = res.json()
-        items = data.get('result', {}).get('items', [])
+        data = {"textQuery": f"{category} {location}", "languageCode": "ru", "maxResultCount": 20}
+        res = requests.post(url, headers=headers, json=data, timeout=10)
+        
+        if res.status_code == 200:
+            results = res.json().get('places', [])
+            companies = []
+            for p in results:
+                companies.append({
+                    'name': p.get('displayName', {}).get('text'),
+                    'website': p.get('websiteUri', ''),
+                    'address': p.get('formattedAddress', ''),
+                    'source': 'Google Maps'
+                })
+            return companies
+        else:
+            # Если New API не включен, пробуем старый Text Search
+            old_url = "https://maps.googleapis.com/maps/api/place/textsearch/json"
+            params = {"query": f"{category} {location}", "key": GOOGLE_API_KEY, "language": "ru"}
+            res = requests.get(old_url, params=params, timeout=10)
+            results = res.json().get('results', [])
+            companies = []
+            for p in results:
+                companies.append({
+                    'name': p.get('name'),
+                    'website': '', 
+                    'place_id': p.get('place_id'),
+                    'source': 'Google Maps'
+                })
+            return companies
+    except Exception as e:
+        log.debug(f"Google Places error: {e}")
+        return []
 
+def search_google_web(category, location, num=10):
+    """Поиск сайтов через Google Custom Search"""
+    if not GOOGLE_API_KEY or not GOOGLE_CSE_ID:
+        return []
+    
+    log.info(f"     [Google Web] поиск: {category} {location}...")
+    try:
+        url = "https://www.googleapis.com/customsearch/v1"
+        params = {
+            'q': f"{category} {location} контакты email",
+            'key': GOOGLE_API_KEY,
+            'cx': GOOGLE_CSE_ID,
+            'num': num,
+            'lr': 'lang_ru'
+        }
+        res = requests.get(url, params=params, timeout=10)
+        items = res.json().get('items', [])
         companies = []
         for item in items:
-            name = item.get('name', '')
-            website = ''
-            for group in item.get('contact_groups', []):
-                for contact in group.get('contacts', []):
-                    if contact.get('type') == 'website':
-                        website = contact.get('value', '')
-                        break
-            if not website:
-                for link in item.get('links', []):
-                    if link.get('type') == 'website':
-                        website = link.get('value', '')
-                        break
-            if name:
-                companies.append({'name': name, 'website': website})
-
-        log.info(f'  2GIS: {len(companies)} компаний по запросу "{query}"')
+            name = item.get('title', '').split('—')[0].split('|')[0].strip()
+            companies.append({
+                'name': name,
+                'website': item.get('link'),
+                'source': 'Google Search'
+            })
         return companies
-    except Exception as ex:
-        log.error(f'  2GIS error: {ex}')
+    except Exception as e:
+        log.error(f"Google Web Search error: {e}")
         return []
 
 # ══════════════════════════════════════════════════════
-#  ПОИСК ЧЕРЕЗ DUCKDUCKGO
+#  GOOGLE GEMINI (Умное извлечение email)
 # ══════════════════════════════════════════════════════
 
-def search_duckduckgo(query):
-    """Ищет сайты через DuckDuckGo"""
+def extract_emails_with_gemini(html_content):
+    """Использует Gemini для поиска email в тексте страницы"""
+    if not GEMINI_API_KEY:
+        return []
+    
     try:
-        url = f'https://html.duckduckgo.com/html/?q={requests.utils.quote(query)}'
-        res = requests.get(url, headers=HEADERS, timeout=12)
-        soup = BeautifulSoup(res.text, 'html.parser')
-        links = []
-        for a in soup.find_all('a', href=True):
-            href = a['href']
-            if href.startswith('http') and 'duckduckgo' not in href:
-                links.append(href)
-        unique = list(dict.fromkeys(links))[:6]
-        log.info(f'  DuckDuckGo: {len(unique)} сайтов')
-        return unique
-    except Exception as ex:
-        log.error(f'  DuckDuckGo error: {ex}')
+        soup = BeautifulSoup(html_content, 'html.parser')
+        for s in soup(['script', 'style', 'nav', 'footer']): s.decompose()
+        text = soup.get_text(separator=' ', strip=True)[:10000]
+
+        genai.configure(api_key=GEMINI_API_KEY)
+        model = genai.GenerativeModel('gemini-1.5-flash')
+        
+        prompt = (
+            "Найди все корпоративные email-адреса в тексте ниже. "
+            "Верни ТОЛЬКО список адресов через запятую. Если адресов нет, напиши 'NONE'.\n\n"
+            f"Текст:\n{text}"
+        )
+        
+        response = model.generate_content(prompt)
+        res_text = response.text.strip()
+        
+        if 'NONE' in res_text.upper():
+            return []
+            
+        emails = [e.strip().lower() for e in res_text.split(',') if '@' in e]
+        return list(set(emails))
+    except Exception as e:
+        log.debug(f"Gemini error: {e}")
         return []
+
+# ══════════════════════════════════════════════════════
+#  СКРЕЙПИНГ КАТАЛОГОВ
+# ══════════════════════════════════════════════════════
+
+def scrape_zoon(query):
+    try:
+        url = f"https://zoon.ru/search/?query%5B%5D={query}&city=spb"
+        res = requests.get(url, headers=HEADERS, timeout=10)
+        soup = BeautifulSoup(res.text, 'html.parser')
+        companies = []
+        for item in soup.select('div.search-results-item')[:10]:
+            link = item.select_one('a.title-link')
+            if link:
+                name = link.get_text(strip=True)
+                href = link['href']
+                if not href.startswith('http'): href = "https://zoon.ru" + href
+                companies.append({'name': name, 'profile_url': href, 'source': 'Zoon'})
+        
+        for c in companies:
+            try:
+                time.sleep(0.5)
+                p_res = requests.get(c['profile_url'], headers=HEADERS, timeout=10)
+                p_soup = BeautifulSoup(p_res.text, 'html.parser')
+                site = p_soup.select_one('a.js-service-website')
+                if site: c['website'] = site['href'].split('?')[0].strip('/')
+            except: pass
+        return companies
+    except: return []
+
+def scrape_orgpage(query):
+    try:
+        url = f"https://www.orgpage.ru/поиск/?query={query}&location=Санкт-Петербург"
+        res = requests.get(url, headers=HEADERS, timeout=10)
+        soup = BeautifulSoup(res.text, 'html.parser')
+        companies = []
+        for item in soup.select('div.result-item')[:10]:
+            link = item.select_one('a.item-title')
+            if link:
+                name = link.get_text(strip=True)
+                href = link['href']
+                if not href.startswith('http'): href = "https://www.orgpage.ru" + href
+                companies.append({'name': name, 'profile_url': href, 'source': 'Orgpage'})
+        
+        for c in companies:
+            try:
+                time.sleep(0.5)
+                p_res = requests.get(c['profile_url'], headers=HEADERS, timeout=10)
+                p_soup = BeautifulSoup(p_res.text, 'html.parser')
+                email_tag = p_soup.select_one('a.email-link')
+                if email_tag: c['email'] = email_tag.get_text(strip=True)
+                site_tag = p_soup.select_one('a.website-link')
+                if site_tag: c['website'] = site_tag['href']
+            except: pass
+        return companies
+    except: return []
 
 # ══════════════════════════════════════════════════════
 #  ПАРСИНГ EMAIL СО САЙТА
 # ══════════════════════════════════════════════════════
 
-SKIP_EMAILS = {'noreply', 'no-reply', 'test', 'example', 'domain',
-               'email', 'postmaster', 'webmaster', 'mailer-daemon'}
-
-def is_good_email(email):
-    local = email.split('@')[0].lower()
-    if any(s in local for s in SKIP_EMAILS):
-        return False
-    if len(email) < 6 or len(email) > 60:
-        return False
-    if not re.match(r'^[\w.+\-]+@[\w\-]+\.[\w.]{2,}$', email):
-        return False
-    return True
-
-def parse_emails_from_page(url):
-    """Парсит emails с одной страницы"""
-    try:
-        res = requests.get(url, headers=HEADERS, timeout=8, allow_redirects=True)
-        res.raise_for_status()
-        soup = BeautifulSoup(res.text, 'html.parser')
-        emails = set()
-        for e in re.findall(r'[\w.+\-]+@[\w\-]+\.[\w.]{2,}', soup.get_text()):
-            emails.add(e.lower())
-        for a in soup.find_all('a', href=re.compile(r'^mailto:', re.I)):
-            e = a['href'].replace('mailto:', '').split('?')[0].strip().lower()
-            if '@' in e:
-                emails.add(e)
-        return [e for e in emails if is_good_email(e)], soup
-    except:
-        return [], None
-
 def extract_emails_from_url(url):
-    """Ищет emails на сайте — главная + страница контактов"""
-    if not url.startswith('http'):
-        url = 'https://' + url
+    if not url or not isinstance(url, str): return []
+    if not url.startswith('http'): url = 'http://' + url
+    
+    def find(page_url):
+        try:
+            res = requests.get(page_url, headers=HEADERS, timeout=10)
+            text = res.text
+            found = set(re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', text))
+            soup = BeautifulSoup(text, 'html.parser')
+            for a in soup.find_all('a', href=re.compile(r'^mailto:', re.I)):
+                e = a['href'].replace('mailto:', '').split('?')[0].strip().lower()
+                if '@' in e: found.add(e)
+            return found, soup
+        except: return set(), None
 
-    emails, soup = parse_emails_from_page(url)
+    emails, soup = find(url)
+    
+    # Умный поиск через Gemini
+    if not emails and soup and GEMINI_API_KEY:
+        log.info(f'     [Gemini] интеллектуальный поиск email...')
+        gemini_found = extract_emails_with_gemini(str(soup))
+        if gemini_found:
+            emails.update(gemini_found)
 
-    # Если на главной пусто — ищем страницу контактов
     if not emails and soup:
+        # Ищем страницу контактов
         for a in soup.find_all('a', href=True):
-            href = a['href'].lower()
-            text = a.get_text().lower()
-            if any(k in href or k in text for k in ['contact', 'контакт', 'about', 'feedback']):
-                full_url = href if href.startswith('http') else urljoin(url, href)
-                extra, _ = parse_emails_from_page(full_url)
-                emails.extend(extra)
-                if emails:
-                    break
+            h, t = a['href'].lower(), a.get_text().lower()
+            if any(k in h or k in t for k in ['contact', 'контакт', 'about', 'о-нас']):
+                full = h if h.startswith('http') else urljoin(url, h)
+                extra, _ = find(full)
+                emails.update(extra)
+                if emails: break
 
-    return list(set(emails))
+    garbage = {'noreply@', 'test@', 'example@', 'sentry@', 'wix@', 'domain@'}
+    filtered = [e.lower() for e in emails if not any(g in e.lower() for g in garbage) and 5 < len(e) < 50]
+    return list(set(filtered))
 
 # ══════════════════════════════════════════════════════
 #  HUNTER.IO API
 # ══════════════════════════════════════════════════════
 
-def find_email_hunter(website):
-    if not HUNTER_API_KEY or not website:
+def find_email_hunter(domain, company_name):
+    if not HUNTER_API_KEY:
         return None
     try:
-        domain = website.split('://')[1].split('/')[0].replace('www.', '') if '://' in website else website
-        res = requests.get(
-            'https://api.hunter.io/v2/domain-search',
-            params={'domain': domain, 'api_key': HUNTER_API_KEY, 'limit': 5},
-            timeout=10
-        )
+        clean_domain = domain.replace('https://', '').replace('http://', '').replace('www.', '').split('/')[0]
+        params = {'domain': clean_domain, 'api_key': HUNTER_API_KEY, 'limit': 5}
+        res = requests.get('https://api.hunter.io/v2/domain-search', params=params, timeout=10)
         emails = res.json().get('data', {}).get('emails', [])
-        return emails[0].get('value') if emails else None
-    except:
-        return None
+        if emails: return emails[0].get('value')
+    except: pass
+    return None
 
 # ══════════════════════════════════════════════════════
 #  ГЛАВНЫЙ ЦИКЛ
 # ══════════════════════════════════════════════════════
 
 def main():
-    log.info('═════════════════════════════════════════════')
-    log.info(' Tile Mailer Finder — запуск')
-    log.info('═════════════════════════════════════════════')
-
+    log.info('🚀 Запуск Tile Mailer Finder (Расширенный поиск)')
     sheet = get_sheet()
-    if not sheet:
-        return
-
-    existing = get_existing_emails(sheet)
-    log.info(f'📊 В базе уже: {len(existing)} emails')
     total = 0
-
-    for query in SEARCH_QUERIES:
-        log.info(f'\n🔍 {query}')
-
-        # Источник 1: 2GIS
-        companies = search_2gis(query + ' Санкт-Петербург')
-
-        # Источник 2: DuckDuckGo — парсим сайты напрямую
-        links = search_duckduckgo(query)
-        for link in links:
-            domain = link.split('://')[1].split('/')[0] if '://' in link else link
-            companies.append({'name': domain, 'website': link})
-
-        # Обрабатываем все найденные компании
-        seen = set()
-        for company in companies:
-            website = company.get('website', '')
-            if not website or website in seen:
-                continue
-            seen.add(website)
-
-            time.sleep(1)
-
-            # Ищем email на сайте
-            email = None
-            emails = extract_emails_from_url(website)
-            if emails:
-                # Берём первый email не из базы
-                for e in emails:
-                    if e not in existing:
-                        email = e
-                        break
-
-            # Если не нашли на сайте — ищем через Hunter
-            if not email:
-                candidate = find_email_hunter(website)
-                if candidate and candidate not in existing:
-                    email = candidate
-
+    
+    for category in SEARCH_CATEGORIES:
+        log.info(f'\n🔎 Категория: {category}')
+        candidates = []
+        
+        # Собираем со всех источников
+        candidates.extend(search_google_places(category, 'Санкт-Петербург'))
+        candidates.extend(search_google_web(category, 'Санкт-Петербург'))
+        candidates.extend(scrape_zoon(category))
+        candidates.extend(scrape_orgpage(category))
+        
+        # Уникализация по имени
+        unique = {}
+        for c in candidates:
+            n = c['name'].lower().strip()
+            if n not in unique: unique[n] = c
+            
+        log.info(f'   Найдено кандидатов: {len(unique)}')
+        
+        for name, company in unique.items():
+            log.info(f'   » {company["name"]} ({company.get("source")})')
+            email = company.get('email')
+            site = company.get('website')
+            
+            if not email and site:
+                log.info(f'     Сайт: {site} -> парсим...')
+                found = extract_emails_from_url(site)
+                if found:
+                    email = found[0]
+                    log.info(f'     [OK] Email найден: {email}')
+            
+            # Hunter.io если пусто
+            if not email and site:
+                email = find_email_hunter(site, company['name'])
+                if email: log.info(f'     [OK] Email (Hunter): {email}')
+            
             if email:
-                add_to_sheet(sheet, company['name'], website, email, 'Web+2GIS')
-                existing.add(email)
-                total += 1
-
-        time.sleep(2)
-
-    log.info('\n═════════════════════════════════════════════')
-    log.info(f'✅ Добавлено новых: {total}')
-    log.info('═════════════════════════════════════════════')
+                if add_company_to_sheet(sheet, company['name'], site, email, company['source'], category):
+                    total += 1
+            else:
+                log.info('     [!] Email не найден')
+            time.sleep(1)
+            
+    log.info(f'\n✅ Завершено. Добавлено новых email: {total}')
 
 if __name__ == '__main__':
     main()
