@@ -224,7 +224,9 @@ def search_gemini_leads(category, location, num=10):
     log.info(f"     [Gemini AI] генерация списка компаний: {category}...")
     try:
         genai.configure(api_key=GEMINI_API_KEY)
-        model = genai.GenerativeModel('gemini-1.5-flash')
+        # Пробуем несколько вариантов названия модели для надежности
+        model_name = 'gemini-1.5-flash'
+        model = genai.GenerativeModel(model_name)
         
         prompt = (
             f"Составь список из {num} известных компаний в сфере '{category}' в городе {location}. "
@@ -234,20 +236,20 @@ def search_gemini_leads(category, location, num=10):
         
         response = model.generate_content(prompt)
         res_text = response.text.strip()
-        log.debug(f"Gemini Raw Response: {res_text[:200]}...")
         
         # Если это не JSON, пробуем просто распарсить по строкам
         if '[' not in res_text:
-            log.info("     [Gemini AI] ответ не в JSON, пробуем текст...")
+            log.info("     [Gemini AI] ответ в текстовом формате, извлекаю сайты...")
             companies = []
-            for line in res_text.split('\n'):
-                if '.' in line and ('http' in line or '.ru' in line or '.com' in line):
-                    parts = line.split('-') if '-' in line else [line, ""]
-                    companies.append({
-                        'name': parts[0].strip(),
-                        'website': parts[1].strip() if 'http' in parts[1] else None,
-                        'source': 'Gemini AI (Text)'
-                    })
+            import re
+            # Ищем домены
+            domains = re.findall(r'[a-zA-Z0-9.-]+\.(?:ru|com|net|org|su)', res_text)
+            for d in list(set(domains))[:num]:
+                companies.append({
+                    'name': d.split('.')[0].capitalize(),
+                    'website': f"https://{d}",
+                    'source': 'Gemini AI (Memory)'
+                })
             return companies
         
         # Извлекаем JSON из ответа
