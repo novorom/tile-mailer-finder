@@ -51,12 +51,24 @@ SEARCH_CATEGORIES = [
     'дизайн интерьера',
     'архитектурное проектирование',
     'ремонт квартир под ключ',
-    'керамическая плитка спб',
+    'керамическая плитка',
     'сантехника оптом',
-    'магазин напольных покрытий'
+    'магазин напольных покрытий',
+    'ремонт ванных комнат',
+    'отделочные работы',
+    'строительство коттеджей',
+    'дизайн-студия',
+    'укладка плитки',
+    'комплексный ремонт помещений',
+    'строительство таунхаусов',
+    'ремонт коммерческих помещений',
+    'подрядчики по отделке',
+    'проектирование интерьеров',
+    'ремонт офисов',
+    'элитный ремонт квартир'
 ]
 
-LOCATIONS = ['Санкт-Петербург']
+LOCATIONS = ['Санкт-Петербург', 'Ленинградская область']
 
 # ══════════════════════════════════════════════════════
 #  GOOGLE SHEETS
@@ -437,66 +449,68 @@ def main():
     sheet = get_sheet()
     total = 0
     
-    for category in SEARCH_CATEGORIES:
-        log.info(f'\n🔎 Категория: {category}')
-        candidates = []
-        
-        # Собираем со всех источников
-        p_res = search_google_places(category, 'Санкт-Петербург')
-        candidates.extend(p_res)
-        
-        w_res = search_google_web(category, 'Санкт-Петербург')
-        candidates.extend(w_res)
-        
-        d_res = []
-        if len(w_res) == 0:
-            d_res = search_duckduckgo(category, 'Санкт-Петербург')
-            candidates.extend(d_res)
-        
-        z_res = scrape_zoon(category)
-        candidates.extend(z_res)
-        
-        o_res = scrape_orgpage(category)
-        candidates.extend(o_res)
-        
-        g_res = []
-        if len(candidates) == 0:
-            g_res = search_gemini_leads(category, 'Санкт-Петербург')
-            candidates.extend(g_res)
-        
-        log.info(f"   Результаты сборов: Maps({len(p_res)}), Web({len(w_res)}), DDG({len(d_res)}), Zoon({len(z_res)}), Org({len(o_res)}), Gemini({len(g_res)})")
-        
-        # Уникализация по имени
-        unique = {}
-        for c in candidates:
-            n = c['name'].lower().strip()
-            if n not in unique: unique[n] = c
+    for location in LOCATIONS:
+        for category in SEARCH_CATEGORIES:
+            log.info(f'\n🔎 Категория: {category} ({location})')
+            candidates = []
             
-        log.info(f'   Найдено кандидатов: {len(unique)}')
+            # Собираем со всех источников
+            p_res = search_google_places(category, location)
+            candidates.extend(p_res)
+            
+            w_res = search_google_web(category, location)
+            candidates.extend(w_res)
+            
+            d_res = []
+            if len(w_res) == 0:
+                d_res = search_duckduckgo(category, location)
+                candidates.extend(d_res)
+            
+            z_res = scrape_zoon(category)
+            candidates.extend(z_res)
+            
+            o_res = scrape_orgpage(category)
+            candidates.extend(o_res)
+            
+            g_res = []
+            if len(candidates) == 0:
+                g_res = search_gemini_leads(category, location)
+                candidates.extend(g_res)
+            
+            log.info(f"   Результаты сборов: Maps({len(p_res)}), Web({len(w_res)}), DDG({len(d_res)}), Zoon({len(z_res)}), Org({len(o_res)}), Gemini({len(g_res)})")
+
         
-        for name, company in unique.items():
-            log.info(f'   » {company["name"]} ({company.get("source")})')
-            email = company.get('email')
-            site = company.get('website')
+            # Уникализация по имени
+            unique = {}
+            for c in candidates:
+                n = c['name'].lower().strip()
+                if n not in unique: unique[n] = c
+                
+            log.info(f'   Найдено кандидатов: {len(unique)}')
             
-            if not email and site:
-                log.info(f'     Сайт: {site} -> парсим...')
-                found = extract_emails_from_url(site)
-                if found:
-                    email = found[0]
-                    log.info(f'     [OK] Email найден: {email}')
-            
-            # Hunter.io если пусто
-            if not email and site:
-                email = find_email_hunter(site, company['name'])
-                if email: log.info(f'     [OK] Email (Hunter): {email}')
-            
-            if email:
-                if add_company_to_sheet(sheet, email):
-                    total += 1
-            else:
-                log.info('     [!] Email не найден')
-            time.sleep(1)
+            for name, company in unique.items():
+                log.info(f'   » {company["name"]} ({company.get("source")})')
+                email = company.get('email')
+                site = company.get('website')
+                
+                if not email and site:
+                    log.info(f'     Сайт: {site} -> парсим...')
+                    found = extract_emails_from_url(site)
+                    if found:
+                        email = found[0]
+                        log.info(f'     [OK] Email найден: {email}')
+                
+                # Hunter.io если пусто
+                if not email and site:
+                    email = find_email_hunter(site, company['name'])
+                    if email: log.info(f'     [OK] Email (Hunter): {email}')
+                
+                if email:
+                    if add_company_to_sheet(sheet, email):
+                        total += 1
+                else:
+                    log.info('     [!] Email не найден')
+                time.sleep(1)
             
     log.info(f'\n✅ Завершено. Добавлено новых email: {total}')
 
