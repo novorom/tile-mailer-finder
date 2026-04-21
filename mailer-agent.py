@@ -263,7 +263,8 @@ def load_all_records(sheet):
         if email == 'email': # пропускаем заголовок если он вдруг есть
             continue
         
-        status = row[1].strip() if len(row) > 1 else 'active'
+        status_val = row[1].strip().lower() if len(row) > 1 else ''
+        status = status_val if 'dead' in status_val else 'active'
         sent   = row[2].strip() if len(row) > 2 else ''
         records[email] = {'row': row_num, 'status': status, 'sent': sent}
     return records, all_rows
