@@ -262,7 +262,7 @@ def search_gemini_leads(category, location, num=40):
     try:
         genai.configure(api_key=GEMINI_API_KEY)
         # Пробуем доступные модели по очереди
-        models_to_try = ['gemini-3.1-flash-lite-preview', 'gemini-1.5-flash', 'gemini-pro']
+        models_to_try = ['gemini-3.1-flash-lite', 'gemini-1.5-flash', 'gemini-pro']
         model = None
         for m_name in models_to_try:
             try:
