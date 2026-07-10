@@ -58,6 +58,9 @@ MSK = timezone(timedelta(hours=3))
 
 DAILY_LIMIT = 290
 
+MAILER_INDEX = int(os.environ.get('MAILER_INDEX', '0'))
+TOTAL_MAILERS = int(os.environ.get('TOTAL_MAILERS', '1'))
+
 # ══════════════════════════════════════════════════════
 #  ПРОВЕРКА ОКНА ОТПРАВКИ
 # ══════════════════════════════════════════════════════
@@ -354,9 +357,9 @@ def run_mailing(sheet, records, month_str):
     pending = [
         (email, meta)
         for email, meta in records.items()
-        if meta['status'] == 'active' and meta['sent'] != month_str
+        if meta['status'] == 'active' and meta['sent'] != month_str and (meta['row'] % TOTAL_MAILERS) == (MAILER_INDEX % TOTAL_MAILERS)
     ]
-    log.info(f'Ожидают отправки в этом месяце: {len(pending)}')
+    log.info(f'Ожидают отправки в этом месяце (канал {MAILER_INDEX + 1}/{TOTAL_MAILERS}): {len(pending)}')
 
     for email, meta in pending:
         if sent + dead + errors >= DAILY_LIMIT:

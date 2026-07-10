@@ -1,4 +1,4 @@
-name: Tile Mailer Agent (Отправка писем)
+name: Tile Mailer Agent 3 (Канал 3)
 
 on:
   schedule:
@@ -21,6 +21,8 @@ jobs:
         env:
           SHEET_ID: ${{ secrets.SHEET_ID }}
           GOOGLE_CREDS: ${{ secrets.GOOGLE_CREDS }}
-          BREVO_USER: ${{ secrets.BREVO_USER }}
-          BREVO_PASS: ${{ secrets.BREVO_PASS }}
+          BREVO_USER: ${{ secrets.BREVO_USER_3 }}
+          BREVO_PASS: ${{ secrets.BREVO_PASS_3 }}
+          MAILER_INDEX: 2
+          TOTAL_MAILERS: 4
         run: python mailer-agent.py
