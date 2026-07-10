@@ -144,17 +144,16 @@ def get_sheet():
         log.error(f'❌ Google Sheets error: {ex}')
         return None
 
-def add_company_to_sheet(sheet, email):
+def add_company_to_sheet(sheet, email, local_existing_emails):
     if not sheet:
         log.info(f'[NO SHEET] Found: {email}')
         return False
     try:
-        # Проверка на дубликат по email в колонке A
-        existing_emails = retry_gspread_call(sheet.col_values, 1)
-        if email in existing_emails:
+        if email in local_existing_emails:
             return False
 
         retry_gspread_call(sheet.append_row, [email])
+        local_existing_emails.add(email)
         log.info(f'✓ Добавлено: {email}')
         return True
     except Exception as ex:
@@ -444,11 +443,26 @@ def extract_emails_from_url(url):
     if not url or not isinstance(url, str): return []
     if not url.startswith('http'): url = 'http://' + url
     
+    from urllib.parse import urlparse
+    try:
+        parsed_url = urlparse(url)
+        base_url = f"{parsed_url.scheme}://{parsed_url.netloc}"
+    except Exception:
+        base_url = url
+
     def find(page_url):
         try:
             res = requests.get(page_url, headers=HEADERS, timeout=10)
             text = res.text
             found = set(re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', text))
+            
+            # Поиск обфусцированных email (например, info [at] site.ru, info (собака) site.ru)
+            obfuscated = re.findall(r'[a-zA-Z0-9._%+-]+\s*(?:\[at\]|\(at\)|\{at\}|\[собака\]|\(собака\)|\{собака\}|@)\s*[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', text)
+            for obs in obfuscated:
+                cleaned = re.sub(r'\s*(?:\[at\]|\(at\)|\{at\}|\[собака\]|\(собака\)|\{собака\})\s*', '@', obs)
+                if '@' in cleaned:
+                    found.add(cleaned.strip().lower())
+
             soup = BeautifulSoup(text, 'html.parser')
             for a in soup.find_all('a', href=re.compile(r'^mailto:', re.I)):
                 e = a['href'].replace('mailto:', '').split('?')[0].strip().lower()
@@ -458,22 +472,44 @@ def extract_emails_from_url(url):
 
     emails, soup = find(url)
     
-    # Умный поиск через Gemini
+    # Умный поиск через Gemini на главной
     if not emails and soup and GEMINI_API_KEY:
-        log.info(f'     [Gemini] интеллектуальный поиск email...')
+        log.info(f'     [Gemini] интеллектуальный поиск email на главной...')
         gemini_found = extract_emails_with_gemini(str(soup))
         if gemini_found:
             emails.update(gemini_found)
 
-    if not emails and soup:
-        # Ищем страницу контактов
+    # Ищем страницы контактов по ссылкам
+    if soup:
+        contact_links = []
         for a in soup.find_all('a', href=True):
             h, t = a['href'].lower(), a.get_text().lower()
-            if any(k in h or k in t for k in ['contact', 'контакт', 'about', 'о-нас']):
+            if any(k in h or k in t for k in ['contact', 'контакт', 'about', 'о-нас', 'о компании', 'feedback', 'обратная']):
                 full = h if h.startswith('http') else urljoin(url, h)
-                extra, _ = find(full)
-                emails.update(extra)
-                if emails: break
+                contact_links.append(full)
+        
+        # Стандартные пути напрямую (на случай JS-генерации)
+        for path in ['/contacts', '/contact', '/about', '/contacts/', '/about/']:
+            contact_links.append(urljoin(base_url, path))
+            
+        seen_links = set()
+        unique_contact_links = []
+        for link in contact_links:
+            if link not in seen_links:
+                seen_links.add(link)
+                unique_contact_links.append(link)
+                
+        for link in unique_contact_links[:5]:
+            extra_emails, extra_soup = find(link)
+            if extra_emails:
+                emails.update(extra_emails)
+                break
+            if extra_soup and GEMINI_API_KEY:
+                # Резервный Gemini на странице контактов
+                gemini_found = extract_emails_with_gemini(str(extra_soup))
+                if gemini_found:
+                    emails.update(gemini_found)
+                    break
 
     garbage = {'noreply@', 'test@', 'example@', 'sentry@', 'wix@', 'domain@'}
     filtered = [e.lower() for e in emails if not any(g in e.lower() for g in garbage) and 5 < len(e) < 50]
@@ -502,71 +538,128 @@ def find_email_hunter(domain, company_name):
 def main():
     log.info('🚀 Запуск Tile Mailer Finder (Расширенный поиск)')
     sheet = get_sheet()
+    
+    # Кэшируем существующие email один раз при старте
+    local_existing_emails = set()
+    if sheet:
+        try:
+            log.info('Загрузка существующих email из Google Sheets...')
+            local_existing_emails = set(retry_gspread_call(sheet.col_values, 1))
+            log.info(f'Загружено {len(local_existing_emails)} существующих адресов.')
+        except Exception as e:
+            log.warning(f'Не удалось загрузить существующие email: {e}')
+            
+    processed_domains = set()
     total = 0
     
+    # Перемешиваем категории и локации для разнообразия поиска
+    import random
+    combined_tasks = []
     for location in LOCATIONS:
         for category in SEARCH_CATEGORIES:
-            log.info(f'\n🔎 Категория: {category} ({location})')
-            candidates = []
-            
-            # Собираем со всех источников
-            p_res = search_google_places(category, location)
-            candidates.extend(p_res)
-            
-            w_res = search_google_web(category, location)
-            candidates.extend(w_res)
-            
-            d_res = []
-            if len(w_res) == 0:
-                d_res = search_duckduckgo(category, location)
-                candidates.extend(d_res)
-            
-            z_res = scrape_zoon(category)
-            candidates.extend(z_res)
-            
-            o_res = scrape_orgpage(category)
-            candidates.extend(o_res)
-            
-            g_res = []
-            if len(candidates) == 0:
-                g_res = search_gemini_leads(category, location)
-                candidates.extend(g_res)
-            
-            log.info(f"   Результаты сборов: Maps({len(p_res)}), Web({len(w_res)}), DDG({len(d_res)}), Zoon({len(z_res)}), Org({len(o_res)}), Gemini({len(g_res)})")
-
+            combined_tasks.append((category, location))
+    random.shuffle(combined_tasks)
+    
+    # Ограничиваем количество комбинаций за один запуск (например, 10 комбинаций)
+    # чтобы не упираться в лимиты API и выполнять поиск стабильно каждый день
+    selected_tasks = combined_tasks[:10]
+    log.info(f'Выбрано {len(selected_tasks)} случайных поисковых комбинаций для этого запуска.')
+    
+    for category, location in selected_tasks:
+        log.info(f'\n🔎 Категория: {category} ({location})')
+        candidates = []
         
-            # Уникализация по имени
-            unique = {}
-            for c in candidates:
-                n = c['name'].lower().strip()
-                if n not in unique: unique[n] = c
-                
-            log.info(f'   Найдено кандидатов: {len(unique)}')
+        # Собираем со всех источников
+        p_res = search_google_places(category, location)
+        candidates.extend(p_res)
+        
+        w_res = search_google_web(category, location)
+        candidates.extend(w_res)
+        
+        d_res = []
+        if len(w_res) == 0:
+            d_res = search_duckduckgo(category, location)
+            candidates.extend(d_res)
+        
+        z_res = scrape_zoon(category)
+        candidates.extend(z_res)
+        
+        o_res = scrape_orgpage(category)
+        candidates.extend(o_res)
+        
+        g_res = []
+        if len(candidates) == 0:
+            g_res = search_gemini_leads(category, location)
+            candidates.extend(g_res)
+        
+        log.info(f"   Результаты сборов: Maps({len(p_res)}), Web({len(w_res)}), DDG({len(d_res)}), Zoon({len(z_res)}), Org({len(o_res)}), Gemini({len(g_res)})")
+
+        # Уникализация по имени
+        unique = {}
+        for c in candidates:
+            n = c['name'].lower().strip()
+            if n not in unique: unique[n] = c
             
-            for name, company in unique.items():
-                log.info(f'   » {company["name"]} ({company.get("source")})')
-                email = company.get('email')
-                site = company.get('website')
+        log.info(f'   Найдено уникальных кандидатов: {len(unique)}')
+        
+        for name, company in unique.items():
+            log.info(f'   » {company["name"]} ({company.get("source")})')
+            email = company.get('email')
+            site = company.get('website')
+            
+            # Извлекаем домен для уникализации и избежания повторного парсинга
+            domain = None
+            if site and isinstance(site, str):
+                from urllib.parse import urlparse
+                try:
+                    domain = urlparse(site).netloc.lower().replace('www.', '')
+                except:
+                    pass
+            
+            if domain and domain in processed_domains:
+                log.info(f'     [!] Домен {domain} уже обрабатывался в этом запуске, пропускаем.')
+                continue
+            
+            if domain:
+                processed_domains.add(domain)
                 
-                if not email and site:
-                    log.info(f'     Сайт: {site} -> парсим...')
-                    found = extract_emails_from_url(site)
-                    if found:
-                        email = found[0]
+            # Проверяем, есть ли уже email (если он вернулся из источника напрямую)
+            if email:
+                email = email.lower().strip()
+                if email in local_existing_emails:
+                    log.info(f'     [!] Email {email} уже есть в таблице, пропускаем.')
+                    continue
+            
+            # Парсим сайт, если email не найден
+            if not email and site:
+                log.info(f'     Сайт: {site} -> парсим...')
+                found = extract_emails_from_url(site)
+                if found:
+                    new_found = [e for e in found if e not in local_existing_emails]
+                    if new_found:
+                        email = new_found[0]
                         log.info(f'     [OK] Email найден: {email}')
-                
-                # Hunter.io если пусто
-                if not email and site:
-                    email = find_email_hunter(site, company['name'])
-                    if email: log.info(f'     [OK] Email (Hunter): {email}')
-                
-                if email:
-                    if add_company_to_sheet(sheet, email):
-                        total += 1
-                else:
-                    log.info('     [!] Email не найден')
-                time.sleep(1)
+                    else:
+                        log.info(f'     [!] Все найденные email ({found}) уже есть в таблице.')
             
+            # Hunter.io если пусто
+            if not email and site:
+                email = find_email_hunter(site, company['name'])
+                if email:
+                    email = email.lower().strip()
+                    if email in local_existing_emails:
+                        log.info(f'     [!] Найденный через Hunter email {email} уже есть в таблице.')
+                        email = None
+                    else:
+                        log.info(f'     [OK] Email (Hunter): {email}')
+            
+            if email:
+                if add_company_to_sheet(sheet, email, local_existing_emails):
+                    total += 1
+            else:
+                log.info('     [!] Email не найден')
+            time.sleep(1)
+        
     log.info(f'\n✅ Завершено. Добавлено новых email: {total}')
 
 if __name__ == '__main__':
