@@ -512,7 +512,18 @@ def extract_emails_from_url(url):
                     break
 
     garbage = {'noreply@', 'test@', 'example@', 'sentry@', 'wix@', 'domain@'}
-    filtered = [e.lower() for e in emails if not any(g in e.lower() for g in garbage) and 5 < len(e) < 50]
+    invalid_extensions = ('.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp', '.ico', '.css', '.js', '.pdf', '.zip', '.tar', '.gz')
+    filtered = []
+    for e in emails:
+        e_lower = e.lower().strip()
+        if any(g in e_lower for g in garbage):
+            continue
+        if e_lower.endswith(invalid_extensions):
+            continue
+        if '@2x' in e_lower or '@3x' in e_lower:
+            continue
+        if 5 < len(e_lower) < 50:
+            filtered.append(e_lower)
     return list(set(filtered))
 
 # ══════════════════════════════════════════════════════
