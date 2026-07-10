@@ -199,6 +199,32 @@ EMAIL_BODY_HTML = """\
 #  GOOGLE SHEETS
 # ══════════════════════════════════════════════════════
 
+def retry_gspread_call(func, *args, max_retries=5, initial_delay=2, backoff_factor=2, **kwargs):
+    """Выполняет gspread функцию с экспоненциальной задержкой в случае временных ошибок API."""
+    import random
+    delay = initial_delay
+    for attempt in range(max_retries):
+        try:
+            return func(*args, **kwargs)
+        except gspread.exceptions.APIError as ex:
+            code = ex.code
+            is_transient = code in [429, 500, 502, 503, 504]
+            if not is_transient or attempt == max_retries - 1:
+                raise ex
+            jitter = random.uniform(0.5, 1.5)
+            sleep_time = delay * jitter
+            log.warning(f"Ошибка Google Sheets API [{code}]: {ex.message}. Попытка {attempt+1}/{max_retries} через {sleep_time:.2f} сек...")
+            time.sleep(sleep_time)
+            delay *= backoff_factor
+        except (requests.exceptions.RequestException, socket.error) as ex:
+            if attempt == max_retries - 1:
+                raise ex
+            jitter = random.uniform(0.5, 1.5)
+            sleep_time = delay * jitter
+            log.warning(f"Сетевая ошибка при запросе к Google Sheets: {ex}. Попытка {attempt+1}/{max_retries} через {sleep_time:.2f} сек...")
+            time.sleep(sleep_time)
+            delay *= backoff_factor
+
 def get_sheet():
     creds_data = json.loads(CREDS_JSON)
     with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
@@ -210,11 +236,11 @@ def get_sheet():
     ]
     creds = Credentials.from_service_account_file(creds_file, scopes=scope)
     client = gspread.authorize(creds)
-    sheet = client.open_by_key(SHEET_ID).sheet1
+    sheet = retry_gspread_call(lambda: client.open_by_key(SHEET_ID).sheet1)
     return sheet
 
 def load_all_records(sheet):
-    all_rows = sheet.get_all_values()
+    all_rows = retry_gspread_call(sheet.get_all_values)
     if not all_rows:
         return {}, []
 
@@ -239,20 +265,20 @@ def reset_monthly_sent(sheet, records):
         if meta['sent']:
             updates.append({'range': f'C{meta["row"]}', 'values': [['']]})
     if updates:
-        sheet.batch_update(updates)
+        retry_gspread_call(sheet.batch_update, updates)
     log.info(f'Сброшено флагов: {len(updates)}')
 
 def mark_sent(sheet, row_num, month_str):
-    sheet.update_cell(row_num, 3, month_str)
+    retry_gspread_call(sheet.update_cell, row_num, 3, month_str)
 
 def mark_dead(sheet, row_num, reason):
     try:
-        sheet.update_cell(row_num, 2, f'dead:{reason[:60]}')
+        retry_gspread_call(sheet.update_cell, row_num, 2, f'dead:{reason[:60]}')
     except Exception as ex:
         log.warning(f'Не удалось пометить строку {row_num}: {ex}')
 
 def delete_dead_rows(sheet):
-    all_rows = sheet.get_all_values()
+    all_rows = retry_gspread_call(sheet.get_all_values)
     if not all_rows:
         return 0
     dead = [
@@ -261,7 +287,7 @@ def delete_dead_rows(sheet):
         if len(row) > 1 and str(row[1]).startswith('dead:')
     ]
     for row_num in sorted(dead, reverse=True):
-        sheet.delete_rows(row_num)
+        retry_gspread_call(sheet.delete_rows, row_num)
         time.sleep(0.3)
     return len(dead)
 

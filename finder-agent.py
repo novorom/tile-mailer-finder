@@ -99,6 +99,33 @@ LOCATIONS = [
 #  GOOGLE SHEETS
 # ══════════════════════════════════════════════════════
 
+def retry_gspread_call(func, *args, max_retries=5, initial_delay=2, backoff_factor=2, **kwargs):
+    """Выполняет gspread функцию с экспоненциальной задержкой в случае временных ошибок API."""
+    import random
+    import socket
+    delay = initial_delay
+    for attempt in range(max_retries):
+        try:
+            return func(*args, **kwargs)
+        except gspread.exceptions.APIError as ex:
+            code = ex.code
+            is_transient = code in [429, 500, 502, 503, 504]
+            if not is_transient or attempt == max_retries - 1:
+                raise ex
+            jitter = random.uniform(0.5, 1.5)
+            sleep_time = delay * jitter
+            log.warning(f"Ошибка Google Sheets API [{code}]: {ex.message}. Попытка {attempt+1}/{max_retries} через {sleep_time:.2f} сек...")
+            time.sleep(sleep_time)
+            delay *= backoff_factor
+        except (requests.exceptions.RequestException, socket.error) as ex:
+            if attempt == max_retries - 1:
+                raise ex
+            jitter = random.uniform(0.5, 1.5)
+            sleep_time = delay * jitter
+            log.warning(f"Сетевая ошибка при запросе к Google Sheets: {ex}. Попытка {attempt+1}/{max_retries} через {sleep_time:.2f} сек...")
+            time.sleep(sleep_time)
+            delay *= backoff_factor
+
 def get_sheet():
     if not SHEET_ID or not CREDS_JSON:
         log.warning('Google Sheets credentials not set (SHEET_ID or GOOGLE_CREDS)')
@@ -110,7 +137,7 @@ def get_sheet():
             scopes=['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive']
         )
         gc = gspread.authorize(credentials)
-        sheet = gc.open_by_key(SHEET_ID).sheet1
+        sheet = retry_gspread_call(lambda: gc.open_by_key(SHEET_ID).sheet1)
         log.info('✅ Google Sheets подключён')
         return sheet
     except Exception as ex:
@@ -123,11 +150,11 @@ def add_company_to_sheet(sheet, email):
         return False
     try:
         # Проверка на дубликат по email в колонке A
-        existing_emails = sheet.col_values(1)
+        existing_emails = retry_gspread_call(sheet.col_values, 1)
         if email in existing_emails:
             return False
 
-        sheet.append_row([email])
+        retry_gspread_call(sheet.append_row, [email])
         log.info(f'✓ Добавлено: {email}')
         return True
     except Exception as ex:
