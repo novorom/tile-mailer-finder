@@ -424,12 +424,9 @@ def main():
     log.info(f'─── Рассылка — месяц {month_str} ───')
     sent, dead, errors = run_mailing(sheet, records, month_str)
 
-    if dead > 0:
-        log.info('─── Удаление мёртвых адресов ───')
-        deleted = delete_dead_rows(sheet)
-        log.info(f'Удалено: {deleted}')
-    else:
-        deleted = 0
+    log.info('─── Удаление мёртвых адресов ───')
+    deleted = delete_dead_rows(sheet)
+    log.info(f'Удалено: {deleted}')
 
     log.info('═══════════════════════════════════════════')
     log.info(f'ИТОГ: отправлено={sent} | мёртвых удалено={deleted} | ошибок={errors}')
