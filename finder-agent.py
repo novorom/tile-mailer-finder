@@ -550,6 +550,80 @@ def scrape_construction_portals(category):
     log.info(f"     [{len(companies)}] компаний найдено на строительных порталах")
     return companies
 
+def scrape_builder_databases(category):
+    """Парсинг баз строителей и подрядчиков"""
+    companies = []
+    
+    # Список баз строителей для парсинга
+    databases = [
+        {
+            'name': 'Stroyportal.ru (База строителей)',
+            'url': 'https://www.stroyportal.ru',
+            'search_url': f'https://www.stroyportal.ru/catalog/?q={requests.utils.quote(category)}&region=spb'
+        },
+        {
+            'name': 'Stroymaterialy.ru (База поставщиков)',
+            'url': 'https://www.stroymaterialy.ru',
+            'search_url': f'https://www.stroymaterialy.ru/companies/?q={requests.utils.quote(category)}'
+        },
+        {
+            'name': 'Stroyka.ru (База подрядчиков)',
+            'url': 'https://www.stroyka.ru',
+            'search_url': f'https://www.stroyka.ru/firms/?q={requests.utils.quote(category)}&region=78'
+        }
+    ]
+    
+    for database in databases:
+        try:
+            log.info(f"     [{database['name']}] поиск...")
+            time.sleep(1)
+            res = requests.get(database['search_url'], headers=HEADERS, timeout=10)
+            soup = BeautifulSoup(res.text, 'html.parser')
+            
+            # Поиск компаний в базе
+            for item in soup.select('div.company-card, div.firm-item, tr.firm-row')[:5]:
+                try:
+                    name_elem = item.select_one('a.company-title, a.firm-name, h3 a, h4 a')
+                    if name_elem:
+                        name = name_elem.get_text(strip=True)
+                        href = name_elem.get('href', '')
+                        if href and not href.startswith('http'):
+                            href = database['url'] + href if href.startswith('/') else database['url'] + '/' + href
+                        
+                        # Поиск email на странице компании
+                        if href:
+                            time.sleep(0.5)
+                            try:
+                                comp_res = requests.get(href, headers=HEADERS, timeout=10)
+                                comp_soup = BeautifulSoup(comp_res.text, 'html.parser')
+                                emails = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', comp_soup.text)
+                                if emails:
+                                    companies.append({
+                                        'name': name,
+                                        'email': emails[0],
+                                        'website': href,
+                                        'source': database['name']
+                                    })
+                                else:
+                                    companies.append({
+                                        'name': name,
+                                        'website': href,
+                                        'source': database['name']
+                                    })
+                            except:
+                                companies.append({
+                                    'name': name,
+                                    'website': href,
+                                    'source': database['name']
+                                })
+                except: pass
+        except Exception as e:
+            log.debug(f"Ошибка парсинга {database['name']}: {e}")
+            continue
+    
+    log.info(f"     [{len(companies)}] компаний найдено в базах строителей")
+    return companies
+
 # ══════════════════════════════════════════════════════
 #  ПАРСИНГ EMAIL СО САЙТА
 # ══════════════════════════════════════════════════════
@@ -803,12 +877,16 @@ def main():
         cp_res = scrape_construction_portals(category)
         candidates.extend(cp_res)
         
+        # Добавляем парсинг баз строителей
+        bd_res = scrape_builder_databases(category)
+        candidates.extend(bd_res)
+        
         g_res = []
         if len(candidates) == 0:
             g_res = search_gemini_leads(category, location)
             candidates.extend(g_res)
         
-        log.info(f"   Результаты сборов: Web({len(w_res)}), DDG({len(d_res)}), Zoon({len(z_res)}), Org({len(o_res)}), Portals({len(cp_res)}), Gemini({len(g_res)})")
+        log.info(f"   Результаты сборов: Web({len(w_res)}), DDG({len(d_res)}), Zoon({len(z_res)}), Org({len(o_res)}), Portals({len(cp_res)}), Databases({len(bd_res)}), Gemini({len(g_res)})")
 
         # Уникализация по имени
         unique = {}
