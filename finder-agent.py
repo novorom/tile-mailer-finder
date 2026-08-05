@@ -619,6 +619,19 @@ def extract_emails_from_url(url):
             filtered.append(e_lower)
     return list(set(filtered))
 
+def check_site_exists(url):
+    """Проверяет существование сайта перед парсингом"""
+    if not url or not isinstance(url, str):
+        return False
+    if not url.startswith('http'):
+        url = 'http://' + url
+    
+    try:
+        response = requests.head(url, headers=HEADERS, timeout=5, allow_redirects=True)
+        return response.status_code in [200, 301, 302, 303, 307, 308]
+    except:
+        return False
+
 def generate_common_emails(domain):
     """Генерирует стандартные email шаблоны для домена"""
     if not domain:
@@ -760,7 +773,11 @@ def main():
             
             # Парсим сайт, если email не найден
             if not email and site:
-                log.info(f'     Сайт: {site} -> парсим...')
+                log.info(f'     Сайт: {site} -> проверяем существование...')
+                if not check_site_exists(site):
+                    log.info(f'     [!] Сайт не существует или недоступен, пропускаем.')
+                    continue
+                log.info(f'     Сайт существует -> парсим...')
                 found = extract_emails_from_url(site)
                 if found:
                     new_found = [e for e in found if e not in local_existing_emails]
@@ -779,6 +796,8 @@ def main():
                     if new_common:
                         email = new_common[0]
                         log.info(f'     [OK] Email (шаблон): {email}')
+                else:
+                    log.info(f'     [!] Шаблоны не дали результатов.')
             
             # Hunter.io если пусто
             if not email and site:
