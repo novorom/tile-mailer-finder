@@ -624,6 +624,154 @@ def scrape_builder_databases(category):
     log.info(f"     [{len(companies)}] компаний найдено в базах строителей")
     return companies
 
+def scrape_developer_databases(category):
+    """Парсинг баз застройщиков"""
+    companies = []
+    
+    # Список баз застройщиков для парсинга
+    developers = [
+        {
+            'name': 'N1.ru (База застройщиков)',
+            'url': 'https://www.n1.ru',
+            'search_url': f'https://www.n1.ru/zhilie-kompleksy/?q={requests.utils.quote(category)}&region=spb'
+        },
+        {
+            'name': 'Cian.ru (База застройщиков)',
+            'url': 'https://www.cian.ru',
+            'search_url': f'https://www.cian.ru/developers/?q={requests.utils.quote(category)}&region=1'
+        },
+        {
+            'name': 'Domofond.ru (База застройщиков)',
+            'url': 'https://www.domofond.ru',
+            'search_url': f'https://www.domofond.ru/developers/?q={requests.utils.quote(category)}&region=spb'
+        }
+    ]
+    
+    for developer in developers:
+        try:
+            log.info(f"     [{developer['name']}] поиск...")
+            time.sleep(1)
+            res = requests.get(developer['search_url'], headers=HEADERS, timeout=10)
+            soup = BeautifulSoup(res.text, 'html.parser')
+            
+            # Поиск застройщиков
+            for item in soup.select('div.developer-card, div.builder-item, tr.developer-row')[:5]:
+                try:
+                    name_elem = item.select_one('a.developer-name, a.builder-title, h3 a, h4 a')
+                    if name_elem:
+                        name = name_elem.get_text(strip=True)
+                        href = name_elem.get('href', '')
+                        if href and not href.startswith('http'):
+                            href = developer['url'] + href if href.startswith('/') else developer['url'] + '/' + href
+                        
+                        # Поиск email на странице застройщика
+                        if href:
+                            time.sleep(0.5)
+                            try:
+                                comp_res = requests.get(href, headers=HEADERS, timeout=10)
+                                comp_soup = BeautifulSoup(comp_res.text, 'html.parser')
+                                emails = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', comp_soup.text)
+                                if emails:
+                                    companies.append({
+                                        'name': name,
+                                        'email': emails[0],
+                                        'website': href,
+                                        'source': developer['name']
+                                    })
+                                else:
+                                    companies.append({
+                                        'name': name,
+                                        'website': href,
+                                        'source': developer['name']
+                                    })
+                            except:
+                                companies.append({
+                                    'name': name,
+                                    'website': href,
+                                    'source': developer['name']
+                                })
+                except: pass
+        except Exception as e:
+            log.debug(f"Ошибка парсинга {developer['name']}: {e}")
+            continue
+    
+    log.info(f"     [{len(companies)}] компаний найдено в базах застройщиков")
+    return companies
+
+def scrape_sro_databases(category):
+    """Парсинг баз СРО (саморегулируемых организаций)"""
+    companies = []
+    
+    # Список баз СРО для парсинга
+    sro_databases = [
+        {
+            'name': 'Nostroy.ru (Реестр СРО)',
+            'url': 'https://www.nostroy.ru',
+            'search_url': f'https://www.nostroy.ru/members/?q={requests.utils.quote(category)}&region=78'
+        },
+        {
+            'name': 'Reestrstro.ru (Реестр СРО)',
+            'url': 'https://www.reestrstro.ru',
+            'search_url': f'https://www.reestrstro.ru/search/?q={requests.utils.quote(category)}&region=spb'
+        },
+        {
+            'name': 'Sro-register.ru (Реестр СРО)',
+            'url': 'https://www.sro-register.ru',
+            'search_url': f'https://www.sro-register.ru/members/?q={requests.utils.quote(category)}'
+        }
+    ]
+    
+    for sro_db in sro_databases:
+        try:
+            log.info(f"     [{sro_db['name']}] поиск...")
+            time.sleep(1)
+            res = requests.get(sro_db['search_url'], headers=HEADERS, timeout=10)
+            soup = BeautifulSoup(res.text, 'html.parser')
+            
+            # Поиск компаний в реестре СРО
+            for item in soup.select('div.member-card, div.sro-member, tr.member-row')[:5]:
+                try:
+                    name_elem = item.select_one('a.member-name, a.company-title, h3 a, h4 a')
+                    if name_elem:
+                        name = name_elem.get_text(strip=True)
+                        href = name_elem.get('href', '')
+                        if href and not href.startswith('http'):
+                            href = sro_db['url'] + href if href.startswith('/') else sro_db['url'] + '/' + href
+                        
+                        # Поиск email на странице компании
+                        if href:
+                            time.sleep(0.5)
+                            try:
+                                comp_res = requests.get(href, headers=HEADERS, timeout=10)
+                                comp_soup = BeautifulSoup(comp_res.text, 'html.parser')
+                                emails = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', comp_soup.text)
+                                if emails:
+                                    companies.append({
+                                        'name': name,
+                                        'email': emails[0],
+                                        'website': href,
+                                        'source': sro_db['name']
+                                    })
+                                else:
+                                    companies.append({
+                                        'name': name,
+                                        'website': href,
+                                        'source': sro_db['name']
+                                    })
+                            except:
+                                companies.append({
+                                    'name': name,
+                                    'website': href,
+                                    'source': sro_db['name']
+                                })
+                except: pass
+        except Exception as e:
+            log.debug(f"Ошибка парсинга {sro_db['name']}: {e}")
+            continue
+    
+    log.info(f"     [{len(companies)}] компаний найдено в реестрах СРО")
+    return companies
+
 # ══════════════════════════════════════════════════════
 #  ПАРСИНГ EMAIL СО САЙТА
 # ══════════════════════════════════════════════════════
@@ -881,12 +1029,20 @@ def main():
         bd_res = scrape_builder_databases(category)
         candidates.extend(bd_res)
         
+        # Добавляем парсинг баз застройщиков
+        dev_res = scrape_developer_databases(category)
+        candidates.extend(dev_res)
+        
+        # Добавляем парсинг реестров СРО
+        sro_res = scrape_sro_databases(category)
+        candidates.extend(sro_res)
+        
         g_res = []
         if len(candidates) == 0:
             g_res = search_gemini_leads(category, location)
             candidates.extend(g_res)
         
-        log.info(f"   Результаты сборов: Web({len(w_res)}), DDG({len(d_res)}), Zoon({len(z_res)}), Org({len(o_res)}), Portals({len(cp_res)}), Databases({len(bd_res)}), Gemini({len(g_res)})")
+        log.info(f"   Результаты сборов: Web({len(w_res)}), DDG({len(d_res)}), Zoon({len(z_res)}), Org({len(o_res)}), Portals({len(cp_res)}), Builders({len(bd_res)}), Developers({len(dev_res)}), SRO({len(sro_res)}), Gemini({len(g_res)})")
 
         # Уникализация по имени
         unique = {}
