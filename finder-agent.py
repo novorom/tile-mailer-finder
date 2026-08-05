@@ -1492,6 +1492,150 @@ def scrape_tile_shops(category):
     log.info(f"     [{len(companies)}] компаний найдено в салонах плитки")
     return companies
 
+def scrape_forums_communities(category):
+    """Парсинг профильных форумов и сообществ"""
+    companies = []
+    
+    # Список профильных форумов и сообществ
+    forums = [
+        {
+            'name': 'Stroyforum.ru (Строительный форум)',
+            'url': 'https://www.stroyforum.ru',
+            'search_url': f'https://www.stroyforum.ru/search/?q={requests.utils.quote(category)}'
+        },
+        {
+            'name': 'Mastergrad.ru (Форум мастеров)',
+            'url': 'https://www.mastergrad.ru',
+            'search_url': f'https://www.mastergrad.ru/search/?q={requests.utils.quote(category)}'
+        },
+        {
+            'name': 'Remontnik.ru (Форум ремонтников)',
+            'url': 'https://www.remontnik.ru',
+            'search_url': f'https://www.remontnik.ru/forum/search/?q={requests.utils.quote(category)}'
+        }
+    ]
+    
+    for forum in forums:
+        try:
+            log.info(f"     [{forum['name']}] поиск...")
+            time.sleep(1)
+            res = requests.get(forum['search_url'], headers=HEADERS, timeout=10)
+            soup = BeautifulSoup(res.text, 'html.parser')
+            
+            for item in soup.select('div.user-card, div.member-item, tr.user-row')[:5]:
+                try:
+                    name_elem = item.select_one('a.user-name, a.member-title, h3 a, h4 a')
+                    if name_elem:
+                        name = name_elem.get_text(strip=True)
+                        href = name_elem.get('href', '')
+                        if href and not href.startswith('http'):
+                            href = forum['url'] + href if href.startswith('/') else forum['url'] + '/' + href
+                        
+                        if href:
+                            time.sleep(0.5)
+                            try:
+                                comp_res = requests.get(href, headers=HEADERS, timeout=10)
+                                comp_soup = BeautifulSoup(comp_res.text, 'html.parser')
+                                emails = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', comp_soup.text)
+                                if emails:
+                                    companies.append({
+                                        'name': name,
+                                        'email': emails[0],
+                                        'website': href,
+                                        'source': forum['name']
+                                    })
+                                else:
+                                    companies.append({
+                                        'name': name,
+                                        'website': href,
+                                        'source': forum['name']
+                                    })
+                            except:
+                                companies.append({
+                                    'name': name,
+                                    'website': href,
+                                    'source': forum['name']
+                                })
+                except: pass
+        except Exception as e:
+            log.debug(f"Ошибка парсинга {forum['name']}: {e}")
+            continue
+    
+    log.info(f"     [{len(companies)}] компаний найдено на форумах")
+    return companies
+
+def scrape_exhibitions_fairs(category):
+    """Парсинг выставок и ярмарок"""
+    companies = []
+    
+    # Список выставок и ярмарок
+    exhibitions = [
+        {
+            'name': 'Expostroy.ru (Выставки строительства)',
+            'url': 'https://www.expostroy.ru',
+            'search_url': f'https://www.expostroy.ru/exhibitors/?q={requests.utils.quote(category)}'
+        },
+        {
+            'name': 'Stroyexpo.ru (Строительные выставки)',
+            'url': 'https://www.stroyexpo.ru',
+            'search_url': f'https://www.stroyexpo.ru/participants/?q={requests.utils.quote(category)}'
+        },
+        {
+            'name': 'Buildfair.ru (Строительные ярмарки)',
+            'url': 'https://www.buildfair.ru',
+            'search_url': f'https://www.buildfair.ru/exhibitors/?q={requests.utils.quote(category)}'
+        }
+    ]
+    
+    for exhibition in exhibitions:
+        try:
+            log.info(f"     [{exhibition['name']}] поиск...")
+            time.sleep(1)
+            res = requests.get(exhibition['search_url'], headers=HEADERS, timeout=10)
+            soup = BeautifulSoup(res.text, 'html.parser')
+            
+            for item in soup.select('div.exhibitor-card, div.participant-item, tr.exhibitor-row')[:5]:
+                try:
+                    name_elem = item.select_one('a.exhibitor-name, a.participant-title, h3 a, h4 a')
+                    if name_elem:
+                        name = name_elem.get_text(strip=True)
+                        href = name_elem.get('href', '')
+                        if href and not href.startswith('http'):
+                            href = exhibition['url'] + href if href.startswith('/') else exhibition['url'] + '/' + href
+                        
+                        if href:
+                            time.sleep(0.5)
+                            try:
+                                comp_res = requests.get(href, headers=HEADERS, timeout=10)
+                                comp_soup = BeautifulSoup(comp_res.text, 'html.parser')
+                                emails = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', comp_soup.text)
+                                if emails:
+                                    companies.append({
+                                        'name': name,
+                                        'email': emails[0],
+                                        'website': href,
+                                        'source': exhibition['name']
+                                    })
+                                else:
+                                    companies.append({
+                                        'name': name,
+                                        'website': href,
+                                        'source': exhibition['name']
+                                    })
+                            except:
+                                companies.append({
+                                    'name': name,
+                                    'website': href,
+                                    'source': exhibition['name']
+                                })
+                except: pass
+        except Exception as e:
+            log.debug(f"Ошибка парсинга {exhibition['name']}: {e}")
+            continue
+    
+    log.info(f"     [{len(companies)}] компаний найдено на выставках")
+    return companies
+
 # ══════════════════════════════════════════════════════
 #  ПАРСИНГ EMAIL СО САЙТА
 # ══════════════════════════════════════════════════════
@@ -1797,12 +1941,20 @@ def main():
         shop_res = scrape_tile_shops(category)
         candidates.extend(shop_res)
         
+        # Добавляем парсинг форумов и сообществ
+        forum_res = scrape_forums_communities(category)
+        candidates.extend(forum_res)
+        
+        # Добавляем парсинг выставок и ярмарок
+        expo_res = scrape_exhibitions_fairs(category)
+        candidates.extend(expo_res)
+        
         g_res = []
         if len(candidates) == 0:
             g_res = search_gemini_leads(category, location)
             candidates.extend(g_res)
         
-        log.info(f"   Результаты сборов: Web({len(w_res)}), DDG({len(d_res)}), Zoon({len(z_res)}), Org({len(o_res)}), Portals({len(cp_res)}), Builders({len(bd_res)}), Developers({len(dev_res)}), SRO({len(sro_res)}), Suppliers({len(sup_res)}), Design({len(des_res)}), Repair({len(rep_res)}), Objects({len(obj_res)}), Contractors({len(ctr_res)}), Finishers({len(fin_res)}), Radar({len(rad_res)}), Directories({len(dir_res)}), Marketplaces({len(mkt_res)}), Shops({len(shop_res)}), Gemini({len(g_res)})")
+        log.info(f"   Результаты сборов: Web({len(w_res)}), DDG({len(d_res)}), Zoon({len(z_res)}), Org({len(o_res)}), Portals({len(cp_res)}), Builders({len(bd_res)}), Developers({len(dev_res)}), SRO({len(sro_res)}), Suppliers({len(sup_res)}), Design({len(des_res)}), Repair({len(rep_res)}), Objects({len(obj_res)}), Contractors({len(ctr_res)}), Finishers({len(fin_res)}), Radar({len(rad_res)}), Directories({len(dir_res)}), Marketplaces({len(mkt_res)}), Shops({len(shop_res)}), Forums({len(forum_res)}), Exhibitions({len(expo_res)}), Gemini({len(g_res)})")
 
         # Уникализация по имени
         unique = {}
