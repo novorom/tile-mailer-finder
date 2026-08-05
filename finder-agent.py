@@ -611,6 +611,11 @@ def extract_emails_from_url(url):
             continue
         if '@2x' in e_lower or '@3x' in e_lower:
             continue
+        # Фильтрация emails с цифрами перед @ (например, 335-51-11info@setlgroup.ru)
+        if '@' in e_lower:
+            local_part = e_lower.split('@')[0]
+            if any(char.isdigit() for char in local_part):
+                continue
         if 5 < len(e_lower) < 50:
             filtered.append(e_lower)
     return list(set(filtered))
