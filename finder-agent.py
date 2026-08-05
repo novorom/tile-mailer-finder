@@ -511,6 +511,14 @@ def extract_emails_from_url(url):
 
             soup = BeautifulSoup(text, 'html.parser')
             
+            # Поиск в footer и header
+            for section in ['footer', 'header']:
+                section_elem = soup.find(section)
+                if section_elem:
+                    section_text = section_elem.get_text()
+                    section_emails = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', section_text)
+                    found.update(e.lower() for e in section_emails)
+            
             # Поиск в mailto ссылках
             for a in soup.find_all('a', href=re.compile(r'^mailto:', re.I)):
                 e = a['href'].replace('mailto:', '').split('?')[0].strip().lower()
@@ -610,6 +618,30 @@ def extract_emails_from_url(url):
         if 5 < len(e_lower) < 50:
             filtered.append(e_lower)
     return list(set(filtered))
+
+def generate_common_emails(domain):
+    """Генерирует стандартные email шаблоны для домена"""
+    if not domain:
+        return []
+    
+    clean_domain = domain.replace('https://', '').replace('http://', '').replace('www.', '').split('/')[0]
+    
+    common_prefixes = [
+        'info', 'contact', 'sales', 'support', 'office', 'admin', 
+        'manager', 'director', 'hr', 'marketing', 'billing', 'reception',
+        'info@', 'contact@', 'sales@', 'support@', 'office@', 'admin@',
+        'manager@', 'director@', 'hr@', 'marketing@', 'billing@', 'reception@'
+    ]
+    
+    emails = []
+    for prefix in common_prefixes:
+        if '@' in prefix:
+            email = prefix.replace('@', '') + '@' + clean_domain
+        else:
+            email = prefix + '@' + clean_domain
+        emails.append(email)
+    
+    return list(set(emails))
 
 # ══════════════════════════════════════════════════════
 #  HUNTER.IO API
@@ -737,6 +769,16 @@ def main():
                         log.info(f'     [OK] Email найден: {email}')
                     else:
                         log.info(f'     [!] Все найденные email ({found}) уже есть в таблице.')
+            
+            # Генерируем стандартные email шаблоны если парсинг не дал результатов
+            if not email and site:
+                log.info(f'     [Генерация] Пробуем стандартные email шаблоны...')
+                common_emails = generate_common_emails(site)
+                if common_emails:
+                    new_common = [e for e in common_emails if e not in local_existing_emails]
+                    if new_common:
+                        email = new_common[0]
+                        log.info(f'     [OK] Email (шаблон): {email}')
             
             # Hunter.io если пусто
             if not email and site:
