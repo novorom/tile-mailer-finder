@@ -1348,6 +1348,150 @@ def scrape_business_directories(category):
     log.info(f"     [{len(companies)}] компаний найдено в бизнес-каталогах")
     return companies
 
+def scrape_marketplaces(category):
+    """Парсинг торговых площадок и маркетплейсов стройматериалов"""
+    companies = []
+    
+    # Список торговых площадок и маркетплейсов
+    marketplaces = [
+        {
+            'name': 'Stroyopt.ru (Маркетплейс стройматериалов)',
+            'url': 'https://www.stroyopt.ru',
+            'search_url': f'https://www.stroyopt.ru/catalog/?q={requests.utils.quote(category)}'
+        },
+        {
+            'name': 'Stroytorg.ru (Торговая площадка)',
+            'url': 'https://www.stroytorg.ru',
+            'search_url': f'https://www.stroytorg.ru/sellers/?q={requests.utils.quote(category)}'
+        },
+        {
+            'name': 'Stroymarket.ru (Маркетплейс)',
+            'url': 'https://www.stroymarket.ru',
+            'search_url': f'https://www.stroymarket.ru/companies/?q={requests.utils.quote(category)}'
+        }
+    ]
+    
+    for marketplace in marketplaces:
+        try:
+            log.info(f"     [{marketplace['name']}] поиск...")
+            time.sleep(1)
+            res = requests.get(marketplace['search_url'], headers=HEADERS, timeout=10)
+            soup = BeautifulSoup(res.text, 'html.parser')
+            
+            for item in soup.select('div.seller-card, div.company-item, tr.seller-row')[:5]:
+                try:
+                    name_elem = item.select_one('a.seller-name, a.company-title, h3 a, h4 a')
+                    if name_elem:
+                        name = name_elem.get_text(strip=True)
+                        href = name_elem.get('href', '')
+                        if href and not href.startswith('http'):
+                            href = marketplace['url'] + href if href.startswith('/') else marketplace['url'] + '/' + href
+                        
+                        if href:
+                            time.sleep(0.5)
+                            try:
+                                comp_res = requests.get(href, headers=HEADERS, timeout=10)
+                                comp_soup = BeautifulSoup(comp_res.text, 'html.parser')
+                                emails = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', comp_soup.text)
+                                if emails:
+                                    companies.append({
+                                        'name': name,
+                                        'email': emails[0],
+                                        'website': href,
+                                        'source': marketplace['name']
+                                    })
+                                else:
+                                    companies.append({
+                                        'name': name,
+                                        'website': href,
+                                        'source': marketplace['name']
+                                    })
+                            except:
+                                companies.append({
+                                    'name': name,
+                                    'website': href,
+                                    'source': marketplace['name']
+                                })
+                except: pass
+        except Exception as e:
+            log.debug(f"Ошибка парсинга {marketplace['name']}: {e}")
+            continue
+    
+    log.info(f"     [{len(companies)}] компаний найдено на маркетплейсах")
+    return companies
+
+def scrape_tile_shops(category):
+    """Парсинг салонов и магазинов плитки"""
+    companies = []
+    
+    # Список салонов и магазинов плитки
+    shops = [
+        {
+            'name': 'Tileshop.ru (Салоны плитки)',
+            'url': 'https://www.tileshop.ru',
+            'search_url': f'https://www.tileshop.ru/companies/?q={requests.utils.quote(category)}&region=spb'
+        },
+        {
+            'name': 'Keramogranit.ru (Магазины керамогранита)',
+            'url': 'https://www.keramogranit.ru',
+            'search_url': f'https://www.keramogranit.ru/shops/?q={requests.utils.quote(category)}&region=78'
+        },
+        {
+            'name': 'Plitka.ru (Салоны плитки)',
+            'url': 'https://www.plitka.ru',
+            'search_url': f'https://www.plitka.ru/salons/?q={requests.utils.quote(category)}&region=spb'
+        }
+    ]
+    
+    for shop in shops:
+        try:
+            log.info(f"     [{shop['name']}] поиск...")
+            time.sleep(1)
+            res = requests.get(shop['search_url'], headers=HEADERS, timeout=10)
+            soup = BeautifulSoup(res.text, 'html.parser')
+            
+            for item in soup.select('div.shop-card, div.salon-item, tr.shop-row')[:5]:
+                try:
+                    name_elem = item.select_one('a.shop-name, a.salon-title, h3 a, h4 a')
+                    if name_elem:
+                        name = name_elem.get_text(strip=True)
+                        href = name_elem.get('href', '')
+                        if href and not href.startswith('http'):
+                            href = shop['url'] + href if href.startswith('/') else shop['url'] + '/' + href
+                        
+                        if href:
+                            time.sleep(0.5)
+                            try:
+                                comp_res = requests.get(href, headers=HEADERS, timeout=10)
+                                comp_soup = BeautifulSoup(comp_res.text, 'html.parser')
+                                emails = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', comp_soup.text)
+                                if emails:
+                                    companies.append({
+                                        'name': name,
+                                        'email': emails[0],
+                                        'website': href,
+                                        'source': shop['name']
+                                    })
+                                else:
+                                    companies.append({
+                                        'name': name,
+                                        'website': href,
+                                        'source': shop['name']
+                                    })
+                            except:
+                                companies.append({
+                                    'name': name,
+                                    'website': href,
+                                    'source': shop['name']
+                                })
+                except: pass
+        except Exception as e:
+            log.debug(f"Ошибка парсинга {shop['name']}: {e}")
+            continue
+    
+    log.info(f"     [{len(companies)}] компаний найдено в салонах плитки")
+    return companies
+
 # ══════════════════════════════════════════════════════
 #  ПАРСИНГ EMAIL СО САЙТА
 # ══════════════════════════════════════════════════════
@@ -1645,12 +1789,20 @@ def main():
         dir_res = scrape_business_directories(category)
         candidates.extend(dir_res)
         
+        # Добавляем парсинг маркетплейсов стройматериалов
+        mkt_res = scrape_marketplaces(category)
+        candidates.extend(mkt_res)
+        
+        # Добавляем парсинг салонов плитки
+        shop_res = scrape_tile_shops(category)
+        candidates.extend(shop_res)
+        
         g_res = []
         if len(candidates) == 0:
             g_res = search_gemini_leads(category, location)
             candidates.extend(g_res)
         
-        log.info(f"   Результаты сборов: Web({len(w_res)}), DDG({len(d_res)}), Zoon({len(z_res)}), Org({len(o_res)}), Portals({len(cp_res)}), Builders({len(bd_res)}), Developers({len(dev_res)}), SRO({len(sro_res)}), Suppliers({len(sup_res)}), Design({len(des_res)}), Repair({len(rep_res)}), Objects({len(obj_res)}), Contractors({len(ctr_res)}), Finishers({len(fin_res)}), Radar({len(rad_res)}), Directories({len(dir_res)}), Gemini({len(g_res)})")
+        log.info(f"   Результаты сборов: Web({len(w_res)}), DDG({len(d_res)}), Zoon({len(z_res)}), Org({len(o_res)}), Portals({len(cp_res)}), Builders({len(bd_res)}), Developers({len(dev_res)}), SRO({len(sro_res)}), Suppliers({len(sup_res)}), Design({len(des_res)}), Repair({len(rep_res)}), Objects({len(obj_res)}), Contractors({len(ctr_res)}), Finishers({len(fin_res)}), Radar({len(rad_res)}), Directories({len(dir_res)}), Marketplaces({len(mkt_res)}), Shops({len(shop_res)}), Gemini({len(g_res)})")
 
         # Уникализация по имени
         unique = {}
