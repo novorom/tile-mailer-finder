@@ -206,59 +206,6 @@ def add_company_to_sheet(sheet, email, local_existing_emails):
 #  GOOGLE SEARCH APIs
 # ══════════════════════════════════════════════════════
 
-def search_google_places(category, location):
-    if not GOOGLE_API_KEY:
-        log.debug("Google API Key not set")
-        return []
-    log.info(f"     [Google Maps] поиск: {category}...")
-    try:
-        # Пытаемся использовать New Places API (searchText)
-        url = "https://places.googleapis.com/v1/places:searchText"
-        headers = {
-            "Content-Type": "application/json",
-            "X-Goog-Api-Key": GOOGLE_API_KEY,
-            "X-Goog-FieldMask": "places.displayName,places.formattedAddress,places.websiteUri"
-        }
-        data = {"textQuery": f"{category} {location}", "languageCode": "ru", "maxResultCount": 20}
-        res = requests.post(url, headers=headers, json=data, timeout=10)
-        
-        if res.status_code == 200:
-            results = res.json().get('places', [])
-            companies = []
-            for p in results:
-                companies.append({
-                    'name': p.get('displayName', {}).get('text'),
-                    'website': p.get('websiteUri', ''),
-                    'address': p.get('formattedAddress', ''),
-                    'source': 'Google Maps'
-                })
-            return companies
-        else:
-            log.error(f"     [Google Maps] ошибка API: {res.status_code} {res.text[:100]}")
-            # Пытаемся использовать старый Text Search как основной резерв
-            log.info("     [Google Maps] пробуем старый API (Text Search)...")
-            old_url = "https://maps.googleapis.com/maps/api/place/textsearch/json"
-            params = {"query": f"{category} {location}", "key": GOOGLE_API_KEY, "language": "ru"}
-            res_old = requests.get(old_url, params=params, timeout=10)
-            if res_old.status_code == 200:
-                data = res_old.json()
-                old_companies = []
-                for item in data.get('results', []):
-                    old_companies.append({
-                        'name': item.get('name'),
-                        'website': None, 
-                        'place_id': item.get('place_id'),
-                        'source': 'Google Maps (Old)'
-                    })
-                log.info(f"     [Google Maps Old] найдено: {len(old_companies)}")
-                return old_companies
-            else:
-                log.error(f"     [Google Maps Old] тоже ошибка: {res_old.status_code}")
-                return []
-    except Exception as e:
-        log.debug(f"Google Places error: {e}")
-        return []
-
 def search_google_web(category, location, num=10):
     """Поиск сайтов через Google Custom Search"""
     if not GOOGLE_API_KEY or not GOOGLE_CSE_ID:
@@ -712,9 +659,6 @@ def main():
         candidates = []
         
         # Собираем со всех источников
-        p_res = search_google_places(category, location)
-        candidates.extend(p_res)
-        
         w_res = search_google_web(category, location)
         candidates.extend(w_res)
         
@@ -734,7 +678,7 @@ def main():
             g_res = search_gemini_leads(category, location)
             candidates.extend(g_res)
         
-        log.info(f"   Результаты сборов: Maps({len(p_res)}), Web({len(w_res)}), DDG({len(d_res)}), Zoon({len(z_res)}), Org({len(o_res)}), Gemini({len(g_res)})")
+        log.info(f"   Результаты сборов: Web({len(w_res)}), DDG({len(d_res)}), Zoon({len(z_res)}), Org({len(o_res)}), Gemini({len(g_res)})")
 
         # Уникализация по имени
         unique = {}
