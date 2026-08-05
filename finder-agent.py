@@ -988,6 +988,222 @@ def scrape_repair_companies(category):
     log.info(f"     [{len(companies)}] компаний найдено в базах ремонтных компаний")
     return companies
 
+def scrape_construction_objects(category):
+    """Парсинг баз строительных объектов"""
+    companies = []
+    
+    # Список баз строительных объектов
+    databases = [
+        {
+            'name': 'Stroyobject.ru (База строй объектов)',
+            'url': 'https://www.stroyobject.ru',
+            'search_url': f'https://www.stroyobject.ru/objects/?q={requests.utils.quote(category)}&region=spb'
+        },
+        {
+            'name': 'Objectstroy.ru (База строй объектов)',
+            'url': 'https://www.objectstroy.ru',
+            'search_url': f'https://www.objectstroy.ru/objects/?q={requests.utils.quote(category)}&region=78'
+        },
+        {
+            'name': 'Stroyportal-objects.ru (База строй объектов)',
+            'url': 'https://www.stroyportal-objects.ru',
+            'search_url': f'https://www.stroyportal-objects.ru/search/?q={requests.utils.quote(category)}'
+        }
+    ]
+    
+    for database in databases:
+        try:
+            log.info(f"     [{database['name']}] поиск...")
+            time.sleep(1)
+            res = requests.get(database['search_url'], headers=HEADERS, timeout=10)
+            soup = BeautifulSoup(res.text, 'html.parser')
+            
+            for item in soup.select('div.object-card, div.construction-item, tr.object-row')[:5]:
+                try:
+                    name_elem = item.select_one('a.object-name, a.construction-title, h3 a, h4 a')
+                    if name_elem:
+                        name = name_elem.get_text(strip=True)
+                        href = name_elem.get('href', '')
+                        if href and not href.startswith('http'):
+                            href = database['url'] + href if href.startswith('/') else database['url'] + '/' + href
+                        
+                        if href:
+                            time.sleep(0.5)
+                            try:
+                                comp_res = requests.get(href, headers=HEADERS, timeout=10)
+                                comp_soup = BeautifulSoup(comp_res.text, 'html.parser')
+                                emails = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', comp_soup.text)
+                                if emails:
+                                    companies.append({
+                                        'name': name,
+                                        'email': emails[0],
+                                        'website': href,
+                                        'source': database['name']
+                                    })
+                                else:
+                                    companies.append({
+                                        'name': name,
+                                        'website': href,
+                                        'source': database['name']
+                                    })
+                            except:
+                                companies.append({
+                                    'name': name,
+                                    'website': href,
+                                    'source': database['name']
+                                })
+                except: pass
+        except Exception as e:
+            log.debug(f"Ошибка парсинга {database['name']}: {e}")
+            continue
+    
+    log.info(f"     [{len(companies)}] компаний найдено в базах строй объектов")
+    return companies
+
+def scrape_contractors_database(category):
+    """Парсинг баз подрядчиков"""
+    companies = []
+    
+    # Список баз подрядчиков
+    databases = [
+        {
+            'name': 'Contractor.ru (База подрядчиков)',
+            'url': 'https://www.contractor.ru',
+            'search_url': f'https://www.contractor.ru/companies/?q={requests.utils.quote(category)}&region=spb'
+        },
+        {
+            'name': 'Podryadchik.ru (База подрядчиков)',
+            'url': 'https://www.podryadchik.ru',
+            'search_url': f'https://www.podryadchik.ru/firms/?q={requests.utils.quote(category)}&region=78'
+        },
+        {
+            'name': 'Stroy-contractor.ru (База подрядчиков)',
+            'url': 'https://www.stroy-contractor.ru',
+            'search_url': f'https://www.stroy-contractor.ru/companies/?q={requests.utils.quote(category)}'
+        }
+    ]
+    
+    for database in databases:
+        try:
+            log.info(f"     [{database['name']}] поиск...")
+            time.sleep(1)
+            res = requests.get(database['search_url'], headers=HEADERS, timeout=10)
+            soup = BeautifulSoup(res.text, 'html.parser')
+            
+            for item in soup.select('div.contractor-card, div.firm-item, tr.contractor-row')[:5]:
+                try:
+                    name_elem = item.select_one('a.contractor-name, a.firm-title, h3 a, h4 a')
+                    if name_elem:
+                        name = name_elem.get_text(strip=True)
+                        href = name_elem.get('href', '')
+                        if href and not href.startswith('http'):
+                            href = database['url'] + href if href.startswith('/') else database['url'] + '/' + href
+                        
+                        if href:
+                            time.sleep(0.5)
+                            try:
+                                comp_res = requests.get(href, headers=HEADERS, timeout=10)
+                                comp_soup = BeautifulSoup(comp_res.text, 'html.parser')
+                                emails = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', comp_soup.text)
+                                if emails:
+                                    companies.append({
+                                        'name': name,
+                                        'email': emails[0],
+                                        'website': href,
+                                        'source': database['name']
+                                    })
+                                else:
+                                    companies.append({
+                                        'name': name,
+                                        'website': href,
+                                        'source': database['name']
+                                    })
+                            except:
+                                companies.append({
+                                    'name': name,
+                                    'website': href,
+                                    'source': database['name']
+                                })
+                except: pass
+        except Exception as e:
+            log.debug(f"Ошибка парсинга {database['name']}: {e}")
+            continue
+    
+    log.info(f"     [{len(companies)}] компаний найдено в базах подрядчиков")
+    return companies
+
+def scrape_finishers_database(category):
+    """Парсинг баз мастеров-отделочников"""
+    companies = []
+    
+    # Список баз мастеров-отделочников
+    databases = [
+        {
+            'name': 'Otdelka.ru (База отделочников)',
+            'url': 'https://www.otdelka.ru',
+            'search_url': f'https://www.otdelka.ru/masters/?q={requests.utils.quote(category)}&region=spb'
+        },
+        {
+            'name': 'Master-otdelka.ru (База отделочников)',
+            'url': 'https://www.master-otdelka.ru',
+            'search_url': f'https://www.master-otdelka.ru/companies/?q={requests.utils.quote(category)}&region=spb'
+        },
+        {
+            'name': 'Otdelchnik.ru (База отделочников)',
+            'url': 'https://www.otdelchnik.ru',
+            'search_url': f'https://www.otdelchnik.ru/masters/?q={requests.utils.quote(category)}&region=78'
+        }
+    ]
+    
+    for database in databases:
+        try:
+            log.info(f"     [{database['name']}] поиск...")
+            time.sleep(1)
+            res = requests.get(database['search_url'], headers=HEADERS, timeout=10)
+            soup = BeautifulSoup(res.text, 'html.parser')
+            
+            for item in soup.select('div.master-card, div.finisher-item, tr.master-row')[:5]:
+                try:
+                    name_elem = item.select_one('a.master-name, a.finisher-title, h3 a, h4 a')
+                    if name_elem:
+                        name = name_elem.get_text(strip=True)
+                        href = name_elem.get('href', '')
+                        if href and not href.startswith('http'):
+                            href = database['url'] + href if href.startswith('/') else database['url'] + '/' + href
+                        
+                        if href:
+                            time.sleep(0.5)
+                            try:
+                                comp_res = requests.get(href, headers=HEADERS, timeout=10)
+                                comp_soup = BeautifulSoup(comp_res.text, 'html.parser')
+                                emails = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', comp_soup.text)
+                                if emails:
+                                    companies.append({
+                                        'name': name,
+                                        'email': emails[0],
+                                        'website': href,
+                                        'source': database['name']
+                                    })
+                                else:
+                                    companies.append({
+                                        'name': name,
+                                        'website': href,
+                                        'source': database['name']
+                                    })
+                            except:
+                                companies.append({
+                                    'name': name,
+                                    'website': href,
+                                    'source': database['name']
+                                })
+                except: pass
+        except Exception as e:
+            log.debug(f"Ошибка парсинга {database['name']}: {e}")
+            continue
+    
+    log.info(f"     [{len(companies)}] компаний найдено в базах мастеров-отделочников")
+    return companies
+
 # ══════════════════════════════════════════════════════
 #  ПАРСИНГ EMAIL СО САЙТА
 # ══════════════════════════════════════════════════════
@@ -1265,12 +1481,24 @@ def main():
         rep_res = scrape_repair_companies(category)
         candidates.extend(rep_res)
         
+        # Добавляем парсинг баз строй объектов
+        obj_res = scrape_construction_objects(category)
+        candidates.extend(obj_res)
+        
+        # Добавляем парсинг баз подрядчиков
+        ctr_res = scrape_contractors_database(category)
+        candidates.extend(ctr_res)
+        
+        # Добавляем парсинг баз мастеров-отделочников
+        fin_res = scrape_finishers_database(category)
+        candidates.extend(fin_res)
+        
         g_res = []
         if len(candidates) == 0:
             g_res = search_gemini_leads(category, location)
             candidates.extend(g_res)
         
-        log.info(f"   Результаты сборов: Web({len(w_res)}), DDG({len(d_res)}), Zoon({len(z_res)}), Org({len(o_res)}), Portals({len(cp_res)}), Builders({len(bd_res)}), Developers({len(dev_res)}), SRO({len(sro_res)}), Suppliers({len(sup_res)}), Design({len(des_res)}), Repair({len(rep_res)}), Gemini({len(g_res)})")
+        log.info(f"   Результаты сборов: Web({len(w_res)}), DDG({len(d_res)}), Zoon({len(z_res)}), Org({len(o_res)}), Portals({len(cp_res)}), Builders({len(bd_res)}), Developers({len(dev_res)}), SRO({len(sro_res)}), Suppliers({len(sup_res)}), Design({len(des_res)}), Repair({len(rep_res)}), Objects({len(obj_res)}), Contractors({len(ctr_res)}), Finishers({len(fin_res)}), Gemini({len(g_res)})")
 
         # Уникализация по имени
         unique = {}
