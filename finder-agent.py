@@ -433,29 +433,32 @@ def scrape_construction_portals(category):
         {
             'name': 'IRN.ru (Строительный портал)',
             'url': 'https://www.irn.ru',
-            'search_url': f'https://www.irn.ru/search/?q={requests.utils.quote(category)}&region=spb'
+            'search_url': f'https://www.irn.ru/search/?q={requests.utils.quote(category)}&region=spb',
+            'projects_url': f'https://www.irn.ru/projects/?region=spb'  # Завершенные проекты
         },
         {
             'name': 'Stroi.ru (Строительный портал)',
             'url': 'https://www.stroi.ru',
-            'search_url': f'https://www.stroi.ru/search?q={requests.utils.quote(category)}'
+            'search_url': f'https://www.stroi.ru/search?q={requests.utils.quote(category)}',
+            'projects_url': f'https://www.stroi.ru/projects/'  # Завершенные проекты
         },
         {
             'name': 'Stroitelstvo.ru',
             'url': 'https://www.stroitelstvo.ru',
-            'search_url': f'https://www.stroitelstvo.ru/search?q={requests.utils.quote(category)}'
+            'search_url': f'https://www.stroitelstvo.ru/search?q={requests.utils.quote(category)}',
+            'projects_url': f'https://www.stroitelstvo.ru/projects/'  # Завершенные проекты
         }
     ]
     
     for portal in portals:
         try:
-            log.info(f"     [{portal['name']}] поиск...")
+            # Поиск по категории
+            log.info(f"     [{portal['name']}] поиск по категории...")
             time.sleep(1)
             res = requests.get(portal['search_url'], headers=HEADERS, timeout=10)
             soup = BeautifulSoup(res.text, 'html.parser')
             
             # Общая логика для поиска компаний на порталах
-            # Адаптируется под структуру каждого портала
             for item in soup.select('div.company-item, div.search-result, tr.search-row')[:5]:
                 try:
                     name_elem = item.select_one('a.company-name, a.title, h3 a, h4 a')
@@ -471,7 +474,7 @@ def scrape_construction_portals(category):
                             try:
                                 comp_res = requests.get(href, headers=HEADERS, timeout=10)
                                 comp_soup = BeautifulSoup(comp_res.text, 'html.parser')
-                                emails = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', comp_res.text)
+                                emails = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', comp_soup.text)
                                 if emails:
                                     companies.append({
                                         'name': name,
@@ -492,6 +495,54 @@ def scrape_construction_portals(category):
                                     'source': portal['name']
                                 })
                 except: pass
+            
+            # Поиск в завершенных проектах
+            log.info(f"     [{portal['name']}] поиск в завершенных проектах...")
+            time.sleep(1)
+            try:
+                proj_res = requests.get(portal['projects_url'], headers=HEADERS, timeout=10)
+                proj_soup = BeautifulSoup(proj_res.text, 'html.parser')
+                
+                # Поиск компаний в завершенных проектах
+                for proj_item in proj_soup.select('div.project-item, div.completed-project, tr.project-row')[:5]:
+                    try:
+                        company_elem = proj_item.select_one('a.company-name, a.developer, a.contractor')
+                        if company_elem:
+                            company_name = company_elem.get_text(strip=True)
+                            company_href = company_elem.get('href', '')
+                            if company_href and not company_href.startswith('http'):
+                                company_href = portal['url'] + company_href if company_href.startswith('/') else portal['url'] + '/' + company_href
+                            
+                            # Поиск email на странице компании
+                            if company_href:
+                                time.sleep(0.5)
+                                try:
+                                    comp_res = requests.get(company_href, headers=HEADERS, timeout=10)
+                                    comp_soup = BeautifulSoup(comp_res.text, 'html.parser')
+                                    emails = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', comp_soup.text)
+                                    if emails:
+                                        companies.append({
+                                            'name': company_name,
+                                            'email': emails[0],
+                                            'website': company_href,
+                                            'source': f"{portal['name']} (Завершенные проекты)"
+                                        })
+                                    else:
+                                        companies.append({
+                                            'name': company_name,
+                                            'website': company_href,
+                                            'source': f"{portal['name']} (Завершенные проекты)"
+                                        })
+                                except:
+                                    companies.append({
+                                        'name': company_name,
+                                        'website': company_href,
+                                        'source': f"{portal['name']} (Завершенные проекты)"
+                                    })
+                    except: pass
+            except Exception as e:
+                log.debug(f"Ошибка парсинга завершенных проектов {portal['name']}: {e}")
+                
         except Exception as e:
             log.debug(f"Ошибка парсинга {portal['name']}: {e}")
             continue
