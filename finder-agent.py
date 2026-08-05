@@ -424,6 +424,81 @@ def scrape_orgpage(query):
         return companies
     except: return []
 
+def scrape_construction_portals(category):
+    """Парсинг строительных порталов СПб и СЗ региона"""
+    companies = []
+    
+    # Список строительных порталов для парсинга
+    portals = [
+        {
+            'name': 'IRN.ru (Строительный портал)',
+            'url': 'https://www.irn.ru',
+            'search_url': f'https://www.irn.ru/search/?q={requests.utils.quote(category)}&region=spb'
+        },
+        {
+            'name': 'Stroi.ru (Строительный портал)',
+            'url': 'https://www.stroi.ru',
+            'search_url': f'https://www.stroi.ru/search?q={requests.utils.quote(category)}'
+        },
+        {
+            'name': 'Stroitelstvo.ru',
+            'url': 'https://www.stroitelstvo.ru',
+            'search_url': f'https://www.stroitelstvo.ru/search?q={requests.utils.quote(category)}'
+        }
+    ]
+    
+    for portal in portals:
+        try:
+            log.info(f"     [{portal['name']}] поиск...")
+            time.sleep(1)
+            res = requests.get(portal['search_url'], headers=HEADERS, timeout=10)
+            soup = BeautifulSoup(res.text, 'html.parser')
+            
+            # Общая логика для поиска компаний на порталах
+            # Адаптируется под структуру каждого портала
+            for item in soup.select('div.company-item, div.search-result, tr.search-row')[:5]:
+                try:
+                    name_elem = item.select_one('a.company-name, a.title, h3 a, h4 a')
+                    if name_elem:
+                        name = name_elem.get_text(strip=True)
+                        href = name_elem.get('href', '')
+                        if href and not href.startswith('http'):
+                            href = portal['url'] + href if href.startswith('/') else portal['url'] + '/' + href
+                        
+                        # Поиск email на странице компании
+                        if href:
+                            time.sleep(0.5)
+                            try:
+                                comp_res = requests.get(href, headers=HEADERS, timeout=10)
+                                comp_soup = BeautifulSoup(comp_res.text, 'html.parser')
+                                emails = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', comp_res.text)
+                                if emails:
+                                    companies.append({
+                                        'name': name,
+                                        'email': emails[0],
+                                        'website': href,
+                                        'source': portal['name']
+                                    })
+                                else:
+                                    companies.append({
+                                        'name': name,
+                                        'website': href,
+                                        'source': portal['name']
+                                    })
+                            except:
+                                companies.append({
+                                    'name': name,
+                                    'website': href,
+                                    'source': portal['name']
+                                })
+                except: pass
+        except Exception as e:
+            log.debug(f"Ошибка парсинга {portal['name']}: {e}")
+            continue
+    
+    log.info(f"     [{len(companies)}] компаний найдено на строительных порталах")
+    return companies
+
 # ══════════════════════════════════════════════════════
 #  ПАРСИНГ EMAIL СО САЙТА
 # ══════════════════════════════════════════════════════
@@ -673,12 +748,16 @@ def main():
         o_res = scrape_orgpage(category)
         candidates.extend(o_res)
         
+        # Добавляем парсинг строительных порталов
+        cp_res = scrape_construction_portals(category)
+        candidates.extend(cp_res)
+        
         g_res = []
         if len(candidates) == 0:
             g_res = search_gemini_leads(category, location)
             candidates.extend(g_res)
         
-        log.info(f"   Результаты сборов: Web({len(w_res)}), DDG({len(d_res)}), Zoon({len(z_res)}), Org({len(o_res)}), Gemini({len(g_res)})")
+        log.info(f"   Результаты сборов: Web({len(w_res)}), DDG({len(d_res)}), Zoon({len(z_res)}), Org({len(o_res)}), Portals({len(cp_res)}), Gemini({len(g_res)})")
 
         # Уникализация по имени
         unique = {}
