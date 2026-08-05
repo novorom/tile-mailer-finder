@@ -1204,6 +1204,78 @@ def scrape_finishers_database(category):
     log.info(f"     [{len(companies)}] компаний найдено в базах мастеров-отделочников")
     return companies
 
+def scrape_stroyradar_similar(category):
+    """Парсинг Стройрадара и похожих источников"""
+    companies = []
+    
+    # Список Стройрадара и похожих источников
+    databases = [
+        {
+            'name': 'Stroyradar.ru (Стройрадар)',
+            'url': 'https://www.stroyradar.ru',
+            'search_url': f'https://www.stroyradar.ru/companies/?q={requests.utils.quote(category)}&region=spb'
+        },
+        {
+            'name': 'Stroyinfo.ru (Стройинфо)',
+            'url': 'https://www.stroyinfo.ru',
+            'search_url': f'https://www.stroyinfo.ru/companies/?q={requests.utils.quote(category)}&region=spb'
+        },
+        {
+            'name': 'Stroybase.ru (Стройбаза)',
+            'url': 'https://www.stroybase.ru',
+            'search_url': f'https://www.stroybase.ru/firms/?q={requests.utils.quote(category)}&region=78'
+        }
+    ]
+    
+    for database in databases:
+        try:
+            log.info(f"     [{database['name']}] поиск...")
+            time.sleep(1)
+            res = requests.get(database['search_url'], headers=HEADERS, timeout=10)
+            soup = BeautifulSoup(res.text, 'html.parser')
+            
+            for item in soup.select('div.company-card, div.firm-item, tr.company-row')[:5]:
+                try:
+                    name_elem = item.select_one('a.company-name, a.firm-title, h3 a, h4 a')
+                    if name_elem:
+                        name = name_elem.get_text(strip=True)
+                        href = name_elem.get('href', '')
+                        if href and not href.startswith('http'):
+                            href = database['url'] + href if href.startswith('/') else database['url'] + '/' + href
+                        
+                        if href:
+                            time.sleep(0.5)
+                            try:
+                                comp_res = requests.get(href, headers=HEADERS, timeout=10)
+                                comp_soup = BeautifulSoup(comp_res.text, 'html.parser')
+                                emails = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', comp_soup.text)
+                                if emails:
+                                    companies.append({
+                                        'name': name,
+                                        'email': emails[0],
+                                        'website': href,
+                                        'source': database['name']
+                                    })
+                                else:
+                                    companies.append({
+                                        'name': name,
+                                        'website': href,
+                                        'source': database['name']
+                                    })
+                            except:
+                                companies.append({
+                                    'name': name,
+                                    'website': href,
+                                    'source': database['name']
+                                })
+                except: pass
+        except Exception as e:
+            log.debug(f"Ошибка парсинга {database['name']}: {e}")
+            continue
+    
+    log.info(f"     [{len(companies)}] компаний найдено на Стройрадаре и похожих")
+    return companies
+
 # ══════════════════════════════════════════════════════
 #  ПАРСИНГ EMAIL СО САЙТА
 # ══════════════════════════════════════════════════════
@@ -1493,12 +1565,16 @@ def main():
         fin_res = scrape_finishers_database(category)
         candidates.extend(fin_res)
         
+        # Добавляем парсинг Стройрадара и похожих
+        rad_res = scrape_stroyradar_similar(category)
+        candidates.extend(rad_res)
+        
         g_res = []
         if len(candidates) == 0:
             g_res = search_gemini_leads(category, location)
             candidates.extend(g_res)
         
-        log.info(f"   Результаты сборов: Web({len(w_res)}), DDG({len(d_res)}), Zoon({len(z_res)}), Org({len(o_res)}), Portals({len(cp_res)}), Builders({len(bd_res)}), Developers({len(dev_res)}), SRO({len(sro_res)}), Suppliers({len(sup_res)}), Design({len(des_res)}), Repair({len(rep_res)}), Objects({len(obj_res)}), Contractors({len(ctr_res)}), Finishers({len(fin_res)}), Gemini({len(g_res)})")
+        log.info(f"   Результаты сборов: Web({len(w_res)}), DDG({len(d_res)}), Zoon({len(z_res)}), Org({len(o_res)}), Portals({len(cp_res)}), Builders({len(bd_res)}), Developers({len(dev_res)}), SRO({len(sro_res)}), Suppliers({len(sup_res)}), Design({len(des_res)}), Repair({len(rep_res)}), Objects({len(obj_res)}), Contractors({len(ctr_res)}), Finishers({len(fin_res)}), Radar({len(rad_res)}), Gemini({len(g_res)})")
 
         # Уникализация по имени
         unique = {}
