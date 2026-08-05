@@ -86,13 +86,59 @@ SEARCH_CATEGORIES = [
 ]
 
 LOCATIONS = [
+    # Санкт-Петербург и область
     'Санкт-Петербург', 
     'Ленинградская область', 
     'Мурино', 
     'Кудрово', 
     'Всеволожск', 
     'Гатчина', 
-    'Выборг'
+    'Выборг',
+    'Сосновый Бор',
+    'Тихвин',
+    'Луга',
+    
+    # Новгородская область
+    'Великий Новгород',
+    'Новгородская область',
+    
+    # Псковская область
+    'Псков',
+    'Псковская область',
+    
+    # Тверская область
+    'Тверь',
+    'Тверская область',
+    
+    # Карелия
+    'Петрозаводск',
+    'Республика Карелия',
+    
+    # Мурманская область
+    'Мурманск',
+    'Мурманская область',
+    
+    # Архангельская область
+    'Архангельск',
+    'Архангельская область',
+    
+    # Калининградская область
+    'Калининград',
+    'Калининградская область',
+    'Советск',
+    'Черняховск',
+    'Балтийск',
+    'Светлогорск',
+    'Гурьевск',
+    'Зеленоградск',
+    
+    # Вологодская область
+    'Вологда',
+    'Вологодская область',
+    
+    # Коми
+    'Сыктывкар',
+    'Республика Коми'
 ]
 
 # ══════════════════════════════════════════════════════
@@ -464,9 +510,48 @@ def extract_emails_from_url(url):
                     found.add(cleaned.strip().lower())
 
             soup = BeautifulSoup(text, 'html.parser')
+            
+            # Поиск в mailto ссылках
             for a in soup.find_all('a', href=re.compile(r'^mailto:', re.I)):
                 e = a['href'].replace('mailto:', '').split('?')[0].strip().lower()
                 if '@' in e: found.add(e)
+            
+            # Поиск в data-email атрибутах
+            for elem in soup.find_all(attrs={'data-email': True}):
+                e = elem['data-email'].strip().lower()
+                if '@' in e: found.add(e)
+            
+            # Поиск в data-* атрибутах с email
+            for elem in soup.find_all(True):
+                for attr, value in elem.attrs.items():
+                    if attr.startswith('data-') and isinstance(value, str):
+                        if '@' in value and '.' in value.split('@')[-1]:
+                            emails = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', value)
+                            found.update(e.lower() for e in emails)
+            
+            # Поиск в мета-тегах
+            for meta in soup.find_all('meta'):
+                for attr in ['content', 'name', 'property']:
+                    if meta.get(attr):
+                        emails = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', meta[attr])
+                        found.update(e.lower() for e in emails)
+            
+            # Поиск в JSON-LD структурированных данных
+            for script in soup.find_all('script', type='application/ld+json'):
+                try:
+                    import json
+                    data = json.loads(script.string)
+                    json_str = json.dumps(data).lower()
+                    emails = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', json_str)
+                    found.update(e.lower() for e in emails)
+                except: pass
+            
+            # Поиск в JavaScript коде
+            for script in soup.find_all('script'):
+                if script.string:
+                    emails = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', script.string)
+                    found.update(e.lower() for e in emails)
+            
             return found, soup
         except: return set(), None
 
@@ -484,12 +569,12 @@ def extract_emails_from_url(url):
         contact_links = []
         for a in soup.find_all('a', href=True):
             h, t = a['href'].lower(), a.get_text().lower()
-            if any(k in h or k in t for k in ['contact', 'контакт', 'about', 'о-нас', 'о компании', 'feedback', 'обратная']):
+            if any(k in h or k in t for k in ['contact', 'контакт', 'about', 'о-нас', 'о компании', 'feedback', 'обратная', 'связь', 'контакты']):
                 full = h if h.startswith('http') else urljoin(url, h)
                 contact_links.append(full)
         
         # Стандартные пути напрямую (на случай JS-генерации)
-        for path in ['/contacts', '/contact', '/about', '/contacts/', '/about/']:
+        for path in ['/contacts', '/contact', '/about', '/contacts/', '/about/', '/kontakty', '/kontakt', '/o-nas', '/o-kompanii', '/feedback', '/obratnaya-svyaz', '/svyaz', '/kontakty/', '/kontakt/', '/o-nas/', '/o-kompanii/', '/feedback/', '/obratnaya-svyaz/', '/svyaz/']:
             contact_links.append(urljoin(base_url, path))
             
         seen_links = set()
@@ -499,7 +584,7 @@ def extract_emails_from_url(url):
                 seen_links.add(link)
                 unique_contact_links.append(link)
                 
-        for link in unique_contact_links[:5]:
+        for link in unique_contact_links[:10]:  # Увеличили с 5 до 10
             extra_emails, extra_soup = find(link)
             if extra_emails:
                 emails.update(extra_emails)
