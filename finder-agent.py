@@ -194,8 +194,8 @@ def add_company_to_sheet(sheet, email, local_existing_emails):
         if email in local_existing_emails:
             return False
 
-        # Добавляем email в столбец A (первая колонка)
-        retry_gspread_call(sheet.append_row, [email, '', ''])
+        # Добавляем email в столбец A с активным статусом в столбце B
+        retry_gspread_call(sheet.append_row, [email, 'active', ''])
         local_existing_emails.add(email)
         log.info(f'✓ Добавлено: {email}')
         return True
