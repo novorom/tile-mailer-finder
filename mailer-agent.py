@@ -290,6 +290,39 @@ def delete_dead_rows(sheet):
         time.sleep(0.3)
     return len(dead)
 
+def delete_rows_without_status(sheet):
+    """Удаляет строки без статуса (пустой столбец B) - те, что не отправляются"""
+    all_rows = retry_gspread_call(sheet.get_all_values)
+    if not all_rows:
+        return 0
+    to_delete = []
+    for i, row in enumerate(all_rows, start=1):
+        if not row or not row[0].strip():
+            continue
+        email = row[0].strip().lower()
+        if email == 'email':
+            continue
+        # Если столбец B (статус) пустой - удаляем
+        status_val = row[1].strip().lower() if len(row) > 1 else ''
+        if not status_val:
+            to_delete.append(i)
+    
+    for row_num in sorted(to_delete, reverse=True):
+        retry_gspread_call(sheet.delete_rows, row_num)
+        time.sleep(0.3)
+    return len(to_delete)
+
+def reset_old_month_status(sheet, records, old_month):
+    """Сбрасывает статус для указанного месяца (например, 2026-07)"""
+    log.info(f'Сброс статуса для месяца {old_month}...')
+    updates = []
+    for email, meta in records.items():
+        if meta['sent'] == old_month:
+            updates.append({'range': f'C{meta["row"]}', 'values': [['']]})
+    if updates:
+        retry_gspread_call(sheet.batch_update, updates)
+    log.info(f'Сброшено статусов {old_month}: {len(updates)}')
+
 # ══════════════════════════════════════════════════════
 #  ОТПРАВКА
 # ══════════════════════════════════════════════════════
@@ -394,6 +427,30 @@ def main():
             log.info(f'Тест-отправка на: {test_email}')
             status, detail = send_one_email(test_email)
             log.info('✅ Тест отправлен!' if status == 'ok' else f'❌ Ошибка: {detail}')
+        return
+    
+    # Ручные операции для очистки таблицы
+    if '--delete-no-status' in sys.argv:
+        log.info('═══════════════════════════════════════════')
+        log.info(' Удаление строк без статуса')
+        log.info('═══════════════════════════════════════════')
+        sheet = get_sheet()
+        if sheet:
+            deleted = delete_rows_without_status(sheet)
+            log.info(f'Удалено строк без статуса: {deleted}')
+        return
+    
+    if '--reset-month' in sys.argv:
+        idx = sys.argv.index('--reset-month')
+        month = sys.argv[idx + 1] if idx + 1 < len(sys.argv) else None
+        if month:
+            log.info('═══════════════════════════════════════════')
+            log.info(f' Сброс статуса для месяца {month}')
+            log.info('═══════════════════════════════════════════')
+            sheet = get_sheet()
+            if sheet:
+                records, _ = load_all_records(sheet)
+                reset_old_month_status(sheet, records, month)
         return
 
     log.info('═══════════════════════════════════════════')
