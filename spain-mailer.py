@@ -121,7 +121,8 @@ EMAIL_BODY_HTML = """\
     Sales Manager — 20+ years B2B Export Sales<br><br>
     📞 <a href="tel:+79052050900" style="color:#e87722">+7 (905) 205-09-00</a><br>
     📧 <a href="mailto:novorom@mail.ru" style="color:#e87722">novorom@mail.ru</a><br>
-    📍 Benicàssim, Spain (available immediately)
+    � <a href="https://www.linkedin.com/in/roman-novozhilov-b956b780/" style="color:#e87722">LinkedIn Profile</a><br>
+    � Benicàssim, Spain (available immediately)
   </div>
 
   <hr style="margin:32px 0;border:0;border-top:1px solid #ddd">
@@ -165,6 +166,7 @@ EMAIL_BODY_HTML = """\
     Jefe de Ventas — 20+ años Ventas B2B Exportación<br><br>
     📞 <a href="tel:+79052050900" style="color:#e87722">+7 (905) 205-09-00</a><br>
     📧 <a href="mailto:novorom@mail.ru" style="color:#e87722">novorom@mail.ru</a><br>
+    🔗 <a href="https://www.linkedin.com/in/roman-novozhilov-b956b780/" style="color:#e87722">Perfil LinkedIn</a><br>
     📍 Benicàssim, España (disponible inmediatamente)
   </div>
 
@@ -207,6 +209,7 @@ Roman Novozhilov
 Sales Manager — 20+ years B2B Export Sales
 +7 (905) 205-09-00
 novorom@mail.ru
+LinkedIn: https://www.linkedin.com/in/roman-novozhilov-b956b780/
 Benicàssim, Spain (available immediately)
 
 — Versión en español / Spanish version below —
@@ -241,6 +244,7 @@ Roman Novozhilov
 Jefe de Ventas — 20+ años Ventas B2B Exportación
 +7 (905) 205-09-00
 novorom@mail.ru
+LinkedIn: https://www.linkedin.com/in/roman-novozhilov-b956b780/
 Benicàssim, España (disponible inmediatamente)
 
 If you are not interested in receiving job applications, please reply "Remove".
