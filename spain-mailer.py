@@ -98,7 +98,7 @@ EMAIL_BODY_HTML = """\
       <li><strong>Conocimiento profundo de los mercados de Rusia/CIS</strong> — valioso para su expansión de exportación</li>
       <li><strong>Red extensa</strong> en los sectores de construcción, distribución y retail</li>
       <li><strong>Historial comprobado en ventas de exportación</strong> y desarrollo de negocios internacionales</li>
-      <li><strong>Experto en IA y automatización</strong> — construí pipelines automatizados en GitHub Actions, usando Claude, Windsurf, Devin para productividad. <strong>Desarrollé este bot de búsqueda de empleo</strong> que identifica empleadores potenciales y automatiza el contacto, demostrando proactividad y aptitud técnica</li>
+      <li><strong>Experto en IA y automatización</strong> — construí pipelines automatizados en GitHub Actions, usando Claude, Windsurf, Devin para productividad. <strong>Desarrollé este bot de búsqueda de empleo con ayuda de IA (Cascade/Claude)</strong> que vive en GitHub y se ejecuta automáticamente mediante GitHub Actions, identificando empleadores potenciales y automatizando el contacto, demostrando proactividad y aptitud técnica</li>
       <li><strong>Experiencia en e-commerce</strong> — gestiono mis propias tiendas online (plitki-spb.ru, cersanit-spb.ru) con base de datos de 3,000+ contactos</li>
       <li><strong>Experiencia entrenando equipos de ventas</strong> y gestión de ferias comerciales</li>
       <li><strong>Fluido en ruso e inglés</strong> (C1), español básico</li>
@@ -146,7 +146,7 @@ EMAIL_BODY_HTML = """\
       <li><strong>Deep knowledge of Russian/CIS markets</strong> — valuable for your export expansion</li>
       <li><strong>Extensive network</strong> in construction, distribution, and retail sectors</li>
       <li><strong>Proven export sales track record</strong> and international business development</li>
-      <li><strong>AI & automation expertise</strong> — built automated pipelines on GitHub Actions, using Claude, Windsurf, Devin for productivity. <strong>Developed this job search bot</strong> that identifies potential employers and automates outreach, demonstrating proactivity and technical aptitude</li>
+      <li><strong>AI & automation expertise</strong> — built automated pipelines on GitHub Actions, using Claude, Windsurf, Devin for productivity. <strong>Developed this job search bot with AI assistance (Cascade/Claude)</strong> that lives in GitHub and runs automatically via GitHub Actions, identifying potential employers and automating outreach, demonstrating proactivity and technical aptitude</li>
       <li><strong>E-commerce experience</strong> — running own online stores (plitki-spb.ru, cersanit-spb.ru) with 3,000+ contact database</li>
       <li><strong>Sales team training</strong> and trade show management experience</li>
       <li><strong>Fluent in Russian and English</strong> (C1), basic Spanish</li>
@@ -197,7 +197,7 @@ Por qué puedo aportar valor a su empresa:
 - Conocimiento profundo de los mercados de Rusia/CIS — valioso para su expansión de exportación
 - Red extensa en los sectores de construcción, distribución y retail
 - Historial comprobado en ventas de exportación y desarrollo de negocios internacionales
-- Experto en IA y automatización — construí pipelines automatizados en GitHub Actions, usando Claude, Windsurf, Devin para productividad. Desarrollé este bot de búsqueda de empleo que identifica empleadores potenciales y automatiza el contacto, demostrando proactividad y aptitud técnica
+- Experto en IA y automatización — construí pipelines automatizados en GitHub Actions, usando Claude, Windsurf, Devin para productividad. Desarrollé este bot de búsqueda de empleo con ayuda de IA (Cascade/Claude) que vive en GitHub y se ejecuta automáticamente mediante GitHub Actions, identificando empleadores potenciales y automatiza el contacto, demostrando proactividad y aptitud técnica
 - Experiencia en e-commerce — gestiono mis propias tiendas online (plitki-spb.ru, cersanit-spb.ru) con base de datos de 3,000+ contactos
 - Experiencia entrenando equipos de ventas y gestión de ferias comerciales
 - Fluido en ruso e inglés (C1), español básico
@@ -235,7 +235,7 @@ Why I Can Add Value to Your Company:
 - Deep knowledge of Russian/CIS markets — valuable for your export expansion
 - Extensive network in construction, distribution, and retail sectors
 - Proven export sales track record and international business development
-- AI & automation expertise — built automated pipelines on GitHub Actions, using Claude, Windsurf, Devin for productivity. Developed this job search bot that identifies potential employers and automates outreach, demonstrating proactivity and technical aptitude
+- AI & automation expertise — built automated pipelines on GitHub Actions, using Claude, Windsurf, Devin for productivity. Developed this job search bot with AI assistance (Cascade/Claude) that lives in GitHub and runs automatically via GitHub Actions, identifying potential employers and automating outreach, demonstrating proactivity and technical aptitude
 - E-commerce experience — running own online stores (plitki-spb.ru, cersanit-spb.ru) with 3,000+ contact database
 - Sales team training and trade show management experience
 - Fluent in Russian and English (C1), basic Spanish
