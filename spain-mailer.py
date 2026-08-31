@@ -47,7 +47,7 @@ SENDER_EMAIL = 'pasechnick616@gmail.com'
 SENDER_NAME  = 'Roman Novozhilov — Ceramic Industry Professional'
 REPLY_TO     = 'novorom@mail.ru'
 
-SHEET_ID   = os.environ.get('SHEET_ID', '')
+SHEET_ID   = os.environ.get('SPAIN_SHEET_ID', '')
 CREDS_JSON = os.environ.get('GOOGLE_CREDS', '')
 
 SEND_HOUR_FROM = 9

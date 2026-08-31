@@ -34,7 +34,7 @@ log = logging.getLogger(__name__)
 #  КОНФИГУРАЦИЯ
 # ══════════════════════════════════════════════════════
 
-SHEET_ID = os.environ.get('SHEET_ID', '')
+SHEET_ID = os.environ.get('SPAIN_SHEET_ID', '')
 CREDS_JSON = os.environ.get('GOOGLE_CREDS', '')
 GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY', '')
 GOOGLE_CSE_ID = os.environ.get('GOOGLE_CSE_ID', '')

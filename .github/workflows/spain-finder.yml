@@ -18,7 +18,7 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Поиск emails в сфере керамики (Испания)
         env:
-          SHEET_ID: ${{ secrets.SHEET_ID }}
+          SPAIN_SHEET_ID: ${{ secrets.SPAIN_SHEET_ID }}
           GOOGLE_CREDS: ${{ secrets.GOOGLE_CREDS }}
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
           GOOGLE_CSE_ID: ${{ secrets.GOOGLE_CSE_ID }}

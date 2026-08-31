@@ -19,7 +19,7 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Рассылка резюме в Испанию
         env:
-          SHEET_ID: ${{ secrets.SHEET_ID }}
+          SPAIN_SHEET_ID: ${{ secrets.SPAIN_SHEET_ID }}
           GOOGLE_CREDS: ${{ secrets.GOOGLE_CREDS }}
           BREVO_USER: ${{ secrets.BREVO_USER_4 }}
           BREVO_PASS: ${{ secrets.BREVO_PASS_4 }}
