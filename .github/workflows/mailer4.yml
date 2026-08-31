@@ -21,8 +21,8 @@ jobs:
         env:
           SPAIN_SHEET_ID: ${{ secrets.SPAIN_SHEET_ID }}
           GOOGLE_CREDS: ${{ secrets.GOOGLE_CREDS }}
-          BREVO_USER: ${{ secrets.BREVO_USER_4 }}
-          BREVO_PASS: ${{ secrets.BREVO_PASS_4 }}
+          BREVO_USER: a8ba3d001@smtp-brevo.com
+          BREVO_PASS: ODwFGP
           MAILER_INDEX: 0
           TOTAL_MAILERS: 1
           SKIP_TIME_CHECK: true
