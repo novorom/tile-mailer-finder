@@ -93,13 +93,16 @@ EMAIL_BODY_HTML = """\
   <div style="background:#f5f5f5;padding:16px 20px;border-left:4px solid #e87722;margin:20px 0">
     <h3 style="margin:0 0 12px 0;color:#1a1a2e">Why I Can Add Value to Your Company:</h3>
     <ul style="margin:0;padding-left:20px">
-      <li><strong>20+ years in B2B wholesale sales</strong> with major Russian manufacturers</li>
+      <li><strong>20+ years in B2B wholesale sales</strong> with major Russian manufacturers (ceramic tiles, porcelain)</li>
+      <li><strong>Engineering degree in Electronic Systems</strong> — I understand the product, not just the sales pitch</li>
       <li><strong>Deep knowledge of Russian/CIS markets</strong> — valuable for your export expansion</li>
       <li><strong>Extensive network</strong> in construction, distribution, and retail sectors</li>
       <li><strong>Proven export sales track record</strong> and international business development</li>
-      <li><strong>Fluent in Russian and English</strong>, conversational Spanish</li>
+      <li><strong>AI & automation expertise</strong> — built automated pipelines on GitHub Actions, using Claude, Windsurf, Devin for productivity</li>
+      <li><strong>E-commerce experience</strong> — running own online stores (plitki-spb.ru, cersanit-spb.ru) with 3,000+ contact database</li>
+      <li><strong>Sales team training</strong> and trade show management experience</li>
+      <li><strong>Fluent in Russian and English</strong> (C1), conversational Spanish</li>
       <li><strong>Already living in Spain</strong> — no relocation needed, available immediately</li>
-      <li><strong>Technical automation skills</strong> — developed an AI-powered job search bot that identifies potential employers and automates outreach, demonstrating proactivity and technical aptitude</li>
     </ul>
   </div>
 
@@ -138,13 +141,16 @@ EMAIL_BODY_HTML = """\
   <div style="background:#f5f5f5;padding:16px 20px;border-left:4px solid #e87722;margin:20px 0">
     <h3 style="margin:0 0 12px 0;color:#1a1a2e">Por qué puedo aportar valor a su empresa:</h3>
     <ul style="margin:0;padding-left:20px">
-      <li><strong>20+ años en ventas mayoristas B2B</strong> con importantes fabricantes rusos</li>
+      <li><strong>20+ años en ventas mayoristas B2B</strong> con importantes fabricantes rusos (azulejos cerámicos, porcelánico)</li>
+      <li><strong>Título de ingeniero en Sistemas Electrónicos</strong> — entiendo el producto, no solo el discurso de ventas</li>
       <li><strong>Conocimiento profundo de los mercados de Rusia/CIS</strong> — valioso para su expansión de exportación</li>
       <li><strong>Red extensa</strong> en los sectores de construcción, distribución y retail</li>
       <li><strong>Historial comprobado en ventas de exportación</strong> y desarrollo de negocios internacionales</li>
-      <li><strong>Fluido en ruso e inglés</strong>, español conversacional</li>
+      <li><strong>Experto en IA y automatización</strong> — construí pipelines automatizados en GitHub Actions, usando Claude, Windsurf, Devin para productividad</li>
+      <li><strong>Experiencia en e-commerce</strong> — gestiono mis propias tiendas online (plitki-spb.ru, cersanit-spb.ru) con base de datos de 3,000+ contactos</li>
+      <li><strong>Experiencia entrenando equipos de ventas</strong> y gestión de ferias comerciales</li>
+      <li><strong>Fluido en ruso e inglés</strong> (C1), español conversacional</li>
       <li><strong>Ya vivo en España</strong> — no necesita reubicación, disponible inmediatamente</li>
-      <li><strong>Habilidades técnicas de automatización</strong> — desarrollé un bot de búsqueda de empleo con IA que identifica empleadores potenciales y automatiza el contacto, demostrando proactividad y aptitud técnica</li>
     </ul>
   </div>
 
@@ -186,13 +192,16 @@ I am writing to apply for Sales Manager, Export Sales Manager, or Commercial Dir
 With 20+ years of proven B2B wholesale sales and export experience, I am currently residing in Benicàssim, Spain, and ready to contribute to your company's international growth immediately.
 
 Why I Can Add Value to Your Company:
-- 20+ years in B2B wholesale sales with major Russian manufacturers
+- 20+ years in B2B wholesale sales with major Russian manufacturers (ceramic tiles, porcelain)
+- Engineering degree in Electronic Systems — I understand the product, not just the sales pitch
 - Deep knowledge of Russian/CIS markets — valuable for your export expansion
 - Extensive network in construction, distribution, and retail sectors
 - Proven export sales track record and international business development
-- Fluent in Russian and English, conversational Spanish
+- AI & automation expertise — built automated pipelines on GitHub Actions, using Claude, Windsurf, Devin for productivity
+- E-commerce experience — running own online stores (plitki-spb.ru, cersanit-spb.ru) with 3,000+ contact database
+- Sales team training and trade show management experience
+- Fluent in Russian and English (C1), conversational Spanish
 - Already living in Spain — no relocation needed, available immediately
-- Technical automation skills — developed an AI-powered job search bot that identifies potential employers and automates outreach, demonstrating proactivity and technical aptitude
 
 I am particularly interested in export-oriented companies in:
 - Ceramic tiles and construction materials
@@ -221,13 +230,16 @@ Me dirijo a usted para solicitar el puesto de Jefe de Ventas, Jefe de Exportacio
 Con más de 20 años de experiencia probada en ventas mayoristas B2B y exportación, actualmente resido en Benicàssim, España, y estoy listo para contribuir al crecimiento internacional de su empresa de inmediato.
 
 Por qué puedo aportar valor a su empresa:
-- 20+ años en ventas mayoristas B2B con importantes fabricantes rusos
+- 20+ años en ventas mayoristas B2B con importantes fabricantes rusos (azulejos cerámicos, porcelánico)
+- Título de ingeniero en Sistemas Electrónicos — entiendo el producto, no solo el discurso de ventas
 - Conocimiento profundo de los mercados de Rusia/CIS — valioso para su expansión de exportación
 - Red extensa en los sectores de construcción, distribución y retail
 - Historial comprobado en ventas de exportación y desarrollo de negocios internacionales
-- Fluido en ruso e inglés, español conversacional
+- Experto en IA y automatización — construí pipelines automatizados en GitHub Actions, usando Claude, Windsurf, Devin para productividad
+- Experiencia en e-commerce — gestiono mis propias tiendas online (plitki-spb.ru, cersanit-spb.ru) con base de datos de 3,000+ contactos
+- Experiencia entrenando equipos de ventas y gestión de ferias comerciales
+- Fluido en ruso e inglés (C1), español conversacional
 - Ya vivo en España — no necesita reubicación, disponible inmediatamente
-- Habilidades técnicas de automatización — desarrollé un bot de búsqueda de empleo con IA que identifica empleadores potenciales y automatiza el contacto, demostrando proactividad y aptitud técnica
 
 Estoy particularmente interesado en empresas orientadas a la exportación en:
 - Azulejos cerámicos y materiales de construcción
