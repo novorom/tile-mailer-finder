@@ -76,7 +76,7 @@ def is_send_window() -> bool:
 #  ПИСЬМО С РЕЗЮМЕ
 # ══════════════════════════════════════════════════════
 
-EMAIL_SUBJECT = "Job Application: Sales Manager / Export Manager — Roman Novozhilov (CV attached)"
+EMAIL_SUBJECT = "Solicitud de empleo: Jefe de Ventas / Exportaciones — Roman Novozhilov (CV adjunto)"
 
 EMAIL_BODY_HTML = """\
 <!DOCTYPE html>
@@ -99,6 +99,7 @@ EMAIL_BODY_HTML = """\
       <li><strong>Proven export sales track record</strong> and international business development</li>
       <li><strong>Fluent in Russian and English</strong>, conversational Spanish</li>
       <li><strong>Already living in Spain</strong> — no relocation needed, available immediately</li>
+      <li><strong>Technical automation skills</strong> — developed an AI-powered job search bot that identifies potential employers and automates outreach, demonstrating proactivity and technical aptitude</li>
     </ul>
   </div>
 
@@ -123,8 +124,52 @@ EMAIL_BODY_HTML = """\
     📍 Benicàssim, Spain (available immediately)
   </div>
 
+  <hr style="margin:32px 0;border:0;border-top:1px solid #ddd">
+
+  <p style="font-size:12px;color:#666;margin-bottom:8px">— Versión en español / Spanish version below —</p>
+
+  <p>Estimado/a Responsable de Selección de Personal,</p>
+
+  <p>Me dirijo a usted para solicitar el puesto de <strong>Jefe de Ventas</strong>, <strong>Jefe de Exportaciones</strong> o <strong>Director Comercial</strong> en su empresa.</p>
+
+  <p>Con <strong>más de 20 años de experiencia probada en ventas mayoristas B2B y exportación</strong>, actualmente resido en Benicàssim, España, y estoy listo para contribuir al crecimiento internacional de su empresa de inmediato.</p>
+
+  <div style="background:#f5f5f5;padding:16px 20px;border-left:4px solid #e87722;margin:20px 0">
+    <h3 style="margin:0 0 12px 0;color:#1a1a2e">Por qué puedo aportar valor a su empresa:</h3>
+    <ul style="margin:0;padding-left:20px">
+      <li><strong>20+ años en ventas mayoristas B2B</strong> con importantes fabricantes rusos</li>
+      <li><strong>Conocimiento profundo de los mercados de Rusia/CIS</strong> — valioso para su expansión de exportación</li>
+      <li><strong>Red extensa</strong> en los sectores de construcción, distribución y retail</li>
+      <li><strong>Historial comprobado en ventas de exportación</strong> y desarrollo de negocios internacionales</li>
+      <li><strong>Fluido en ruso e inglés</strong>, español conversacional</li>
+      <li><strong>Ya vivo en España</strong> — no necesita reubicación, disponible inmediatamente</li>
+      <li><strong>Habilidades técnicas de automatización</strong> — desarrollé un bot de búsqueda de empleo con IA que identifica empleadores potenciales y automatiza el contacto, demostrando proactividad y aptitud técnica</li>
+    </ul>
+  </div>
+
+  <p>Estoy particularmente interesado en empresas orientadas a la exportación en:</p>
+  <ul>
+    <li>Azulejos cerámicos y materiales de construcción</li>
+    <li>Alimentos y productos agrícolas (cítricos, frutas, vino)</li>
+    <li>Muebles, textiles y calzado</li>
+    <li>Repuestos automotrices y maquinaria industrial</li>
+    <li>Químicos, plásticos y productos metálicos</li>
+  </ul>
+
+  <p>Estoy disponible para una entrevista personal en su conveniencia y puedo comenzar de inmediato.</p>
+
+  <p>Adjunto mi CV detallado. Agradezco la oportunidad de discutir cómo mi experiencia puede beneficiar el crecimiento de exportación de su organización.</p>
+
+  <div style="background:#1a1a2e;color:#fff;padding:16px 20px;border-radius:8px;margin-top:24px">
+    <strong>Roman Novozhilov</strong><br>
+    Jefe de Ventas — 20+ años Ventas B2B Exportación<br><br>
+    📞 <a href="tel:+79052050900" style="color:#e87722">+7 (905) 205-09-00</a><br>
+    📧 <a href="mailto:novorom@mail.ru" style="color:#e87722">novorom@mail.ru</a><br>
+    📍 Benicàssim, España (disponible inmediatamente)
+  </div>
+
   <p style="font-size:11px;color:#aaa;margin-top:16px">
-    If you are not interested in receiving job applications, please reply "Remove".
+    Si no está interesado en recibir solicitudes de empleo, responda "Remove".
   </p>
 
 </body>
@@ -145,6 +190,7 @@ Why I Can Add Value to Your Company:
 - Proven export sales track record and international business development
 - Fluent in Russian and English, conversational Spanish
 - Already living in Spain — no relocation needed, available immediately
+- Technical automation skills — developed an AI-powered job search bot that identifies potential employers and automates outreach, demonstrating proactivity and technical aptitude
 
 I am particularly interested in export-oriented companies in:
 - Ceramic tiles and construction materials
@@ -162,6 +208,40 @@ Sales Manager — 20+ years B2B Export Sales
 +7 (905) 205-09-00
 novorom@mail.ru
 Benicàssim, Spain (available immediately)
+
+— Versión en español / Spanish version below —
+
+Estimado/a Responsable de Selección de Personal,
+
+Me dirijo a usted para solicitar el puesto de Jefe de Ventas, Jefe de Exportaciones o Director Comercial en su empresa.
+
+Con más de 20 años de experiencia probada en ventas mayoristas B2B y exportación, actualmente resido en Benicàssim, España, y estoy listo para contribuir al crecimiento internacional de su empresa de inmediato.
+
+Por qué puedo aportar valor a su empresa:
+- 20+ años en ventas mayoristas B2B con importantes fabricantes rusos
+- Conocimiento profundo de los mercados de Rusia/CIS — valioso para su expansión de exportación
+- Red extensa en los sectores de construcción, distribución y retail
+- Historial comprobado en ventas de exportación y desarrollo de negocios internacionales
+- Fluido en ruso e inglés, español conversacional
+- Ya vivo en España — no necesita reubicación, disponible inmediatamente
+- Habilidades técnicas de automatización — desarrollé un bot de búsqueda de empleo con IA que identifica empleadores potenciales y automatiza el contacto, demostrando proactividad y aptitud técnica
+
+Estoy particularmente interesado en empresas orientadas a la exportación en:
+- Azulejos cerámicos y materiales de construcción
+- Alimentos y productos agrícolas (cítricos, frutas, vino)
+- Muebles, textiles y calzado
+- Repuestos automotrices y maquinaria industrial
+- Químicos, plásticos y productos metálicos
+
+Estoy disponible para una entrevista personal en su conveniencia y puedo comenzar de inmediato.
+
+Adjunto mi CV detallado. Agradezco la oportunidad de discutir cómo mi experiencia puede beneficiar el crecimiento de exportación de su organización.
+
+Roman Novozhilov
+Jefe de Ventas — 20+ años Ventas B2B Exportación
++7 (905) 205-09-00
+novorom@mail.ru
+Benicàssim, España (disponible inmediatamente)
 
 If you are not interested in receiving job applications, please reply "Remove".
 """
