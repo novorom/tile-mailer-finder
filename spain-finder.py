@@ -46,36 +46,61 @@ HEADERS = {
     'Accept-Language': 'es-ES,es;q=0.9,en-US;q=0.8,en;q=0.7',
 }
 
-# Категории для керамической промышленности в Испании
+# Категории для керамической промышленности в Испании (Castellón - центр керамики)
 CERAMIC_CATEGORIES = [
-    # Производители керамической плитки
+    # Производители керамической плитки в Castellón
     'fabricantes azulejos cerámica Castellón',
     'fabricantes gres porcelánico Castellón',
-    'fabricantes baldosas cerámicas España',
+    'fabricantes baldosas cerámicas Castellón',
+    'fabricantes cerámica Castellón España',
+    'ceramic tile manufacturers Castellón Spain',
+    
+    # Производители в конкретных городах района Castellón
+    'fabricantes cerámica Nules',
+    'fabricantes cerámica Onda',
+    'fabricantes cerámica Alcora',
+    'fabricantes cerámica Villarreal',
+    'fabricantes cerámica Vila-real',
+    'fabricantes cerámica Sant Mateu',
+    'fabricantes cerámica L\'Alcora',
+    'fabricantes cerámica Ribesalbes',
+    'fabricantes cerámica Vilafranca',
+    'fabricantes cerámica Benicàssim',
+    
+    # Известные керамические бренды и фабрики
+    'ceramic tile factory Spain',
+    'porcelain stoneware manufacturers Spain',
+    'ceramic industry Castellón',
+    'azulejos fabricantes España',
+    'gres porcelánico fabricantes España',
     
     # Производители сырья для керамики
     'fabricantes arcillas cerámicas Castellón',
     'fabricantes esmaltes cerámicos Castellón',
     'fabricantes fritas cerámicas Castellón',
-    'fabricantes pigmentos cerámicos España',
-    'proveedores materias primas cerámica',
+    'fabricantes pigmentos cerámicos Castellón',
+    'proveedores materias primas cerámica Castellón',
     
     # Экспортеры керамики
     'exportadores azulejos cerámica España',
-    'exportadores gres porcelánico',
+    'exportadores gres porcelánico España',
     'ceramic tile export companies Spain',
+    'exportadores cerámica Castellón',
     
     # Оптовые торговцы керамикой
-    'distribuidores azulejos cerámica mayorista',
+    'distribuidores azulejos cerámica mayorista Castellón',
     'distribuidores gres porcelánico España',
+    'almacenes cerámica Castellón',
     
     # Оборудование для керамики
-    'fabricantes maquinaria cerámica',
-    'hornos cerámicos industriales',
+    'fabricantes maquinaria cerámica Castellón',
+    'hornos cerámicos industriales Castellón',
+    'maquinaria cerámica España',
     
     # Дизайн и инновации в керамике
-    'laboratorios investigación cerámica',
-    'diseño cerámico innovación',
+    'laboratorios investigación cerámica Castellón',
+    'diseño cerámico innovación España',
+    'instituto tecnología cerámica',
 ]
 
 # Категории для других экспортных отраслей в регионе Валенсии
