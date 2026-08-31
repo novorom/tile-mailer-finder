@@ -328,7 +328,7 @@ def search_gemini_leads(category, location, num=40):
     log.info(f"     [Gemini AI] генерация: {category} {location}...")
     try:
         genai.configure(api_key=GEMINI_API_KEY)
-        models_to_try = ['gemini-1.5-flash', 'gemini-1.5-pro']
+        models_to_try = ['gemini-1.5-flash']
         model = None
         for m_name in models_to_try:
             try:
@@ -617,6 +617,10 @@ def main():
     total = 0
     processed_domains = set()
     
+    # Добавляем статический список компаний один раз за запуск
+    static_companies = get_static_ceramic_companies()
+    log.info(f'Статических компаний: {len(static_companies)}')
+    
     # Объединяем все категории
     all_categories = CERAMIC_CATEGORIES + EXPORT_CATEGORIES
     
@@ -659,11 +663,11 @@ def main():
             g_res = search_gemini_leads(category, location)
             candidates.extend(g_res)
             
-            # Статический список известных керамических фабрик (fallback если API не работают)
-            static_res = get_static_ceramic_companies()
-            candidates.extend(static_res)
+            # Статический список добавляем только для первой категории и первой локации
+            if category == all_categories[0] and location == LOCATIONS[0]:
+                candidates.extend(static_companies)
             
-            log.info(f"   Результаты: Web({len(w_res)}), Web2({len(w_res2)}), DDG({len(d_res)}), DDG2({len(d_res2)}), ASCER({len(ascer_res)}), ToS({len(tos_res)}), Cevisama({len(cev_res)}), Gemini({len(g_res)}), Static({len(static_res)})")
+            log.info(f"   Результаты: Web({len(w_res)}), Web2({len(w_res2)}), DDG({len(d_res)}), DDG2({len(d_res2)}), ASCER({len(ascer_res)}), ToS({len(tos_res)}), Cevisama({len(cev_res)}), Gemini({len(g_res)}), Static({len(static_companies) if category == all_categories[0] and location == LOCATIONS[0] else 0})")
             
             # Уникализация
             unique = {}
