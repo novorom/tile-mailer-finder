@@ -261,7 +261,7 @@ def send_email(to_email):
         msg.attach(html_part)
 
         # Прикрепляем резюме (если файл есть)
-        cv_path = '/Users/r/Downloads/ROMAN NOVOZHILOV.docx'
+        cv_path = os.path.join(os.path.dirname(__file__), 'ROMAN NOVOZHILOV.docx')
         if os.path.exists(cv_path):
             with open(cv_path, 'rb') as f:
                 part = MIMEBase('application', 'octet-stream')
