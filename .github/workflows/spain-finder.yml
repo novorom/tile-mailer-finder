@@ -1,0 +1,27 @@
+name: Spain Ceramic Job Finder
+
+on:
+  schedule:
+    - cron: '0 3 * * *'  # Каждый день в 3:00 МСК (ночью)
+  workflow_dispatch:
+
+jobs:
+  finder:
+    runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r requirements.txt
+      - name: Поиск emails в сфере керамики (Испания)
+        env:
+          SHEET_ID: ${{ secrets.SHEET_ID }}
+          GOOGLE_CREDS: ${{ secrets.GOOGLE_CREDS }}
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          GOOGLE_CSE_ID: ${{ secrets.GOOGLE_CSE_ID }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          HUNTER_API_KEY: ${{ secrets.HUNTER_API_KEY }}
+        run: python spain-finder.py
