@@ -88,7 +88,7 @@ EMAIL_BODY_HTML = """\
 
   <p>Me dirijo a usted para solicitar el puesto de <strong>Jefe de Ventas</strong>, <strong>Jefe de Exportaciones</strong> o <strong>Director Comercial</strong> en su empresa.</p>
 
-  <p>Con <strong>más de 20 años de experiencia probada en ventas mayoristas B2B y exportación</strong>, actualmente resido en Benicàssim, España, y estoy listo para contribuir al crecimiento internacional de su empresa de inmediato.</p>
+  <p>Con <strong>más de 20 años de experiencia probada en ventas mayoristas B2B y exportación</strong>, actualmente resido en Benicàssim, España desde hace 4 años, y estoy listo para contribuir al crecimiento internacional de su empresa de inmediato.</p>
 
   <div style="background:#f5f5f5;padding:16px 20px;border-left:4px solid #e87722;margin:20px 0">
     <h3 style="margin:0 0 12px 0;color:#1a1a2e">Por qué puedo aportar valor a su empresa:</h3>
@@ -102,7 +102,7 @@ EMAIL_BODY_HTML = """\
       <li><strong>Experiencia en e-commerce</strong> — gestiono mis propias tiendas online (plitki-spb.ru, cersanit-spb.ru) con base de datos de 3,000+ contactos</li>
       <li><strong>Experiencia entrenando equipos de ventas</strong> y gestión de ferias comerciales</li>
       <li><strong>Fluido en ruso e inglés</strong> (C1), español básico</li>
-      <li><strong>Ya vivo en España</strong> — no necesita reubicación, disponible inmediatamente</li>
+      <li><strong>Ya vivo en España desde hace 4 años</strong> — no necesita reubicación, disponible inmediatamente</li>
     </ul>
   </div>
 
@@ -136,7 +136,7 @@ EMAIL_BODY_HTML = """\
 
   <p>I am writing to apply for <strong>Sales Manager</strong>, <strong>Export Sales Manager</strong>, or <strong>Commercial Director</strong> positions at your company.</p>
 
-  <p>With <strong>20+ years of proven B2B wholesale sales and export experience</strong>, I am currently residing in Benicàssim, Spain, and ready to contribute to your company's international growth immediately.</p>
+  <p>With <strong>20+ years of proven B2B wholesale sales and export experience</strong>, I have been residing in Benicàssim, Spain for 4 years, and ready to contribute to your company's international growth immediately.</p>
 
   <div style="background:#f5f5f5;padding:16px 20px;border-left:4px solid #e87722;margin:20px 0">
     <h3 style="margin:0 0 12px 0;color:#1a1a2e">Why I Can Add Value to Your Company:</h3>
@@ -150,7 +150,7 @@ EMAIL_BODY_HTML = """\
       <li><strong>E-commerce experience</strong> — running own online stores (plitki-spb.ru, cersanit-spb.ru) with 3,000+ contact database</li>
       <li><strong>Sales team training</strong> and trade show management experience</li>
       <li><strong>Fluent in Russian and English</strong> (C1), basic Spanish</li>
-      <li><strong>Already living in Spain</strong> — no relocation needed, available immediately</li>
+      <li><strong>Already living in Spain for 4 years</strong> — no relocation needed, available immediately</li>
     </ul>
   </div>
 
@@ -189,7 +189,7 @@ Estimado/a Responsable de Selección de Personal,
 
 Me dirijo a usted para solicitar el puesto de Jefe de Ventas, Jefe de Exportaciones o Director Comercial en su empresa.
 
-Con más de 20 años de experiencia probada en ventas mayoristas B2B y exportación, actualmente resido en Benicàssim, España, y estoy listo para contribuir al crecimiento internacional de su empresa de inmediato.
+Con más de 20 años de experiencia probada en ventas mayoristas B2B y exportación, actualmente resido en Benicàssim, España desde hace 4 años, y estoy listo para contribuir al crecimiento internacional de su empresa de inmediato.
 
 Por qué puedo aportar valor a su empresa:
 - 20+ años en ventas mayoristas B2B con importantes fabricantes rusos (azulejos cerámicos, porcelánico)
@@ -201,7 +201,7 @@ Por qué puedo aportar valor a su empresa:
 - Experiencia en e-commerce — gestiono mis propias tiendas online (plitki-spb.ru, cersanit-spb.ru) con base de datos de 3,000+ contactos
 - Experiencia entrenando equipos de ventas y gestión de ferias comerciales
 - Fluido en ruso e inglés (C1), español básico
-- Ya vivo en España — no necesita reubicación, disponible inmediatamente
+- Ya vivo en España desde hace 4 años — no necesita reubicación, disponible inmediatamente
 
 Estoy particularmente interesado en empresas orientadas a la exportación en:
 - Azulejos cerámicos y materiales de construcción
@@ -227,7 +227,7 @@ Dear Hiring Manager,
 
 I am writing to apply for Sales Manager, Export Sales Manager, or Commercial Director positions at your company.
 
-With 20+ years of proven B2B wholesale sales and export experience, I am currently residing in Benicàssim, Spain, and ready to contribute to your company's international growth immediately.
+With 20+ years of proven B2B wholesale sales and export experience, I have been residing in Benicàssim, Spain for 4 years, and ready to contribute to your company's international growth immediately.
 
 Why I Can Add Value to Your Company:
 - 20+ years in B2B wholesale sales with major Russian manufacturers (ceramic tiles, porcelain)
@@ -239,7 +239,7 @@ Why I Can Add Value to Your Company:
 - E-commerce experience — running own online stores (plitki-spb.ru, cersanit-spb.ru) with 3,000+ contact database
 - Sales team training and trade show management experience
 - Fluent in Russian and English (C1), basic Spanish
-- Already living in Spain — no relocation needed, available immediately
+- Already living in Spain for 4 years — no relocation needed, available immediately
 
 I am particularly interested in export-oriented companies in:
 - Ceramic tiles and construction materials
