@@ -59,12 +59,19 @@ DAILY_LIMIT = 200
 MAILER_INDEX = int(os.environ.get('MAILER_INDEX', '0'))
 TOTAL_MAILERS = int(os.environ.get('TOTAL_MAILERS', '1'))
 
+# Отключить проверку времени для тестовой отправки
+SKIP_TIME_CHECK = os.environ.get('SKIP_TIME_CHECK', '').lower() == 'true'
+
 # ══════════════════════════════════════════════════════
 #  ПРОВЕРКА ОКНА ОТПРАВКИ
 # ══════════════════════════════════════════════════════
 
 def is_send_window() -> bool:
-    """Возвращает True если сейчас 9:00–18:00 МСК"""
+    """Возвращает True если сейчас 9:00–18:00 МСК или SKIP_TIME_CHECK=true"""
+    if SKIP_TIME_CHECK:
+        log.info('SKIP_TIME_CHECK=true, проверка времени отключена')
+        return True
+    
     now = datetime.now(MSK)
     hour = now.hour
     if not (SEND_HOUR_FROM <= hour < SEND_HOUR_TO):
