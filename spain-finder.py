@@ -229,6 +229,7 @@ def add_company_to_sheet(sheet, email, local_existing_emails):
 def search_google_web(category, location, num=10):
     """Поиск через Google Custom Search"""
     if not GOOGLE_API_KEY or not GOOGLE_CSE_ID:
+        log.debug("     [Google Web] нет API ключа или CSE ID")
         return []
     
     log.info(f"     [Google Web] поиск: {category} {location}...")
@@ -242,7 +243,13 @@ def search_google_web(category, location, num=10):
             'lr': 'lang_es'
         }
         res = requests.get(url, params=params, timeout=10)
-        items = res.json().get('items', [])
+        data = res.json()
+        
+        if 'error' in data:
+            log.error(f"     [Google Web] API error: {data['error'].get('message', 'Unknown')}")
+            return []
+        
+        items = data.get('items', [])
         companies = []
         for item in items:
             name = item.get('title', '').split('—')[0].split('|')[0].strip()
@@ -296,7 +303,7 @@ def search_gemini_leads(category, location, num=40):
     log.info(f"     [Gemini AI] генерация: {category} {location}...")
     try:
         genai.configure(api_key=GEMINI_API_KEY)
-        models_to_try = ['gemini-1.5-flash', 'gemini-pro']
+        models_to_try = ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-2.0-flash-exp']
         model = None
         for m_name in models_to_try:
             try:
@@ -304,7 +311,8 @@ def search_gemini_leads(category, location, num=40):
                 model.generate_content("test", generation_config={"max_output_tokens": 1})
                 log.info(f"     [Gemini AI] модель: {m_name}")
                 break
-            except:
+            except Exception as e:
+                log.debug(f"     [Gemini AI] модель {m_name} недоступна: {e}")
                 continue
         
         if not model:
@@ -546,33 +554,39 @@ def main():
             
             candidates = []
             
-            # Google Search
+            # Google Search (с локацией)
             w_res = search_google_web(category, location)
             candidates.extend(w_res)
             
-            # DuckDuckGo
+            # Google Search (без локации - больше результатов)
+            w_res2 = search_google_web(category, "Spain")
+            candidates.extend(w_res2)
+            
+            # DuckDuckGo (с локацией)
             d_res = search_duckduckgo(category, location)
             candidates.extend(d_res)
             
-            # ASCER
+            # DuckDuckGo (без локации)
+            d_res2 = search_duckduckgo(category, "Spain")
+            candidates.extend(d_res2)
+            
+            # ASCER (без локации - уже специфичен для Испании)
             ascer_res = scrape_ascer(category)
             candidates.extend(ascer_res)
             
-            # Tile of Spain
+            # Tile of Spain (без локации)
             tos_res = scrape_tile_of_spain(category)
             candidates.extend(tos_res)
             
-            # Cevisama
+            # Cevisama (без локации)
             cev_res = scrape_ferias_valencia(category)
             candidates.extend(cev_res)
             
-            # Gemini fallback
-            g_res = []
-            if len(candidates) == 0:
-                g_res = search_gemini_leads(category, location)
-                candidates.extend(g_res)
+            # Gemini fallback (всегда пытаемся)
+            g_res = search_gemini_leads(category, location)
+            candidates.extend(g_res)
             
-            log.info(f"   Результаты: Web({len(w_res)}), DDG({len(d_res)}), ASCER({len(ascer_res)}), ToS({len(tos_res)}), Cevisama({len(cev_res)}), Gemini({len(g_res)})")
+            log.info(f"   Результаты: Web({len(w_res)}), Web2({len(w_res2)}), DDG({len(d_res)}), DDG2({len(d_res2)}), ASCER({len(ascer_res)}), ToS({len(tos_res)}), Cevisama({len(cev_res)}), Gemini({len(g_res)})")
             
             # Уникализация
             unique = {}
