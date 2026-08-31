@@ -402,7 +402,7 @@ def run_mailing(sheet, records):
     pending = [
         (email, meta)
         for email, meta in records.items()
-        if meta['status'] == 'active' and meta['sent'] != month_str and (meta['row'] % TOTAL_MAILERS) == (MAILER_INDEX % TOTAL_MAILERS)
+        if meta['status'] == 'active' and not meta['sent'] and (meta['row'] % TOTAL_MAILERS) == (MAILER_INDEX % TOTAL_MAILERS)
     ]
     
     log.info(f'Найдено кандидатов для отправки: {len(pending)}')
@@ -417,7 +417,7 @@ def run_mailing(sheet, records):
         success = send_email(email)
         
         if success:
-            mark_sent(sheet, email, month_str)
+            mark_sent(sheet, email, 'sent')
             sent_count += 1
         else:
             # Если ошибка - помечаем как dead
