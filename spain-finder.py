@@ -264,8 +264,7 @@ def search_google_web(category, location, num=10):
             'q': f"{category} {location}",
             'key': GOOGLE_API_KEY,
             'cx': GOOGLE_CSE_ID,
-            'num': num,
-            'lr': 'lang_es'
+            'num': num
         }
         res = requests.get(url, params=params, timeout=10)
         data = res.json()
