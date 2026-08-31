@@ -327,7 +327,7 @@ def search_gemini_leads(category, location, num=40):
     log.info(f"     [Gemini AI] генерация: {category} {location}...")
     try:
         genai.configure(api_key=GEMINI_API_KEY)
-        models_to_try = ['gemini-1.5-flash']
+        models_to_try = ['gemini-3.1-flash-lite', 'gemini-1.5-flash', 'gemini-pro']
         model = None
         for m_name in models_to_try:
             try:
