@@ -98,10 +98,10 @@ EMAIL_BODY_HTML = """\
       <li><strong>Conocimiento profundo de los mercados de Rusia/CIS</strong> — valioso para su expansión de exportación</li>
       <li><strong>Red extensa</strong> en los sectores de construcción, distribución y retail</li>
       <li><strong>Historial comprobado en ventas de exportación</strong> y desarrollo de negocios internacionales</li>
-      <li><strong>Experto en IA y automatización</strong> — construí pipelines automatizados en GitHub Actions, usando Claude, Windsurf, Devin para productividad</li>
+      <li><strong>Experto en IA y automatización</strong> — construí pipelines automatizados en GitHub Actions, usando Claude, Windsurf, Devin para productividad. <strong>Desarrollé este bot de búsqueda de empleo</strong> que identifica empleadores potenciales y automatiza el contacto, demostrando proactividad y aptitud técnica</li>
       <li><strong>Experiencia en e-commerce</strong> — gestiono mis propias tiendas online (plitki-spb.ru, cersanit-spb.ru) con base de datos de 3,000+ contactos</li>
       <li><strong>Experiencia entrenando equipos de ventas</strong> y gestión de ferias comerciales</li>
-      <li><strong>Fluido en ruso e inglés</strong> (C1), español conversacional</li>
+      <li><strong>Fluido en ruso e inglés</strong> (C1), español básico</li>
       <li><strong>Ya vivo en España</strong> — no necesita reubicación, disponible inmediatamente</li>
     </ul>
   </div>
@@ -122,8 +122,8 @@ EMAIL_BODY_HTML = """\
   <div style="background:#1a1a2e;color:#fff;padding:16px 20px;border-radius:8px;margin-top:24px">
     <strong>Roman Novozhilov</strong><br>
     Jefe de Ventas — 20+ años Ventas B2B Exportación<br><br>
-    📞 <a href="tel:+79052050900" style="color:#e87722">+7 (905) 205-09-00</a><br>
-    📧 <a href="mailto:novorom@mail.ru" style="color:#e87722">novorom@mail.ru</a><br>
+    📞 <a href="tel:+34605650553" style="color:#e87722">+34 605 650 553</a><br>
+    📧 <a href="mailto:novorom@gmail.com" style="color:#e87722">novorom@gmail.com</a><br>
     🔗 <a href="https://www.linkedin.com/in/roman-novozhilov-b956b780/" style="color:#e87722">Perfil LinkedIn</a><br>
     📍 Benicàssim, España (disponible inmediatamente)
   </div>
@@ -146,10 +146,10 @@ EMAIL_BODY_HTML = """\
       <li><strong>Deep knowledge of Russian/CIS markets</strong> — valuable for your export expansion</li>
       <li><strong>Extensive network</strong> in construction, distribution, and retail sectors</li>
       <li><strong>Proven export sales track record</strong> and international business development</li>
-      <li><strong>AI & automation expertise</strong> — built automated pipelines on GitHub Actions, using Claude, Windsurf, Devin for productivity</li>
+      <li><strong>AI & automation expertise</strong> — built automated pipelines on GitHub Actions, using Claude, Windsurf, Devin for productivity. <strong>Developed this job search bot</strong> that identifies potential employers and automates outreach, demonstrating proactivity and technical aptitude</li>
       <li><strong>E-commerce experience</strong> — running own online stores (plitki-spb.ru, cersanit-spb.ru) with 3,000+ contact database</li>
       <li><strong>Sales team training</strong> and trade show management experience</li>
-      <li><strong>Fluent in Russian and English</strong> (C1), conversational Spanish</li>
+      <li><strong>Fluent in Russian and English</strong> (C1), basic Spanish</li>
       <li><strong>Already living in Spain</strong> — no relocation needed, available immediately</li>
     </ul>
   </div>
@@ -170,8 +170,8 @@ EMAIL_BODY_HTML = """\
   <div style="background:#1a1a2e;color:#fff;padding:16px 20px;border-radius:8px;margin-top:24px">
     <strong>Roman Novozhilov</strong><br>
     Sales Manager — 20+ years B2B Export Sales<br><br>
-    📞 <a href="tel:+79052050900" style="color:#e87722">+7 (905) 205-09-00</a><br>
-    📧 <a href="mailto:novorom@mail.ru" style="color:#e87722">novorom@mail.ru</a><br>
+    📞 <a href="tel:+34605650553" style="color:#e87722">+34 605 650 553</a><br>
+    📧 <a href="mailto:novorom@gmail.com" style="color:#e87722">novorom@gmail.com</a><br>
     🔗 <a href="https://www.linkedin.com/in/roman-novozhilov-b956b780/" style="color:#e87722">LinkedIn Profile</a><br>
     📍 Benicàssim, Spain (available immediately)
   </div>
@@ -197,10 +197,10 @@ Por qué puedo aportar valor a su empresa:
 - Conocimiento profundo de los mercados de Rusia/CIS — valioso para su expansión de exportación
 - Red extensa en los sectores de construcción, distribución y retail
 - Historial comprobado en ventas de exportación y desarrollo de negocios internacionales
-- Experto en IA y automatización — construí pipelines automatizados en GitHub Actions, usando Claude, Windsurf, Devin para productividad
+- Experto en IA y automatización — construí pipelines automatizados en GitHub Actions, usando Claude, Windsurf, Devin para productividad. Desarrollé este bot de búsqueda de empleo que identifica empleadores potenciales y automatiza el contacto, demostrando proactividad y aptitud técnica
 - Experiencia en e-commerce — gestiono mis propias tiendas online (plitki-spb.ru, cersanit-spb.ru) con base de datos de 3,000+ contactos
 - Experiencia entrenando equipos de ventas y gestión de ferias comerciales
-- Fluido en ruso e inglés (C1), español conversacional
+- Fluido en ruso e inglés (C1), español básico
 - Ya vivo en España — no necesita reubicación, disponible inmediatamente
 
 Estoy particularmente interesado en empresas orientadas a la exportación en:
@@ -216,8 +216,8 @@ Adjunto mi CV detallado. Agradezco la oportunidad de discutir cómo mi experienc
 
 Roman Novozhilov
 Jefe de Ventas — 20+ años Ventas B2B Exportación
-+7 (905) 205-09-00
-novorom@mail.ru
++34 605 650 553
+novorom@gmail.com
 LinkedIn: https://www.linkedin.com/in/roman-novozhilov-b956b780/
 Benicàssim, España (disponible inmediatamente)
 
@@ -235,10 +235,10 @@ Why I Can Add Value to Your Company:
 - Deep knowledge of Russian/CIS markets — valuable for your export expansion
 - Extensive network in construction, distribution, and retail sectors
 - Proven export sales track record and international business development
-- AI & automation expertise — built automated pipelines on GitHub Actions, using Claude, Windsurf, Devin for productivity
+- AI & automation expertise — built automated pipelines on GitHub Actions, using Claude, Windsurf, Devin for productivity. Developed this job search bot that identifies potential employers and automates outreach, demonstrating proactivity and technical aptitude
 - E-commerce experience — running own online stores (plitki-spb.ru, cersanit-spb.ru) with 3,000+ contact database
 - Sales team training and trade show management experience
-- Fluent in Russian and English (C1), conversational Spanish
+- Fluent in Russian and English (C1), basic Spanish
 - Already living in Spain — no relocation needed, available immediately
 
 I am particularly interested in export-oriented companies in:
@@ -254,8 +254,8 @@ Please find my detailed CV attached. I would welcome the opportunity to discuss 
 
 Roman Novozhilov
 Sales Manager — 20+ years B2B Export Sales
-+7 (905) 205-09-00
-novorom@mail.ru
++34 605 650 553
+novorom@gmail.com
 LinkedIn: https://www.linkedin.com/in/roman-novozhilov-b956b780/
 Benicàssim, Spain (available immediately)
 
