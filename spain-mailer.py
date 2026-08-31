@@ -76,7 +76,7 @@ def is_send_window() -> bool:
 #  ПИСЬМО С РЕЗЮМЕ
 # ══════════════════════════════════════════════════════
 
-EMAIL_SUBJECT = "Roman Novozhilov — Sales Manager (20+ years B2B Export Sales)"
+EMAIL_SUBJECT = "Job Application: Sales Manager / Export Manager — Roman Novozhilov (CV attached)"
 
 EMAIL_BODY_HTML = """\
 <!DOCTYPE html>
@@ -86,19 +86,19 @@ EMAIL_BODY_HTML = """\
 
   <p>Dear Hiring Manager,</p>
 
-  <p>I am writing to express my interest in <strong>Sales Manager</strong>, <strong>Export Sales Manager</strong>, or <strong>Commercial Director</strong> positions at your company.</p>
+  <p>I am writing to apply for <strong>Sales Manager</strong>, <strong>Export Sales Manager</strong>, or <strong>Commercial Director</strong> positions at your company.</p>
 
-  <p>With <strong>20+ years of experience in B2B wholesale sales and export</strong>, I am seeking to join a leading Spanish manufacturer or exporter to leverage my extensive expertise in international markets.</p>
+  <p>With <strong>20+ years of proven B2B wholesale sales and export experience</strong>, I am currently residing in Benicàssim, Spain, and ready to contribute to your company's international growth immediately.</p>
 
   <div style="background:#f5f5f5;padding:16px 20px;border-left:4px solid #e87722;margin:20px 0">
-    <h3 style="margin:0 0 12px 0;color:#1a1a2e">Key Qualifications:</h3>
+    <h3 style="margin:0 0 12px 0;color:#1a1a2e">Why I Can Add Value to Your Company:</h3>
     <ul style="margin:0;padding-left:20px">
-      <li><strong>20+ years in B2B wholesale sales and export</strong></li>
-      <li>Experience with major Russian manufacturers (ceramic tiles, construction materials)</li>
-      <li>Extensive network in construction, distribution, and retail sectors</li>
-      <li>Export sales and international business development expertise</li>
-      <li>Fluent in Russian, professional English, basic Spanish</li>
-      <li>Currently residing in Benicàssim, Spain</li>
+      <li><strong>20+ years in B2B wholesale sales</strong> with major Russian manufacturers</li>
+      <li><strong>Deep knowledge of Russian/CIS markets</strong> — valuable for your export expansion</li>
+      <li><strong>Extensive network</strong> in construction, distribution, and retail sectors</li>
+      <li><strong>Proven export sales track record</strong> and international business development</li>
+      <li><strong>Fluent in Russian and English</strong>, conversational Spanish</li>
+      <li><strong>Already living in Spain</strong> — no relocation needed, available immediately</li>
     </ul>
   </div>
 
@@ -111,16 +111,16 @@ EMAIL_BODY_HTML = """\
     <li>Chemicals, plastics, and metal products</li>
   </ul>
 
-  <p>I am ready to contribute to your company's growth in international markets with my proven sales track record and industry knowledge.</p>
+  <p>I am available for a personal interview at your convenience and can start immediately.</p>
 
-  <p>Please find my detailed CV attached. I would welcome the opportunity to discuss how my experience can benefit your organization.</p>
+  <p>Please find my detailed CV attached. I would welcome the opportunity to discuss how my experience can benefit your organization's export growth.</p>
 
   <div style="background:#1a1a2e;color:#fff;padding:16px 20px;border-radius:8px;margin-top:24px">
     <strong>Roman Novozhilov</strong><br>
     Sales Manager — 20+ years B2B Export Sales<br><br>
     📞 <a href="tel:+79052050900" style="color:#e87722">+7 (905) 205-09-00</a><br>
     📧 <a href="mailto:novorom@mail.ru" style="color:#e87722">novorom@mail.ru</a><br>
-    📍 Currently residing in Benicàssim, Spain
+    📍 Benicàssim, Spain (available immediately)
   </div>
 
   <p style="font-size:11px;color:#aaa;margin-top:16px">
@@ -134,17 +134,17 @@ EMAIL_BODY_HTML = """\
 EMAIL_BODY_TEXT = """\
 Dear Hiring Manager,
 
-I am writing to express my interest in Sales Manager, Export Sales Manager, or Commercial Director positions at your company.
+I am writing to apply for Sales Manager, Export Sales Manager, or Commercial Director positions at your company.
 
-With 20+ years of experience in B2B wholesale sales and export, I am seeking to join a leading Spanish manufacturer or exporter to leverage my extensive expertise in international markets.
+With 20+ years of proven B2B wholesale sales and export experience, I am currently residing in Benicàssim, Spain, and ready to contribute to your company's international growth immediately.
 
-Key Qualifications:
-- 20+ years in B2B wholesale sales and export
-- Experience with major Russian manufacturers (ceramic tiles, construction materials)
+Why I Can Add Value to Your Company:
+- 20+ years in B2B wholesale sales with major Russian manufacturers
+- Deep knowledge of Russian/CIS markets — valuable for your export expansion
 - Extensive network in construction, distribution, and retail sectors
-- Export sales and international business development expertise
-- Fluent in Russian, professional English, basic Spanish
-- Currently residing in Benicàssim, Spain
+- Proven export sales track record and international business development
+- Fluent in Russian and English, conversational Spanish
+- Already living in Spain — no relocation needed, available immediately
 
 I am particularly interested in export-oriented companies in:
 - Ceramic tiles and construction materials
@@ -153,15 +153,15 @@ I am particularly interested in export-oriented companies in:
 - Automotive parts and industrial machinery
 - Chemicals, plastics, and metal products
 
-I am ready to contribute to your company's growth in international markets with my proven sales track record and industry knowledge.
+I am available for a personal interview at your convenience and can start immediately.
 
-Please find my detailed CV attached. I would welcome the opportunity to discuss how my experience can benefit your organization.
+Please find my detailed CV attached. I would welcome the opportunity to discuss how my experience can benefit your organization's export growth.
 
 Roman Novozhilov
 Sales Manager — 20+ years B2B Export Sales
 +7 (905) 205-09-00
 novorom@mail.ru
-Currently residing in Benicàssim, Spain
+Benicàssim, Spain (available immediately)
 
 If you are not interested in receiving job applications, please reply "Remove".
 """
