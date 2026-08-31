@@ -78,6 +78,59 @@ CERAMIC_CATEGORIES = [
     'diseño cerámico innovación',
 ]
 
+# Категории для других экспортных отраслей в регионе Валенсии
+EXPORT_CATEGORIES = [
+    # Цитрусовые и фрукты (Valencia - крупный экспортер)
+    'exportadores cítricos Valencia',
+    'exportadores naranjas Valencia',
+    'exportadores frutas Valencia',
+    'citrus fruit export companies Spain',
+    
+    # Мебель (Valencia - мебельный кластер)
+    'fabricantes muebles Valencia',
+    'exportadores muebles España',
+    'furniture export companies Spain',
+    
+    # Текстиль и обувь
+    'fabricantes textiles Valencia',
+    'exportadores textiles España',
+    'fabricantes calzado España',
+    'textile export companies Spain',
+    
+    # Автозапчасти (Ford в Villarreal)
+    'fabricantes autopartes Valencia',
+    'exportadores autopartes España',
+    'automotive parts export Spain',
+    
+    # Морепродукты
+    'exportadores productos del mar Valencia',
+    'seafood export companies Spain',
+    
+    # Вино
+    'bodegas Valencia exportación',
+    'wine export companies Valencia',
+    
+    # Химическая промышленность
+    'fabricantes productos químicos Valencia',
+    'chemical export companies Spain',
+    
+    # Пластмассы
+    'fabricantes plásticos Valencia',
+    'plastic export companies Spain',
+    
+    # Металлообработка
+    'fabricantes metal Valencia',
+    'metal export companies Spain',
+    
+    # Строительные материалы (кроме керамики)
+    'exportadores materiales construcción España',
+    'construction materials export Spain',
+    
+    # Оборудование и техника
+    'exportadores maquinaria industrial España',
+    'industrial machinery export Spain',
+]
+
 # Локации в радиусе 100 км от Беникасима (Benicàssim)
 LOCATIONS = [
     'Benicàssim',
@@ -461,8 +514,9 @@ def scrape_ferias_valencia(category):
 # ══════════════════════════════════════════════════════
 
 def main():
-    log.info('🇪🇸 Spain Ceramic Job Finder — запуск')
-    log.info(f'Категорий: {len(CERAMIC_CATEGORIES)}')
+    log.info('🇪🇸 Spain Export Job Finder — запуск')
+    log.info(f'Керамических категорий: {len(CERAMIC_CATEGORIES)}')
+    log.info(f'Экспортных категорий: {len(EXPORT_CATEGORIES)}')
     log.info(f'Локаций: {len(LOCATIONS)}')
     
     sheet = get_sheet()
@@ -482,7 +536,10 @@ def main():
     total = 0
     processed_domains = set()
     
-    for category in CERAMIC_CATEGORIES:
+    # Объединяем все категории
+    all_categories = CERAMIC_CATEGORIES + EXPORT_CATEGORIES
+    
+    for category in all_categories:
         for location in LOCATIONS:
             log.info(f'\n🔍 Категория: {category}')
             log.info(f'📍 Локация: {location}')

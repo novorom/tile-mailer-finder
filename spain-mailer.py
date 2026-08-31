@@ -76,7 +76,7 @@ def is_send_window() -> bool:
 #  ПИСЬМО С РЕЗЮМЕ
 # ══════════════════════════════════════════════════════
 
-EMAIL_SUBJECT = "Roman Novozhilov — Sales Manager (20+ years B2B) — Ceramic Tile Industry"
+EMAIL_SUBJECT = "Roman Novozhilov — Sales Manager (20+ years B2B Export Sales)"
 
 EMAIL_BODY_HTML = """\
 <!DOCTYPE html>
@@ -86,28 +86,29 @@ EMAIL_BODY_HTML = """\
 
   <p>Dear Hiring Manager,</p>
 
-  <p>I am writing to express my interest in <strong>Sales Manager</strong>, <strong>Export Sales Manager</strong>, or <strong>Commercial Director</strong> positions within the ceramic tile industry.</p>
+  <p>I am writing to express my interest in <strong>Sales Manager</strong>, <strong>Export Sales Manager</strong>, or <strong>Commercial Director</strong> positions at your company.</p>
 
-  <p>With <strong>20+ years of experience in B2B wholesale sales of ceramic tiles and porcelain</strong>, I am seeking to join a leading Spanish ceramic manufacturer, exporter, or distributor to leverage my extensive expertise in international markets.</p>
+  <p>With <strong>20+ years of experience in B2B wholesale sales and export</strong>, I am seeking to join a leading Spanish manufacturer or exporter to leverage my extensive expertise in international markets.</p>
 
   <div style="background:#f5f5f5;padding:16px 20px;border-left:4px solid #e87722;margin:20px 0">
     <h3 style="margin:0 0 12px 0;color:#1a1a2e">Key Qualifications:</h3>
     <ul style="margin:0;padding-left:20px">
-      <li><strong>20+ years in B2B wholesale sales</strong> of ceramic tiles and porcelain</li>
-      <li>Experience with major Russian ceramic manufacturers (Cersanit, Kerama Marazzi, Ural Granite, Granitea, etc.)</li>
+      <li><strong>20+ years in B2B wholesale sales and export</strong></li>
+      <li>Experience with major Russian manufacturers (ceramic tiles, construction materials)</li>
       <li>Extensive network in construction, distribution, and retail sectors</li>
       <li>Export sales and international business development expertise</li>
       <li>Fluent in Russian, professional English, basic Spanish</li>
-      <li>Available for relocation to Benicàssim / Castellón area</li>
+      <li>Available for relocation to Benicàssim / Castellón / Valencia area</li>
     </ul>
   </div>
 
-  <p>I am particularly interested in companies specializing in:</p>
+  <p>I am particularly interested in export-oriented companies in:</p>
   <ul>
-    <li>Ceramic tile and porcelain manufacturing</li>
-    <li>Ceramic tile export and international distribution</li>
-    <li>Raw materials for ceramic production (clays, glazes, frits, pigments)</li>
-    <li>B2B wholesale and retail of ceramic products</li>
+    <li>Ceramic tiles and construction materials</li>
+    <li>Food and agricultural products (citrus, fruits, wine)</li>
+    <li>Furniture, textiles, and footwear</li>
+    <li>Automotive parts and industrial machinery</li>
+    <li>Chemicals, plastics, and metal products</li>
   </ul>
 
   <p>I am ready to contribute to your company's growth in international markets with my proven sales track record and industry knowledge.</p>
@@ -116,10 +117,10 @@ EMAIL_BODY_HTML = """\
 
   <div style="background:#1a1a2e;color:#fff;padding:16px 20px;border-radius:8px;margin-top:24px">
     <strong>Roman Novozhilov</strong><br>
-    Sales Manager — 20+ years B2B Ceramic Tile Sales<br><br>
+    Sales Manager — 20+ years B2B Export Sales<br><br>
     📞 <a href="tel:+79052050900" style="color:#e87722">+7 (905) 205-09-00</a><br>
     📧 <a href="mailto:novorom@mail.ru" style="color:#e87722">novorom@mail.ru</a><br>
-    📍 Available for relocation to Benicàssim / Castellón, Spain
+    📍 Available for relocation to Benicàssim / Castellón / Valencia, Spain
   </div>
 
   <p style="font-size:11px;color:#aaa;margin-top:16px">
@@ -133,33 +134,34 @@ EMAIL_BODY_HTML = """\
 EMAIL_BODY_TEXT = """\
 Dear Hiring Manager,
 
-I am writing to express my interest in Sales Manager, Export Sales Manager, or Commercial Director positions within the ceramic tile industry.
+I am writing to express my interest in Sales Manager, Export Sales Manager, or Commercial Director positions at your company.
 
-With 20+ years of experience in B2B wholesale sales of ceramic tiles and porcelain, I am seeking to join a leading Spanish ceramic manufacturer, exporter, or distributor to leverage my extensive expertise in international markets.
+With 20+ years of experience in B2B wholesale sales and export, I am seeking to join a leading Spanish manufacturer or exporter to leverage my extensive expertise in international markets.
 
 Key Qualifications:
-- 20+ years in B2B wholesale sales of ceramic tiles and porcelain
-- Experience with major Russian ceramic manufacturers (Cersanit, Kerama Marazzi, Ural Granite, Granitea, etc.)
+- 20+ years in B2B wholesale sales and export
+- Experience with major Russian manufacturers (ceramic tiles, construction materials)
 - Extensive network in construction, distribution, and retail sectors
 - Export sales and international business development expertise
 - Fluent in Russian, professional English, basic Spanish
-- Available for relocation to Benicàssim / Castellón area
+- Available for relocation to Benicàssim / Castellón / Valencia area
 
-I am particularly interested in companies specializing in:
-- Ceramic tile and porcelain manufacturing
-- Ceramic tile export and international distribution
-- Raw materials for ceramic production (clays, glazes, frits, pigments)
-- B2B wholesale and retail of ceramic products
+I am particularly interested in export-oriented companies in:
+- Ceramic tiles and construction materials
+- Food and agricultural products (citrus, fruits, wine)
+- Furniture, textiles, and footwear
+- Automotive parts and industrial machinery
+- Chemicals, plastics, and metal products
 
 I am ready to contribute to your company's growth in international markets with my proven sales track record and industry knowledge.
 
 Please find my detailed CV attached. I would welcome the opportunity to discuss how my experience can benefit your organization.
 
 Roman Novozhilov
-Sales Manager — 20+ years B2B Ceramic Tile Sales
+Sales Manager — 20+ years B2B Export Sales
 +7 (905) 205-09-00
 novorom@mail.ru
-Available for relocation to Benicàssim / Castellón, Spain
+Available for relocation to Benicàssim / Castellón / Valencia, Spain
 
 If you are not interested in receiving job applications, please reply "Remove".
 """
