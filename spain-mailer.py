@@ -98,7 +98,7 @@ EMAIL_BODY_HTML = """\
       <li>Extensive network in construction, distribution, and retail sectors</li>
       <li>Export sales and international business development expertise</li>
       <li>Fluent in Russian, professional English, basic Spanish</li>
-      <li>Available for relocation to Benicàssim / Castellón / Valencia area</li>
+      <li>Currently residing in Benicàssim, Spain</li>
     </ul>
   </div>
 
@@ -120,7 +120,7 @@ EMAIL_BODY_HTML = """\
     Sales Manager — 20+ years B2B Export Sales<br><br>
     📞 <a href="tel:+79052050900" style="color:#e87722">+7 (905) 205-09-00</a><br>
     📧 <a href="mailto:novorom@mail.ru" style="color:#e87722">novorom@mail.ru</a><br>
-    📍 Available for relocation to Benicàssim / Castellón / Valencia, Spain
+    📍 Currently residing in Benicàssim, Spain
   </div>
 
   <p style="font-size:11px;color:#aaa;margin-top:16px">
@@ -144,7 +144,7 @@ Key Qualifications:
 - Extensive network in construction, distribution, and retail sectors
 - Export sales and international business development expertise
 - Fluent in Russian, professional English, basic Spanish
-- Available for relocation to Benicàssim / Castellón / Valencia area
+- Currently residing in Benicàssim, Spain
 
 I am particularly interested in export-oriented companies in:
 - Ceramic tiles and construction materials
@@ -161,7 +161,7 @@ Roman Novozhilov
 Sales Manager — 20+ years B2B Export Sales
 +7 (905) 205-09-00
 novorom@mail.ru
-Available for relocation to Benicàssim / Castellón / Valencia, Spain
+Currently residing in Benicàssim, Spain
 
 If you are not interested in receiving job applications, please reply "Remove".
 """
