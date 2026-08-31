@@ -1,0 +1,15 @@
+name: Check Brevo User 4
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check BREVO_USER_4
+        env:
+          BREVO_USER_4: ${{ secrets.BREVO_USER_4 }}
+        run: |
+          echo "BREVO_USER_4 value:"
+          echo "$BREVO_USER_4"
