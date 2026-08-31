@@ -78,20 +78,31 @@ CERAMIC_CATEGORIES = [
     'diseño cerámico innovación',
 ]
 
-# Локации в зоне Кастельона (керамический кластер Испании)
+# Локации в радиусе 100 км от Беникасима (Benicàssim)
 LOCATIONS = [
+    'Benicàssim',
+    'Benicasim',
     'Castellón de la Plana',
     'Castellón',
     'Villarreal',
+    'Vila-real',
     'Onda',
     'Alcora',
     'Nules',
     'Burriana',
-    'Vila-real',
     'Sagunto',
     'Valencia',
+    'Gandia',
+    'Paterna',
+    'Torrent',
+    'Alzira',
+    'Requena',
+    'Vinaròs',
+    'Sant Mateu',
+    'Morella',
     'Comunidad Valenciana',
-    'España',
+    'Provincia de Castellón',
+    'Provincia de Valencia',
 ]
 
 # ══════════════════════════════════════════════════════
