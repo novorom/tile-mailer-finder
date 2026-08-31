@@ -328,7 +328,7 @@ def search_gemini_leads(category, location, num=40):
     log.info(f"     [Gemini AI] генерация: {category} {location}...")
     try:
         genai.configure(api_key=GEMINI_API_KEY)
-        models_to_try = ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-2.0-flash-exp']
+        models_to_try = ['gemini-1.5-flash', 'gemini-1.5-pro']
         model = None
         for m_name in models_to_try:
             try:
@@ -464,6 +464,54 @@ def find_email_hunter(url, company_name):
     except:
         pass
     return None
+
+# ══════════════════════════════════════════════════════
+#  СТАТИЧЕСКИЙ СПИСОК КЕРАМИЧЕСКИХ ФАБРИК
+# ══════════════════════════════════════════════════════
+
+def get_static_ceramic_companies():
+    """Возвращает список известных керамических фабрик в районе Castellón"""
+    companies = [
+        # Крупные производители в Castellón
+        {'name': 'Porcelanosa', 'website': 'https://www.porcelanosa.com', 'source': 'Static'},
+        {'name': 'Vives', 'website': 'https://www.vives.com', 'source': 'Static'},
+        {'name': 'Apavisa', 'website': 'https://www.apavisa.com', 'source': 'Static'},
+        {'name': 'Venis', 'website': 'https://www.venis.com', 'source': 'Static'},
+        {'name': 'L\'Antic Colonial', 'website': 'https://www.lanticcolonial.com', 'source': 'Static'},
+        {'name': 'Noken', 'website': 'https://www.noken.com', 'source': 'Static'},
+        {'name': 'Gamadecor', 'website': 'https://www.gamadecor.com', 'source': 'Static'},
+        {'name': 'Butech', 'website': 'https://www.butech.com', 'source': 'Static'},
+        {'name': 'Krion', 'website': 'https://www.krion.com', 'source': 'Static'},
+        {'name': 'Systempool', 'website': 'https://www.systempool.com', 'source': 'Static'},
+        
+        # Другие известные бренды
+        {'name': 'Roca Cerámica', 'website': 'https://www.roca.com', 'source': 'Static'},
+        {'name': 'Pamesa', 'website': 'https://www.pamesa.com', 'source': 'Static'},
+        {'name': 'Saloni', 'website': 'https://www.saloni.com', 'source': 'Static'},
+        {'name': 'Tau Cerámica', 'website': 'https://www.tauceramica.com', 'source': 'Static'},
+        {'name': 'Marazzi', 'website': 'https://www.marazzi.com', 'source': 'Static'},
+        {'name': 'Cerámica Saloni', 'website': 'https://www.ceramicasaloni.com', 'source': 'Static'},
+        {'name': 'Azulejos Benadresa', 'website': 'https://www.benadresa.com', 'source': 'Static'},
+        {'name': 'Azulejos Halcón', 'website': 'https://www.halcon.com', 'source': 'Static'},
+        {'name': 'Azulejos Berg', 'website': 'https://www.azulejosberg.com', 'source': 'Static'},
+        {'name': 'Azulejos Maya', 'website': 'https://www.azulejosmaya.com', 'source': 'Static'},
+        
+        # Фабрики в конкретных городах
+        {'name': 'Cerámica Nules', 'website': 'https://www.ceramicanules.com', 'source': 'Static'},
+        {'name': 'Cerámica Onda', 'website': 'https://www.ceramicaonda.com', 'source': 'Static'},
+        {'name': 'Cerámica Alcora', 'website': 'https://www.ceramicaalcora.com', 'source': 'Static'},
+        {'name': 'Cerámica Villarreal', 'website': 'https://www.ceramicavillarreal.com', 'source': 'Static'},
+        {'name': 'Cerámica Sant Mateu', 'website': 'https://www.ceramicasantmateu.com', 'source': 'Static'},
+        {'name': 'Cerámica Ribesalbes', 'website': 'https://www.ceramicaribesalbes.com', 'source': 'Static'},
+        {'name': 'Cerámica Vilafranca', 'website': 'https://www.ceramicavilafranca.com', 'source': 'Static'},
+        
+        # Производители сырья
+        {'name': 'Fritta', 'website': 'https://www.fritta.com', 'source': 'Static'},
+        {'name': 'Esmaltes', 'website': 'https://www.esmaltes.com', 'source': 'Static'},
+        {'name': 'Colorobbia', 'website': 'https://www.colorobbia.com', 'source': 'Static'},
+        {'name': 'Torrecid', 'website': 'https://www.torrecid.com', 'source': 'Static'},
+    ]
+    return companies
 
 # ══════════════════════════════════════════════════════
 #  ИСПАНСКИЕ ИСТОЧНИКИ
@@ -611,7 +659,11 @@ def main():
             g_res = search_gemini_leads(category, location)
             candidates.extend(g_res)
             
-            log.info(f"   Результаты: Web({len(w_res)}), Web2({len(w_res2)}), DDG({len(d_res)}), DDG2({len(d_res2)}), ASCER({len(ascer_res)}), ToS({len(tos_res)}), Cevisama({len(cev_res)}), Gemini({len(g_res)})")
+            # Статический список известных керамических фабрик (fallback если API не работают)
+            static_res = get_static_ceramic_companies()
+            candidates.extend(static_res)
+            
+            log.info(f"   Результаты: Web({len(w_res)}), Web2({len(w_res2)}), DDG({len(d_res)}), DDG2({len(d_res2)}), ASCER({len(ascer_res)}), ToS({len(tos_res)}), Cevisama({len(cev_res)}), Gemini({len(g_res)}), Static({len(static_res)})")
             
             # Уникализация
             unique = {}
