@@ -36,13 +36,7 @@ log = logging.getLogger(__name__)
 
 SHEET_ID = os.environ.get('SPAIN_SHEET_ID', '')
 CREDS_JSON = os.environ.get('GOOGLE_CREDS', '')
-GOOGLE_API_KEYS = [
-    os.environ.get('GOOGLE_API_KEY', ''),
-    os.environ.get('GOOGLE_API_KEY_2', ''),
-    os.environ.get('GOOGLE_API_KEY_3', ''),
-    os.environ.get('GOOGLE_API_KEY_4', '')
-]
-GOOGLE_API_KEYS = [k for k in GOOGLE_API_KEYS if k]  # Только непустые ключи
+GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY', '')
 GOOGLE_CSE_ID = os.environ.get('GOOGLE_CSE_ID', '')
 GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', '')
 HUNTER_API_KEY = os.environ.get('HUNTER_API_KEY', '')
@@ -233,49 +227,42 @@ def add_company_to_sheet(sheet, email, local_existing_emails):
 # ══════════════════════════════════════════════════════
 
 def search_google_web(category, location, num=10):
-    """Поиск через Google Custom Search с ротацией ключей"""
-    if not GOOGLE_API_KEYS or not GOOGLE_CSE_ID:
-        log.debug("     [Google Web] нет API ключей или CSE ID")
+    """Поиск через Google Custom Search"""
+    if not GOOGLE_API_KEY or not GOOGLE_CSE_ID:
+        log.debug("     [Google Web] нет API ключа или CSE ID")
         return []
-
+    
     log.info(f"     [Google Web] поиск: {category} {location}...")
-    
-    # Ротация ключей
-    for i, api_key in enumerate(GOOGLE_API_KEYS):
-        try:
-            url = "https://www.googleapis.com/customsearch/v1"
-            params = {
-                'q': f"{category} {location}",
-                'key': api_key,
-                'cx': GOOGLE_CSE_ID,
-                'num': num,
-                'lr': 'lang_es'
-            }
-            res = requests.get(url, params=params, timeout=10)
-            data = res.json()
-            
-            if 'error' in data:
-                error_msg = data['error'].get('message', 'Unknown')
-                log.warning(f"     [Google Web] ключ {i+1}/{len(GOOGLE_API_KEYS)} ошибка: {error_msg}")
-                continue  # Пробуем следующий ключ
-            
-            items = data.get('items', [])
-            companies = []
-            for item in items:
-                name = item.get('title', '').split('—')[0].split('|')[0].strip()
-                companies.append({
-                    'name': name,
-                    'website': item.get('link'),
-                    'source': 'Google Search'
-                })
-            log.info(f"     [Google Web] найдено: {len(companies)} (ключ {i+1}/{len(GOOGLE_API_KEYS)})")
-            return companies
-        except Exception as e:
-            log.warning(f"     [Google Web] ключ {i+1}/{len(GOOGLE_API_KEYS)} exception: {e}")
-            continue
-    
-    log.error("     [Google Web] все ключи исчерпаны или недоступны")
-    return []
+    try:
+        url = "https://www.googleapis.com/customsearch/v1"
+        params = {
+            'q': f"{category} {location}",
+            'key': GOOGLE_API_KEY,
+            'cx': GOOGLE_CSE_ID,
+            'num': num,
+            'lr': 'lang_es'
+        }
+        res = requests.get(url, params=params, timeout=10)
+        data = res.json()
+        
+        if 'error' in data:
+            log.error(f"     [Google Web] API error: {data['error'].get('message', 'Unknown')}")
+            return []
+        
+        items = data.get('items', [])
+        companies = []
+        for item in items:
+            name = item.get('title', '').split('—')[0].split('|')[0].strip()
+            companies.append({
+                'name': name,
+                'website': item.get('link'),
+                'source': 'Google Search'
+            })
+        log.info(f"     [Google Web] найдено: {len(companies)}")
+        return companies
+    except Exception as e:
+        log.debug(f"Google Web error: {e}")
+        return []
 
 # ══════════════════════════════════════════════════════
 #  DUCKDUCKGO SEARCH
