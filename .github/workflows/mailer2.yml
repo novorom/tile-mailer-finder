@@ -21,8 +21,8 @@ jobs:
         env:
           SHEET_ID: ${{ secrets.SHEET_ID }}
           GOOGLE_CREDS: ${{ secrets.GOOGLE_CREDS }}
-          BREVO_USER: ${{ secrets.BREVO_USER_2 }}
-          BREVO_PASS: ${{ secrets.BREVO_PASS_2 }}
+          BREVO_USER: ${{ secrets.BREVO_USER_1 || secrets.BREVO_USER }}
+          BREVO_PASS: ${{ secrets.BREVO_PASS_1 || secrets.BREVO_PASS }}
           MAILER_INDEX: 1
           TOTAL_MAILERS: 3
         run: python mailer-agent.py
