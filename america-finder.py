@@ -37,6 +37,7 @@ log = logging.getLogger(__name__)
 SHEET_ID = os.environ.get('SPAIN_SHEET_ID', '')
 CREDS_JSON = os.environ.get('GOOGLE_CREDS', '')
 GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY', '')
+GOOGLE_API_KEY_2 = os.environ.get('GOOGLE_API_KEY_2', '')  # Альтернативный ключ
 GOOGLE_CSE_ID = os.environ.get('GOOGLE_CSE_ID', '')
 GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', '')
 GEMINI_API_KEY_2 = os.environ.get('GEMINI_API_KEY_2', '')  # Альтернативный ключ
@@ -278,32 +279,34 @@ def add_company_to_sheet(sheet, company_name, email, website, job_title):
 # ══════════════════════════════════════════════════════
 
 def search_google_web(query):
-    """Поиск через Google Custom Search API"""
-    url = 'https://www.googleapis.com/customsearch/v1'
-    params = {
-        'key': GOOGLE_API_KEY,
-        'cx': GOOGLE_CSE_ID,
-        'q': query,
-        'num': 10
-    }
+    """Поиск через Google Custom Search с альтернативным ключом"""
+    api_keys = [GOOGLE_API_KEY, GOOGLE_API_KEY_2]
     
-    try:
-        response = requests.get(url, params=params, headers=HEADERS, timeout=10)
-        response.raise_for_status()
-        data = response.json()
-        
-        results = []
-        if 'items' in data:
-            for item in data['items']:
-                results.append({
-                    'title': item.get('title', ''),
-                    'link': item.get('link', ''),
-                    'snippet': item.get('snippet', '')
-                })
-        return results
-    except Exception as ex:
-        log.warning(f'Ошибка Google Search: {ex}')
-        return []
+    for api_key in api_keys:
+        if not api_key or not GOOGLE_CSE_ID:
+            continue
+            
+        try:
+            url = f'https://www.googleapis.com/customsearch/v1?key={api_key}&cx={GOOGLE_CSE_ID}&q={query}&num=10'
+            response = requests.get(url, timeout=10)
+            response.raise_for_status()
+            data = response.json()
+            
+            if 'items' in data:
+                results = []
+                for item in data['items']:
+                    results.append({
+                        'title': item.get('title', ''),
+                        'link': item.get('link', ''),
+                        'snippet': item.get('snippet', '')
+                    })
+                log.info(f'     [Google Search] найдено: {len(results)}')
+                return results
+        except Exception as ex:
+            log.warning(f'Google Search error (key {api_key[:10]}...): {ex}')
+            continue
+    
+    return []
 
 # ══════════════════════════════════════════════════════
 #  ПАРСИНГ EMAIL
