@@ -294,7 +294,7 @@ def send_one_email(to_email):
     
     # Прикрепляем резюме
     try:
-        resume_path = 'ROMAN NOVOZHILOV.docx'
+        resume_path = 'ROMAN_NOVOZHILOV_REMOTE.docx'
         if os.path.exists(resume_path):
             with open(resume_path, 'rb') as f:
                 part = MIMEBase('application', 'octet-stream')
@@ -302,10 +302,12 @@ def send_one_email(to_email):
             encoders.encode_base64(part)
             part.add_header(
                 'Content-Disposition',
-                f'attachment; filename="Roman_Novozhilov_CV.docx"'
+                f'attachment; filename="Roman_Novozhilov_Remote_Sales_Manager.docx"'
             )
             msg.attach(part)
             log.info('Резюме прикреплено')
+        else:
+            log.warning(f'Резюме не найдено: {resume_path}')
     except Exception as ex:
         log.warning(f'Ошибка прикрепления резюме: {ex}')
     

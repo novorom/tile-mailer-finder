@@ -1,0 +1,97 @@
+ROMAN NOVOZHILOV
+International Sales & Business Development | B2B Building Materials | Remote-Ready Professional
+Benicàssim, Castellón, Spain  |  +34 605-650-553  |  novorom@gmail.com  |  LinkedIn: linkedin.com/in/roman-novozhilov-b956b780/
+Open to Remote Opportunities with US Companies | EST (Spain) - Flexible Timezone
+
+
+PROFILE
+Engineer by education and sales professional with 20+ years of proven B2B wholesale sales and business development experience. Successfully built and managed full-cycle sales operations for ceramic tile and porcelain stoneware across Northwest Russia — from prospecting and contract negotiation to logistics, receivables, and long-term account management. Since 2022, based in Spain running independent e-commerce and automation projects with demonstrated success in remote work environments. Expert in AI-powered automation, GitHub Actions CI/CD pipelines, and building scalable remote-first systems. Fluent in Russian and English (C1), conversational Spanish. Seeking remote Sales Manager, Business Development Manager, or Sales Engineer roles with US companies targeting European, Russian, or CIS markets.
+
+
+REMOTE WORK SKILLS
+• Remote Collaboration: Proficient in Slack, Microsoft Teams, Zoom, Google Meet for daily communication and collaboration
+• Project Management: Trello, Asana, GitHub Projects for task tracking and team coordination
+• Documentation: Confluence, Notion, Google Docs for comprehensive project documentation
+• Time Management: Self-disciplined with proven ability to work across multiple time zones (EST/CET/MSK)
+• Async Communication: Skilled in asynchronous workflows and distributed team collaboration
+• Self-Motivation: Proven track record of delivering results independently with minimal supervision
+• Problem Solving: Strong analytical skills with ability to troubleshoot complex technical issues remotely
+
+
+CORE SKILLS
+Sales: Full-cycle B2B sales, contract negotiation, key account management, distributor & retail network development, receivables management, market monitoring, exhibitions & trade shows, team training and supervision, remote sales team leadership.
+
+Industry: Ceramic tile & porcelain stoneware, building/construction materials — deep product knowledge, sourcing, supplier relations, logistics coordination, international trade.
+
+Technical: Engineering degree (electronic systems); hands-on with e-commerce sites, Next.js/TypeScript projects, email automation (Google Sheets + SMTP), image/data pipelines (Python), GitHub Actions/CI-CD automation, Telegram Bot API, cloud infrastructure.
+
+AI Tools: Claude, Windsurf, Devin, Codex, OpenRouter — daily use for coding, automation, and productivity enhancement.
+
+Languages: Russian (native), English (C1 — Advanced), Spanish (beginner).
+
+
+EXPERIENCE
+
+Owner / Operator — Independent E-commerce & Automation Projects
+October 2022 – Present  ·  Benicàssim, Spain  ·  Fully Remote
+• Built and manage three successful e-commerce platforms for ceramic tile industry (plitki-spb.ru, cersanit-spb.ru, opt-plitki-spb.ru) with automated product catalogs, image pipelines (Python + Cloudinary), and email marketing automation reaching 3,000+ contacts.
+• Developed and maintained 2 Telegram channels with automated news collection, translation, and digest generation, including a daily evening digest channel for emigrants — all managed remotely.
+• Built and operate an automated AI video content pipeline distributing content across 2 YouTube channels, TikTok, and Instagram with consistent scheduling and engagement.
+• Created an email lead-generation system that finds prospective client emails and sends automated outreach campaigns with 40%+ response rates.
+• All projects hosted on GitHub and run on GitHub Actions; hands-on use of AI coding tools (Claude, Windsurf, Devin, Codex) and Next.js/TypeScript codebase.
+• Demonstrated ability to work independently while managing multiple concurrent projects with tight deadlines.
+
+
+Wholesale Manager — Ceramic Tile & Porcelain Stoneware
+June 2015 – January 2022  ·  8 yrs 7 mos  ·  Saint Petersburg & Northwest Russia
+• Ran full sales cycle for major tile brands (Shakhtinskaya Plitka, Nefrit Ceramic, Kerabud, Azori, Kerama-Marazzi, Euro-Ceramic, Atem, Goldentile, Gracia-Ceramic, Ural Granit) across builders, distributors, and retail chains.
+• Negotiated commercial terms: credit depth and limits, special conditions, penalty clauses, and contract structures; signed and managed distribution agreements.
+• Managed accounts receivable end-to-end, including guarantee letters, reconciliation acts, shipment holds, and preparing claims for court when needed.
+• Coordinated logistics, product matrix agreements, and in-store exhibition stands; ran marketing activities and promotions with retail partners.
+• Represented the company at regional and federal construction trade shows; built and maintained long-term partner relationships.
+• Trained and supervised sales teams, implementing performance metrics and incentive programs.
+
+
+Sales Manager — Ceramic Center (ceramic-center.ru)
+December 2013 – June 2015  ·  1 yr 7 mos  ·  Saint Petersburg
+• Sold ceramic tile and porcelain stoneware wholesale across the Northwest Russia dealer network, with regular business travel.
+• Managed full negotiation cycle, contract terms, and product matrix agreements with distributors and retail chains.
+• Handled receivables, claims, and reconciliation; monitored competitors and market conditions.
+
+
+Regional Sales Manager — OOO Lincer (lincer.ru)
+October 2006 – October 2013  ·  7 yrs 1 mo  ·  Saint Petersburg
+• Built and managed the regional distributor and retail network for ceramic tile and porcelain stoneware across Northwest Russia.
+• Owned commercial negotiations, contract signing, and product matrix placement with key accounts.
+• Trained new sales staff and supervised in-store promoters; tracked shipment volumes, margins, and receivables turnover.
+
+
+Head of Regional Office — Window to the World
+January 2005 – June 2005  ·  6 mos  ·  Saint Petersburg / Volgograd
+• Recruited and launched a regional partner office (Volgograd) to sell advertising space for the head office; evaluated partner capacity and negotiated the opening agreement.
+• Trained the commercial team and liaised between the St. Petersburg head office and the new regional representation.
+
+
+Regional Sales Manager — TD Pigment
+September 2003 – March 2004  ·  7 mos  ·  Saint Petersburg
+• Managed regional sales of paints; contributed to establishing business with Severstal.
+
+
+EDUCATION
+Saint Petersburg Electrotechnical University (LETI)
+Engineer, Electronic Systems — 2004
+
+
+TECHNICAL CERTIFICATIONS & SKILLS
+• Programming: Python, JavaScript/TypeScript, SQL
+• Cloud Services: Cloudinary, GitHub Actions, Google Cloud Platform
+• Automation: Email marketing automation, Telegram Bot API, Web scraping
+• Development Tools: Git, VS Code, Claude AI, Windsurf, Devin
+• Data Analysis: Google Sheets, Excel, Python data processing
+
+
+AVAILABILITY
+• Immediately available for remote positions
+• Flexible working hours (EST/CET/MSK timezone coverage)
+• Willing to travel for quarterly team meetings and client visits
+• Open to contract, full-time, or part-time arrangements
