@@ -54,7 +54,7 @@ SEND_HOUR_FROM = 9
 SEND_HOUR_TO   = 18
 MSK = timezone(timedelta(hours=3))
 
-DAILY_LIMIT = 200
+DAILY_LIMIT = 300
 
 MAILER_INDEX = int(os.environ.get('MAILER_INDEX', '0'))
 TOTAL_MAILERS = int(os.environ.get('TOTAL_MAILERS', '1'))
