@@ -84,7 +84,7 @@ def is_send_window() -> bool:
 #  ПИСЬМО С РЕЗЮМЕ
 # ══════════════════════════════════════════════════════
 
-EMAIL_SUBJECT = "Remote Sales Manager Application — Roman Novozhilov (20+ Years B2B Export Experience)"
+EMAIL_SUBJECT = "Remote Sales Manager Application — Roman Novozhilov (20+ Years B2B Export Experience, Remote-Ready)"
 
 EMAIL_BODY_HTML = """\
 <!DOCTYPE html>
@@ -94,15 +94,16 @@ EMAIL_BODY_HTML = """\
 
   <p>Dear Hiring Manager,</p>
 
-  <p>I am writing to express my interest in <strong>remote Sales Manager</strong>, <strong>Export Sales Manager</strong>, or <strong>Business Development Manager</strong> positions at your company.</p>
+  <p>I am writing to express my strong interest in <strong>remote Sales Manager</strong>, <strong>Export Sales Manager</strong>, or <strong>Business Development Manager</strong> positions at your company.</p>
 
-  <p>With <strong>20+ years of proven B2B wholesale sales and export experience</strong>, I am currently based in Spain and seeking remote opportunities to contribute to US companies' international growth.</p>
+  <p>With <strong>20+ years of proven B2B wholesale sales and export experience</strong>, I am currently based in Spain and seeking remote opportunities to contribute to US companies' international growth. I have successfully worked remotely since 2022, managing multiple e-commerce projects and automation systems with demonstrated results.</p>
 
   <div style="background:#f5f5f5;padding:16px 20px;border-left:4px solid #e87722;margin:20px 0">
-    <h3 style="margin:0 0 12px 0;color:#1a1a2e">Why I Can Add Value to Your Company:</h3>
+    <h3 style="margin:0 0 12px 0;color:#1a1a2e">Why I Can Add Value to Your Remote Team:</h3>
     <ul style="margin:0;padding-left:20px">
       <li><strong>20+ years in B2B wholesale sales</strong> with major manufacturers (ceramic tiles, porcelain, construction materials)</li>
-      <li><strong>Engineering degree in Electronic Systems</strong> — I understand the product, not just the sales pitch</li>
+      <li><strong>Proven remote work experience</strong> — successfully managed independent e-commerce projects and automation systems since 2022</li>
+      <li><strong>Engineering degree in Electronic Systems</strong> — technical background that helps me understand complex products</li>
       <li><strong>Deep knowledge of Russian/CIS markets</strong> — valuable for your export expansion to Eastern Europe</li>
       <li><strong>Extensive network</strong> in construction, distribution, and retail sectors</li>
       <li><strong>Proven export sales track record</strong> and international business development</li>
@@ -110,11 +111,12 @@ EMAIL_BODY_HTML = """\
       <li><strong>E-commerce experience</strong> — running own online stores with 3,000+ contact database</li>
       <li><strong>Sales team training</strong> and trade show management experience</li>
       <li><strong>Fluent in Russian and English</strong> (C1), basic Spanish</li>
-      <li><strong>Available for remote work immediately</strong> — based in Spain, flexible timezone</li>
+      <li><strong>Flexible timezone coverage</strong> — based in Spain (EST+6), available for US business hours with overlap</li>
+      <li><strong>Self-motivated and disciplined</strong> — proven ability to work independently and deliver results remotely</li>
     </ul>
   </div>
 
-  <p>I am particularly interested in remote positions with companies in:</p>
+  <p>I am particularly interested in remote positions with US companies in:</p>
   <ul>
     <li>Ceramic tiles and construction materials</li>
     <li>Building materials and manufacturing</li>
@@ -123,9 +125,9 @@ EMAIL_BODY_HTML = """\
     <li>B2B sales and business development</li>
   </ul>
 
-  <p>I am available for a video interview at your convenience and can start immediately.</p>
+  <p>I am available for a video interview at your convenience and can start immediately. I am comfortable with all standard remote collaboration tools (Slack, Teams, Zoom, Asana, Trello) and have a proven track record of successful remote collaboration.</p>
 
-  <p>Please find my detailed CV attached. I would welcome the opportunity to discuss how my experience can benefit your organization's growth.</p>
+  <p>Please find my detailed CV attached. I would welcome the opportunity to discuss how my experience can benefit your organization's growth and how I can contribute to your remote team.</p>
 
   <div style="background:#1a1a2e;color:#fff;padding:16px 20px;border-radius:8px;margin-top:24px">
     <strong>Roman Novozhilov</strong><br>
@@ -133,7 +135,7 @@ EMAIL_BODY_HTML = """\
     📞 <a href="tel:+34605650553" style="color:#e87722">+34 605 650 553</a><br>
     📧 <a href="mailto:novorom@gmail.com" style="color:#e87722">novorom@gmail.com</a><br>
     🔗 <a href="https://www.linkedin.com/in/roman-novozhilov-b956b780/" style="color:#e87722">LinkedIn Profile</a><br>
-    📍 Spain (Remote — Available Immediately)
+    📍 Spain (Remote — EST+6 Timezone — Available Immediately)
   </div>
 
   <p style="font-size:11px;color:#aaa;margin-top:16px">
@@ -147,13 +149,14 @@ EMAIL_BODY_HTML = """\
 EMAIL_BODY_TEXT = """\
 Dear Hiring Manager,
 
-I am writing to express my interest in remote Sales Manager, Export Sales Manager, or Business Development Manager positions at your company.
+I am writing to express my strong interest in remote Sales Manager, Export Sales Manager, or Business Development Manager positions at your company.
 
-With 20+ years of proven B2B wholesale sales and export experience, I am currently based in Spain and seeking remote opportunities to contribute to US companies' international growth.
+With 20+ years of proven B2B wholesale sales and export experience, I am currently based in Spain and seeking remote opportunities to contribute to US companies' international growth. I have successfully worked remotely since 2022, managing multiple e-commerce projects and automation systems with demonstrated results.
 
-Why I Can Add Value to Your Company:
+Why I Can Add Value to Your Remote Team:
 - 20+ years in B2B wholesale sales with major manufacturers (ceramic tiles, porcelain, construction materials)
-- Engineering degree in Electronic Systems — I understand the product, not just the sales pitch
+- Proven remote work experience — successfully managed independent e-commerce projects and automation systems since 2022
+- Engineering degree in Electronic Systems — technical background that helps me understand complex products
 - Deep knowledge of Russian/CIS markets — valuable for your export expansion to Eastern Europe
 - Extensive network in construction, distribution, and retail sectors
 - Proven export sales track record and international business development
@@ -161,25 +164,26 @@ Why I Can Add Value to Your Company:
 - E-commerce experience — running own online stores with 3,000+ contact database
 - Sales team training and trade show management experience
 - Fluent in Russian and English (C1), basic Spanish
-- Available for remote work immediately — based in Spain, flexible timezone
+- Flexible timezone coverage — based in Spain (EST+6), available for US business hours with overlap
+- Self-motivated and disciplined — proven ability to work independently and deliver results remotely
 
-I am particularly interested in remote positions with companies in:
+I am particularly interested in remote positions with US companies in:
 - Ceramic tiles and construction materials
 - Building materials and manufacturing
 - Wholesale and distribution
 - Export and international trade
 - B2B sales and business development
 
-I am available for a video interview at your convenience and can start immediately.
+I am available for a video interview at your convenience and can start immediately. I am comfortable with all standard remote collaboration tools (Slack, Teams, Zoom, Asana, Trello) and have a proven track record of successful remote collaboration.
 
-Please find my detailed CV attached. I would welcome the opportunity to discuss how my experience can benefit your organization's growth.
+Please find my detailed CV attached. I would welcome the opportunity to discuss how my experience can benefit your organization's growth and how I can contribute to your remote team.
 
 Roman Novozhilov
 Remote Sales Manager — 20+ years B2B Export Sales
 +34 605 650 553
 novorom@gmail.com
 LinkedIn: https://www.linkedin.com/in/roman-novozhilov-b956b780/
-Spain (Remote — Available Immediately)
+Spain (Remote — EST+6 Timezone — Available Immediately)
 
 If you are not interested in receiving job applications, please reply "Remove".
 """
