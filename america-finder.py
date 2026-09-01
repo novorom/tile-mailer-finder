@@ -85,6 +85,42 @@ REMOTE_JOB_CATEGORIES = [
     'remote sales export companies',
 ]
 
+# Статический список американских компаний для удаленной работы (fallback)
+STATIC_AMERICAN_COMPANIES = [
+    # Керамическая промышленность
+    {'name': 'Mohawk Industries', 'website': 'https://www.mohawkind.com'},
+    {'name': 'Dal-Tile Corporation', 'website': 'https://www.daltile.com'},
+    {'name': 'Shaw Industries', 'website': 'https://www.shawinc.com'},
+    {'name': 'Armstrong World Industries', 'website': 'https://www.armstrongceilings.com'},
+    {'name': 'Interface Inc', 'website': 'https://www.interface.com'},
+    {'name': 'Crossville Inc', 'website': 'https://www.crossvilleinc.com'},
+    {'name': 'Florida Tile', 'website': 'https://www.floridatile.com'},
+    
+    # Строительные материалы
+    {'name': 'Home Depot', 'website': 'https://www.homedepot.com'},
+    {'name': 'Lowe\'s Companies', 'website': 'https://www.lowes.com'},
+    {'name': 'Builders FirstSource', 'website': 'https://www.bldr.com'},
+    {'name': '84 Lumber', 'website': 'https://www.84lumber.com'},
+    {'name': 'Menards', 'website': 'https://www.menards.com'},
+    
+    # Оптовые дистрибьюторы
+    {'name': 'Ferguson Enterprises', 'website': 'https://www.ferguson.com'},
+    {'name': 'Watsco Inc', 'website': 'https://www.watsco.com'},
+    {'name': 'HD Supply', 'website': 'https://www.hdsupply.com'},
+    {'name': 'Sonepar', 'website': 'https://www.sonepar.com'},
+    
+    # Экспорт и международная торговля
+    {'name': 'C.H. Robinson', 'website': 'https://www.chrobinson.com'},
+    {'name': 'Expeditors International', 'website': 'https://www.expeditors.com'},
+    {'name': 'Flexport', 'website': 'https://www.flexport.com'},
+    {'name': 'Kuehne+Nagel', 'website': 'https://home.kuehne-nagel.com'},
+    
+    # Производство и дистрибуция
+    {'name': 'USG Corporation', 'website': 'https://www.usg.com'},
+    {'name': 'Owens Corning', 'website': 'https://www.owenscorning.com'},
+    {'name': 'Johns Manville', 'website': 'https://www.jm.com'},
+]
+
 # ══════════════════════════════════════════════════════
 #  GOOGLE SHEETS
 # ══════════════════════════════════════════════════════
@@ -317,74 +353,126 @@ def main():
     total_added = 0
     processed_domains = set()
     
-    for category in REMOTE_JOB_CATEGORIES:
-        log.info(f'\n🔍 Категория: {category}')
-        
-        candidates = []
-        
-        # Google Search (основной источник)
-        try:
-            google_results = search_google_web(category)
-            for result in google_results[:5]:
-                website = result.get('link', '')
-                if website:
-                    domain = urlparse(website).netloc.lower().replace('www.', '')
-                    company_name = domain.split('.')[0].capitalize()
-                    candidates.append({
-                        'name': company_name,
-                        'website': website,
-                        'source': 'Google Search'
-                    })
-        except Exception as e:
-            log.warning(f'Google Search error: {e}')
-        
-        # Уникализация по домену
-        unique = {}
-        for c in candidates:
-            domain = None
-            if c.get('website'):
-                try:
-                    domain = urlparse(c['website']).netloc.lower().replace('www.', '')
-                except:
-                    pass
-            
-            if domain and domain not in unique:
-                unique[domain] = c
-        
-        log.info(f'   Уникальных компаний: {len(unique)}')
-        
-        for domain, company in unique.items():
-            if domain in processed_domains:
-                log.info(f'     [!] Домен {domain} уже обрабатывался')
-                continue
-            
+    # Сначала обрабатываем статический список компаний
+    log.info(f'Статических компаний: {len(STATIC_AMERICAN_COMPANIES)}')
+    for company in STATIC_AMERICAN_COMPANIES:
+        domain = urlparse(company['website']).netloc.lower().replace('www.', '')
+        if domain not in processed_domains:
             processed_domains.add(domain)
-            
-            website = company.get('website')
-            company_name = company.get('name', domain)
-            
-            log.info(f'   » {company_name} ({company.get("source")})')
+            log.info(f'   » {company["name"]} (Static)')
             
             # Проверяем существование сайта
-            if not check_site_exists(website):
+            if not check_site_exists(company['website']):
                 log.info(f'     [!] Сайт недоступен')
                 continue
             
             # Парсим emails с сайта
-            emails = extract_emails_from_url(website)
+            emails = extract_emails_from_url(company['website'])
             
             for email in emails:
                 if email.lower() not in existing_emails:
-                    if add_company_to_sheet(sheet, company_name, email, website, category):
+                    if add_company_to_sheet(sheet, company['name'], email, company['website'], 'Static'):
                         existing_emails.add(email.lower())
                         total_added += 1
                         log.info(f'     [OK] Email: {email}')
                 else:
                     log.info(f'     [!] Email уже есть в базе')
             
-            time.sleep(2)  # Задержка между запросами
-        
-        time.sleep(3)  # Задержка между категориями
+            time.sleep(2)
+    
+    # Затем пробуем поиск через категории (если Google Search работает)
+    google_search_works = False
+    try:
+        test_search = search_google_web('test')
+        if test_search:
+            google_search_works = True
+    except:
+        google_search_works = False
+    
+    if not google_search_works:
+        log.warning('Google Search недоступен (403), пропускаем динамический поиск')
+    else:
+        for category in REMOTE_JOB_CATEGORIES:
+            log.info(f'\n🔍 Категория: {category}')
+            
+            candidates = []
+            
+            # Google Search (основной источник)
+            try:
+                google_results = search_google_web(category)
+                for result in google_results[:5]:
+                    website = result.get('link', '')
+                    if website:
+                        domain = urlparse(website).netloc.lower().replace('www.', '')
+                        company_name = domain.split('.')[0].capitalize()
+                        candidates.append({
+                            'name': company_name,
+                            'website': website,
+                            'source': 'Google Search'
+                        })
+            except Exception as e:
+                log.warning(f'Google Search error: {e}')
+            
+            # Gemini fallback (с альтернативным ключом)
+            try:
+                gemini_results = search_gemini_leads(category)
+                for company in gemini_results:
+                    if 'name' in company and 'website' in company:
+                        candidates.append({
+                            'name': company['name'],
+                            'website': company['website'],
+                            'source': 'Gemini AI'
+                        })
+            except Exception as e:
+                log.warning(f'Gemini error: {e}')
+            
+            # Уникализация по домену
+            unique = {}
+            for c in candidates:
+                domain = None
+                if c.get('website'):
+                    try:
+                        domain = urlparse(c['website']).netloc.lower().replace('www.', '')
+                    except:
+                        pass
+                
+                if domain and domain not in unique:
+                    unique[domain] = c
+            
+            log.info(f'   Уникальных компаний: {len(unique)}')
+            
+            for domain, company in unique.items():
+                if domain in processed_domains:
+                    log.info(f'     [!] Домен {domain} уже обрабатывался')
+                    continue
+                
+                processed_domains.add(domain)
+                
+                website = company.get('website')
+                company_name = company.get('name', domain)
+                
+                log.info(f'   » {company_name} ({company.get("source")})')
+                
+                # Проверяем существование сайта
+                if not check_site_exists(website):
+                    log.info(f'     [!] Сайт недоступен')
+                    continue
+                
+                # Парсим emails с сайта
+                emails = extract_emails_from_url(website)
+                
+                for email in emails:
+                    if email.lower() not in existing_emails:
+                        if add_company_to_sheet(sheet, company_name, email, website, category):
+                            existing_emails.add(email.lower())
+                            total_added += 1
+                            log.info(f'     [OK] Email: {email}')
+                    else:
+                        log.info(f'     [!] Email уже есть в базе')
+                
+                time.sleep(2)  # Задержка между запросами
+            
+            time.sleep(3)  # Задержка между категориями
     
     log.info('═══════════════════════════════════════════')
     log.info(f'ИТОГ: добавлено компаний: {total_added}')
