@@ -160,26 +160,40 @@ def search_google_web(query):
 
 def extract_emails_from_url(url):
     """Извлекает emails с веб-страницы"""
+    log.info(f"       Парсинг: {url}")
     try:
-        response = requests.get(url, headers=HEADERS, timeout=10)
-        response.raise_for_status()
-        soup = BeautifulSoup(response.text, 'html.parser')
+        res = requests.get(url, headers=HEADERS, timeout=15)
+        soup = BeautifulSoup(res.text, 'html.parser')
         
-        # Поиск email в тексте
         emails = set()
-        email_pattern = r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
-        
-        # Поиск в тексте страницы
-        text = soup.get_text()
-        emails.update(re.findall(email_pattern, text))
         
         # Поиск в mailto ссылках
-        for a in soup.find_all('a', href=True):
-            href = a['href']
-            if 'mailto:' in href:
-                email = href.replace('mailto:', '').split('?')[0].strip()
-                if '@' in email:
-                    emails.add(email)
+        for mailto in soup.select('a[href^="mailto:"]'):
+            email = mailto['href'].replace('mailto:', '').split('?')[0].strip()
+            if '@' in email:
+                emails.add(email.lower())
+        
+        # Поиск в тексте (регулярка)
+        text = soup.get_text()
+        email_pattern = r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
+        found_emails = re.findall(email_pattern, text)
+        for email in found_emails:
+            # Исключаем emails с цифрами перед @
+            if not re.search(r'\d+@', email):
+                emails.add(email.lower())
+        
+        # Поиск в data-email атрибутах
+        for elem in soup.find_all(attrs={'data-email': True}):
+            email = elem['data-email']
+            if '@' in email:
+                emails.add(email.lower())
+        
+        # Поиск в meta тегах
+        for meta in soup.find_all('meta'):
+            if meta.get('name') in ['email', 'contact-email', 'reply-to']:
+                content = meta.get('content', '')
+                if '@' in content:
+                    emails.add(content.lower())
         
         # Фильтрация
         valid_emails = []
@@ -189,7 +203,7 @@ def extract_emails_from_url(url):
         for email in emails:
             email_lower = email.lower()
             if not any(pattern in email_lower for pattern in skip_patterns):
-                if len(email) < 80:  # Ограничение длины
+                if len(email) < 80:
                     valid_emails.append(email)
         
         return valid_emails
@@ -212,23 +226,25 @@ def search_gemini_leads(query):
     for model_name in models_to_try:
         try:
             model = genai.GenerativeModel(model_name)
+            # Тестовый запрос для проверки доступности
+            model.generate_content("test", generation_config={"max_output_tokens": 1})
+            log.info(f'     [Gemini AI] модель: {model_name}')
+            
             prompt = f"""
             Find 5-10 US companies that are hiring for: {query}
             
             Return ONLY a JSON array with this format:
             [
                 {{
-                    "company": "Company Name",
-                    "website": "https://example.com",
-                    "email": "contact@example.com",
-                    "job_title": "Job Title"
+                    "name": "Company Name",
+                    "website": "https://example.com"
                 }}
             ]
             
             Focus on companies in: ceramic industry, construction materials, manufacturing, wholesale, export.
             """
             
-            response = model.generate_content(prompt)
+            response = model.generate_content(prompt, generation_config={"max_output_tokens": 2000})
             text = response.text
             
             # Извлечение JSON из ответа
@@ -277,7 +293,7 @@ def main():
     
     sheet = get_sheet()
     
-    # Получаем существующие emails из столбца E
+    # Загружаем существующие emails из столбца E
     try:
         existing_emails = set()
         col_e_values = sheet.col_values(5)  # Столбец E
@@ -285,28 +301,78 @@ def main():
             if email and '@' in email:
                 existing_emails.add(email.lower())
         log.info(f'Существующих email в базе: {len(existing_emails)}')
-    except:
+    except Exception as e:
+        log.warning(f'Ошибка загрузки существующих email: {e}')
         existing_emails = set()
     
     total_added = 0
+    processed_domains = set()
     
     for category in REMOTE_JOB_CATEGORIES:
-        log.info(f'  🔍 {category}')
+        log.info(f'\n🔍 Категория: {category}')
         
-        # Поиск через Google
-        google_results = search_google_web(category)
-        for result in google_results[:5]:
-            website = result.get('link', '')
-            if not website:
+        candidates = []
+        
+        # Google Search
+        try:
+            google_results = search_google_web(category)
+            for result in google_results[:5]:
+                website = result.get('link', '')
+                if website:
+                    domain = urlparse(website).netloc.lower().replace('www.', '')
+                    company_name = domain.split('.')[0].capitalize()
+                    candidates.append({
+                        'name': company_name,
+                        'website': website,
+                        'source': 'Google Search'
+                    })
+        except Exception as e:
+            log.warning(f'Google Search error: {e}')
+        
+        # Gemini fallback (с ограничением по квоте)
+        try:
+            gemini_results = search_gemini_leads(category)
+            for company in gemini_results:
+                if 'name' in company and 'website' in company:
+                    candidates.append({
+                        'name': company['name'],
+                        'website': company['website'],
+                        'source': 'Gemini AI'
+                    })
+        except Exception as e:
+            log.warning(f'Gemini error: {e}')
+        
+        # Уникализация по домену
+        unique = {}
+        for c in candidates:
+            domain = None
+            if c.get('website'):
+                try:
+                    domain = urlparse(c['website']).netloc.lower().replace('www.', '')
+                except:
+                    pass
+            
+            if domain and domain not in unique:
+                unique[domain] = c
+        
+        log.info(f'   Уникальных компаний: {len(unique)}')
+        
+        for domain, company in unique.items():
+            if domain in processed_domains:
+                log.info(f'     [!] Домен {domain} уже обрабатывался')
                 continue
             
-            # Извлекаем домен
-            domain = urlparse(website).netloc
-            if not domain:
-                continue
+            processed_domains.add(domain)
             
-            # Извлекаем название компании из URL
-            company_name = domain.replace('www.', '').split('.')[0].capitalize()
+            website = company.get('website')
+            company_name = company.get('name', domain)
+            
+            log.info(f'   » {company_name} ({company.get("source")})')
+            
+            # Проверяем существование сайта
+            if not check_site_exists(website):
+                log.info(f'     [!] Сайт недоступен')
+                continue
             
             # Парсим emails с сайта
             emails = extract_emails_from_url(website)
@@ -316,27 +382,25 @@ def main():
                     if add_company_to_sheet(sheet, company_name, email, website, category):
                         existing_emails.add(email.lower())
                         total_added += 1
+                        log.info(f'     [OK] Email: {email}')
+                else:
+                    log.info(f'     [!] Email уже есть в базе')
             
-            time.sleep(2)
+            time.sleep(2)  # Задержка между запросами
         
-        # Поиск через Gemini
-        gemini_results = search_gemini_leads(category)
-        for company in gemini_results:
-            email = company.get('email', '')
-            if email and email.lower() not in existing_emails:
-                company_name = company.get('company', '')
-                website = company.get('website', '')
-                job_title = company.get('job_title', category)
-                
-                if add_company_to_sheet(sheet, company_name, email, website, job_title):
-                    existing_emails.add(email.lower())
-                    total_added += 1
-        
-        time.sleep(3)
+        time.sleep(3)  # Задержка между категориями
     
     log.info('═══════════════════════════════════════════')
     log.info(f'ИТОГ: добавлено компаний: {total_added}')
     log.info('═══════════════════════════════════════════')
+
+def check_site_exists(url):
+    """Проверяет доступность сайта"""
+    try:
+        response = requests.head(url, headers=HEADERS, timeout=10, allow_redirects=True)
+        return response.status_code < 400
+    except:
+        return False
 
 if __name__ == '__main__':
     main()
