@@ -39,6 +39,7 @@ CREDS_JSON = os.environ.get('GOOGLE_CREDS', '')
 GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY', '')
 GOOGLE_CSE_ID = os.environ.get('GOOGLE_CSE_ID', '')
 GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', '')
+GEMINI_API_KEY_2 = os.environ.get('GEMINI_API_KEY_2', '')  # Альтернативный ключ
 HUNTER_API_KEY = os.environ.get('HUNTER_API_KEY', '')
 
 HEADERS = {
@@ -46,38 +47,42 @@ HEADERS = {
     'Accept-Language': 'en-US,en;q=0.9',
 }
 
-# Категории для поиска удаленной работы в США (сокращенный список)
+# Категории для поиска удаленной работы в США
 REMOTE_JOB_CATEGORIES = [
+    # Remote Sales Manager positions
     'remote sales manager USA',
     'remote export sales manager',
     'remote B2B sales representative',
+    'remote account manager',
     'remote business development manager',
-]
-
-# Статический список американских компаний для удаленной работы
-STATIC_AMERICAN_COMPANIES = [
-    # Керамическая промышленность
-    {'name': 'Mohawk Industries', 'website': 'https://www.mohawkind.com'},
-    {'name': 'Dal-Tile Corporation', 'website': 'https://www.daltile.com'},
-    {'name': 'Shaw Industries', 'website': 'https://www.shawinc.com'},
-    {'name': 'Armstrong World Industries', 'website': 'https://www.armstrongceilings.com'},
-    {'name': 'Interface Inc', 'website': 'https://www.interface.com'},
+    'remote sales director',
+    'work from home sales positions',
+    'remote sales jobs USA',
     
-    # Строительные материалы
-    {'name': 'Home Depot', 'website': 'https://www.homedepot.com'},
-    {'name': 'Lowe\'s Companies', 'website': 'https://www.lowes.com'},
-    {'name': 'Builders FirstSource', 'website': 'https://www.bldr.com'},
-    {'name': '84 Lumber', 'website': 'https://www.84lumber.com'},
+    # Industry-specific remote sales
+    'remote sales manager construction materials',
+    'remote sales manager ceramic industry',
+    'remote sales manager building materials',
+    'remote export sales manager USA',
+    'remote international sales manager',
     
-    # Оптовые дистрибьюторы
-    {'name': 'Ferguson Enterprises', 'website': 'https://www.ferguson.com'},
-    {'name': 'Watsco Inc', 'website': 'https://www.watsco.com'},
-    {'name': 'HD Supply', 'website': 'https://www.hdsupply.com'},
+    # Remote commercial roles
+    'remote commercial director',
+    'remote business development director',
+    'remote account executive',
+    'remote sales representative',
     
-    # Экспорт и международная торговля
-    {'name': 'C.H. Robinson', 'website': 'https://www.chrobinson.com'},
-    {'name': 'Expeditors International', 'website': 'https://www.expeditors.com'},
-    {'name': 'Flexport', 'website': 'https://www.flexport.com'},
+    # Location-specific remote work
+    'remote sales jobs California',
+    'remote sales jobs New York',
+    'remote sales jobs Texas',
+    'remote sales jobs Florida',
+    
+    # Company types
+    'remote sales manufacturing companies',
+    'remote sales distribution companies',
+    'remote sales wholesale companies',
+    'remote sales export companies',
 ]
 
 # ══════════════════════════════════════════════════════
@@ -212,46 +217,54 @@ def extract_emails_from_url(url):
 # ══════════════════════════════════════════════════════
 
 def search_gemini_leads(query):
-    """Поиск компаний через Gemini AI"""
-    if not GEMINI_API_KEY:
-        return []
+    """Поиск компаний через Gemini AI с альтернативным ключом"""
+    api_keys = [GEMINI_API_KEY, GEMINI_API_KEY_2]
     
-    genai.configure(api_key=GEMINI_API_KEY)
-    models_to_try = ['gemini-3.1-flash-lite', 'gemini-1.5-flash', 'gemini-pro']
-    
-    for model_name in models_to_try:
+    for api_key in api_keys:
+        if not api_key:
+            continue
+            
         try:
-            model = genai.GenerativeModel(model_name)
-            # Тестовый запрос для проверки доступности
-            model.generate_content("test", generation_config={"max_output_tokens": 1})
-            log.info(f'     [Gemini AI] модель: {model_name}')
+            genai.configure(api_key=api_key)
+            models_to_try = ['gemini-3.1-flash-lite', 'gemini-1.5-flash', 'gemini-pro']
             
-            prompt = f"""
-            Find 5-10 US companies that are hiring for: {query}
-            
-            Return ONLY a JSON array with this format:
-            [
-                {{
-                    "name": "Company Name",
-                    "website": "https://example.com"
-                }}
-            ]
-            
-            Focus on companies in: ceramic industry, construction materials, manufacturing, wholesale, export.
-            """
-            
-            response = model.generate_content(prompt, generation_config={"max_output_tokens": 2000})
-            text = response.text
-            
-            # Извлечение JSON из ответа
-            json_match = re.search(r'\[.*\]', text, re.DOTALL)
-            if json_match:
-                json_str = json_match.group(0)
-                companies = json_module.loads(json_str)
-                return companies
-            
+            for model_name in models_to_try:
+                try:
+                    model = genai.GenerativeModel(model_name)
+                    # Тестовый запрос для проверки доступности
+                    model.generate_content("test", generation_config={"max_output_tokens": 1})
+                    log.info(f'     [Gemini AI] модель: {model_name}')
+                    
+                    prompt = f"""
+                    Find 5-10 US companies that are hiring for: {query}
+                    
+                    Return ONLY a JSON array with this format:
+                    [
+                        {{
+                            "name": "Company Name",
+                            "website": "https://example.com"
+                        }}
+                    ]
+                    
+                    Focus on companies in: ceramic industry, construction materials, manufacturing, wholesale, export.
+                    """
+                    
+                    response = model.generate_content(prompt, generation_config={"max_output_tokens": 2000})
+                    text = response.text
+                    
+                    # Извлечение JSON из ответа
+                    json_match = re.search(r'\[.*\]', text, re.DOTALL)
+                    if json_match:
+                        json_str = json_match.group(0)
+                        companies = json_module.loads(json_str)
+                        return companies
+                    
+                except Exception as ex:
+                    log.warning(f'Gemini {model_name} error: {ex}')
+                    continue
+                    
         except Exception as ex:
-            log.warning(f'Gemini {model_name} error: {ex}')
+            log.warning(f'Gemini API key error: {ex}')
             continue
     
     return []
@@ -304,34 +317,6 @@ def main():
     total_added = 0
     processed_domains = set()
     
-    # Добавляем статический список компаний
-    log.info(f'Статических компаний: {len(STATIC_AMERICAN_COMPANIES)}')
-    for company in STATIC_AMERICAN_COMPANIES:
-        domain = urlparse(company['website']).netloc.lower().replace('www.', '')
-        if domain not in processed_domains:
-            processed_domains.add(domain)
-            log.info(f'   » {company["name"]} (Static)')
-            
-            # Проверяем существование сайта
-            if not check_site_exists(company['website']):
-                log.info(f'     [!] Сайт недоступен')
-                continue
-            
-            # Парсим emails с сайта
-            emails = extract_emails_from_url(company['website'])
-            
-            for email in emails:
-                if email.lower() not in existing_emails:
-                    if add_company_to_sheet(sheet, company['name'], email, company['website'], 'Static'):
-                        existing_emails.add(email.lower())
-                        total_added += 1
-                        log.info(f'     [OK] Email: {email}')
-                else:
-                    log.info(f'     [!] Email уже есть в базе')
-            
-            time.sleep(2)
-    
-    # Поиск через категории
     for category in REMOTE_JOB_CATEGORIES:
         log.info(f'\n🔍 Категория: {category}')
         
