@@ -2,8 +2,8 @@ name: America Remote Job Mailer (Канал 3)
 
 on:
   schedule:
-    # Запуск каждый будний день в 11:00 UTC (14:00 МСК)
-    - cron: '0 11 * * 1-5'
+    # Запуск каждый будний день в 13:00 UTC (9:00 AM EDT)
+    - cron: '0 13 * * 1-5'
   workflow_dispatch:
 
 jobs:

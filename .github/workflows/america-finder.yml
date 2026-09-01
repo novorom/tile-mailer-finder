@@ -2,7 +2,7 @@ name: America Remote Job Finder
 
 on:
   schedule:
-    - cron: '0 4 * * *'  # Каждый день в 4:00 МСК (ночью)
+    - cron: '0 6 * * *'  # Каждый день в 2:00 AM EDT (6:00 UTC)
   workflow_dispatch:
 
 jobs:
