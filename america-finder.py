@@ -383,6 +383,17 @@ def main():
             # Парсим emails с сайта
             emails = extract_emails_from_url(company['website'])
             
+            # Если не нашли emails, пробуем Hunter.io
+            if not emails and HUNTER_API_KEY:
+                try:
+                    domain = urlparse(company['website']).netloc.lower().replace('www.', '')
+                    hunter_emails = search_hunter_emails(domain)
+                    if hunter_emails:
+                        emails.extend(hunter_emails)
+                        log.info(f'       Hunter.io нашел: {len(hunter_emails)} emails')
+                except Exception as e:
+                    log.warning(f'Hunter.io error: {e}')
+            
             for email in emails:
                 if email.lower() not in existing_emails:
                     if add_company_to_sheet(sheet, company['name'], email, company['website'], 'Static'):
