@@ -46,42 +46,38 @@ HEADERS = {
     'Accept-Language': 'en-US,en;q=0.9',
 }
 
-# Категории для поиска удаленной работы в США
+# Категории для поиска удаленной работы в США (сокращенный список)
 REMOTE_JOB_CATEGORIES = [
-    # Remote Sales Manager positions
     'remote sales manager USA',
     'remote export sales manager',
     'remote B2B sales representative',
-    'remote account manager',
     'remote business development manager',
-    'remote sales director',
-    'work from home sales positions',
-    'remote sales jobs USA',
+]
+
+# Статический список американских компаний для удаленной работы
+STATIC_AMERICAN_COMPANIES = [
+    # Керамическая промышленность
+    {'name': 'Mohawk Industries', 'website': 'https://www.mohawkind.com'},
+    {'name': 'Dal-Tile Corporation', 'website': 'https://www.daltile.com'},
+    {'name': 'Shaw Industries', 'website': 'https://www.shawinc.com'},
+    {'name': 'Armstrong World Industries', 'website': 'https://www.armstrongceilings.com'},
+    {'name': 'Interface Inc', 'website': 'https://www.interface.com'},
     
-    # Industry-specific remote sales
-    'remote sales manager construction materials',
-    'remote sales manager ceramic industry',
-    'remote sales manager building materials',
-    'remote export sales manager USA',
-    'remote international sales manager',
+    # Строительные материалы
+    {'name': 'Home Depot', 'website': 'https://www.homedepot.com'},
+    {'name': 'Lowe\'s Companies', 'website': 'https://www.lowes.com'},
+    {'name': 'Builders FirstSource', 'website': 'https://www.bldr.com'},
+    {'name': '84 Lumber', 'website': 'https://www.84lumber.com'},
     
-    # Remote commercial roles
-    'remote commercial director',
-    'remote business development director',
-    'remote account executive',
-    'remote sales representative',
+    # Оптовые дистрибьюторы
+    {'name': 'Ferguson Enterprises', 'website': 'https://www.ferguson.com'},
+    {'name': 'Watsco Inc', 'website': 'https://www.watsco.com'},
+    {'name': 'HD Supply', 'website': 'https://www.hdsupply.com'},
     
-    # Location-specific remote work
-    'remote sales jobs California',
-    'remote sales jobs New York',
-    'remote sales jobs Texas',
-    'remote sales jobs Florida',
-    
-    # Company types
-    'remote sales manufacturing companies',
-    'remote sales distribution companies',
-    'remote sales wholesale companies',
-    'remote sales export companies',
+    # Экспорт и международная торговля
+    {'name': 'C.H. Robinson', 'website': 'https://www.chrobinson.com'},
+    {'name': 'Expeditors International', 'website': 'https://www.expeditors.com'},
+    {'name': 'Flexport', 'website': 'https://www.flexport.com'},
 ]
 
 # ══════════════════════════════════════════════════════
@@ -308,12 +304,40 @@ def main():
     total_added = 0
     processed_domains = set()
     
+    # Добавляем статический список компаний
+    log.info(f'Статических компаний: {len(STATIC_AMERICAN_COMPANIES)}')
+    for company in STATIC_AMERICAN_COMPANIES:
+        domain = urlparse(company['website']).netloc.lower().replace('www.', '')
+        if domain not in processed_domains:
+            processed_domains.add(domain)
+            log.info(f'   » {company["name"]} (Static)')
+            
+            # Проверяем существование сайта
+            if not check_site_exists(company['website']):
+                log.info(f'     [!] Сайт недоступен')
+                continue
+            
+            # Парсим emails с сайта
+            emails = extract_emails_from_url(company['website'])
+            
+            for email in emails:
+                if email.lower() not in existing_emails:
+                    if add_company_to_sheet(sheet, company['name'], email, company['website'], 'Static'):
+                        existing_emails.add(email.lower())
+                        total_added += 1
+                        log.info(f'     [OK] Email: {email}')
+                else:
+                    log.info(f'     [!] Email уже есть в базе')
+            
+            time.sleep(2)
+    
+    # Поиск через категории
     for category in REMOTE_JOB_CATEGORIES:
         log.info(f'\n🔍 Категория: {category}')
         
         candidates = []
         
-        # Google Search
+        # Google Search (основной источник)
         try:
             google_results = search_google_web(category)
             for result in google_results[:5]:
@@ -328,19 +352,6 @@ def main():
                     })
         except Exception as e:
             log.warning(f'Google Search error: {e}')
-        
-        # Gemini fallback (с ограничением по квоте)
-        try:
-            gemini_results = search_gemini_leads(category)
-            for company in gemini_results:
-                if 'name' in company and 'website' in company:
-                    candidates.append({
-                        'name': company['name'],
-                        'website': company['website'],
-                        'source': 'Gemini AI'
-                    })
-        except Exception as e:
-            log.warning(f'Gemini error: {e}')
         
         # Уникализация по домену
         unique = {}
