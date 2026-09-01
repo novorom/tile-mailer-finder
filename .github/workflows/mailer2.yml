@@ -24,5 +24,5 @@ jobs:
           BREVO_USER: ${{ secrets.BREVO_USER_2 }}
           BREVO_PASS: ${{ secrets.BREVO_PASS_2 }}
           MAILER_INDEX: 1
-          TOTAL_MAILERS: 3
+          TOTAL_MAILERS: 2
         run: python mailer-agent.py

@@ -1,9 +1,9 @@
-name: Tile Mailer Agent 3 (Канал 3)
+name: America Remote Job Mailer (Канал 3)
 
 on:
   schedule:
-    # Запуск каждый будний день в 10:00 UTC (13:00 МСК)
-    - cron: '0 10 * * 1-5'
+    # Запуск каждый будний день в 11:00 UTC (14:00 МСК)
+    - cron: '0 11 * * 1-5'
   workflow_dispatch:
 
 jobs:
@@ -17,12 +17,12 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install -r requirements.txt
-      - name: Рассылка писем
+      - name: Рассылка резюме в США
         env:
-          SHEET_ID: ${{ secrets.SHEET_ID }}
+          SPAIN_SHEET_ID: ${{ secrets.SPAIN_SHEET_ID }}
           GOOGLE_CREDS: ${{ secrets.GOOGLE_CREDS }}
           BREVO_USER: ${{ secrets.BREVO_USER_3 }}
           BREVO_PASS: ${{ secrets.BREVO_PASS_3 }}
-          MAILER_INDEX: 2
-          TOTAL_MAILERS: 3
-        run: python mailer-agent.py
+          MAILER_INDEX: 0
+          TOTAL_MAILERS: 1
+        run: python america-mailer.py
