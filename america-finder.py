@@ -199,7 +199,7 @@ def extract_emails_from_url(url):
     """Извлекает emails с веб-страницы"""
     log.info(f"       Парсинг: {url}")
     try:
-        res = requests.get(url, headers=HEADERS, timeout=15)
+        res = requests.get(url, headers=HEADERS, timeout=20)
         soup = BeautifulSoup(res.text, 'html.parser')
         
         emails = set()
@@ -210,14 +210,12 @@ def extract_emails_from_url(url):
             if '@' in email:
                 emails.add(email.lower())
         
-        # Поиск в тексте (регулярка)
+        # Поиск в тексте (регулярка) - без исключения цифр перед @
         text = soup.get_text()
         email_pattern = r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
         found_emails = re.findall(email_pattern, text)
         for email in found_emails:
-            # Исключаем emails с цифрами перед @
-            if not re.search(r'\d+@', email):
-                emails.add(email.lower())
+            emails.add(email.lower())
         
         # Поиск в data-email атрибутах
         for elem in soup.find_all(attrs={'data-email': True}):
@@ -232,16 +230,32 @@ def extract_emails_from_url(url):
                 if '@' in content:
                     emails.add(content.lower())
         
-        # Фильтрация
+        # Поиск в href атрибутах (иногда email там)
+        for a in soup.find_all('a', href=True):
+            href = a['href']
+            if '@' in href and 'mailto:' not in href:
+                # Извлекаем email из href
+                email_match = re.search(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', href)
+                if email_match:
+                    emails.add(email_match.group(0).lower())
+        
+        # Менее строгая фильтрация
         valid_emails = []
         skip_patterns = ['example', 'test', 'noreply', 'no-reply', 'donotreply', 
-                        'support', 'admin', 'postmaster', 'webmaster', 'spam']
+                        'spam', 'devnull', 'null', 'localhost']
         
         for email in emails:
             email_lower = email.lower()
             if not any(pattern in email_lower for pattern in skip_patterns):
                 if len(email) < 80:
-                    valid_emails.append(email)
+                    # Проверяем базовую валидность
+                    if email.count('@') == 1 and '.' in email.split('@')[1]:
+                        valid_emails.append(email)
+        
+        if valid_emails:
+            log.info(f"       Найдено emails: {len(valid_emails)}")
+        else:
+            log.info(f"       Emails не найдены")
         
         return valid_emails
     except Exception as ex:
