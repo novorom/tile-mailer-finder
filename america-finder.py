@@ -84,6 +84,66 @@ REMOTE_JOB_CATEGORIES = [
     'remote sales distribution companies',
     'remote sales wholesale companies',
     'remote sales export companies',
+    
+    # Startups and AI companies
+    'remote sales manager startup',
+    'remote business development startup',
+    'remote sales AI company',
+    'remote sales tech startup',
+    'remote sales SaaS company',
+    'remote sales software startup',
+    'remote sales fintech startup',
+    'remote sales healthtech startup',
+    'remote sales edtech startup',
+    'remote sales proptech startup',
+    
+    # Technology companies
+    'remote sales manager software company',
+    'remote sales manager cloud services',
+    'remote sales manager cybersecurity',
+    'remote sales manager data analytics',
+    'remote sales manager machine learning',
+    'remote sales manager AI platform',
+    'remote sales manager tech company',
+    
+    # AI and Machine Learning
+    'remote sales manager artificial intelligence',
+    'remote sales manager machine learning',
+    'remote sales manager deep learning',
+    'remote sales manager NLP',
+    'remote sales manager computer vision',
+    
+    # SaaS and Cloud
+    'remote sales manager SaaS',
+    'remote sales manager cloud computing',
+    'remote sales manager CRM software',
+    'remote sales manager ERP software',
+    'remote sales manager collaboration tools',
+    
+    # Fintech
+    'remote sales manager fintech',
+    'remote sales manager payments',
+    'remote sales manager blockchain',
+    'remote sales manager cryptocurrency',
+    'remote sales manager financial software',
+    
+    # Healthtech
+    'remote sales manager healthtech',
+    'remote sales manager telemedicine',
+    'remote sales manager medical software',
+    'remote sales manager healthcare IT',
+    
+    # Edtech
+    'remote sales manager edtech',
+    'remote sales manager online learning',
+    'remote sales manager educational software',
+    'remote sales manager LMS platform',
+    
+    # Proptech
+    'remote sales manager proptech',
+    'remote sales manager real estate tech',
+    'remote sales manager property management',
+    'remote sales manager construction tech',
 ]
 
 # Статический список американских компаний для удаленной работы (fallback)
@@ -208,6 +268,114 @@ STATIC_AMERICAN_COMPANIES = [
     {'name': 'Comcast Business', 'website': 'https://www.comcastbusiness.com'},
     {'name': 'Charter Business', 'website': 'https://www.spectrum.com/business'},
     {'name': 'Lumen Technologies', 'website': 'https://www.lumen.com'},
+    
+    # Startups и технологические компании (где email более доступны)
+    {'name': 'Notion', 'website': 'https://www.notion.so'},
+    {'name': 'Figma', 'website': 'https://www.figma.com'},
+    {'name': 'Canva', 'website': 'https://www.canva.com'},
+    {'name': 'Slack', 'website': 'https://slack.com'},
+    {'name': 'Zoom', 'website': 'https://zoom.us'},
+    {'name': 'Airtable', 'website': 'https://airtable.com'},
+    {'name': 'Monday.com', 'website': 'https://monday.com'},
+    {'name': 'Asana', 'website': 'https://asana.com'},
+    {'name': 'Trello', 'website': 'https://trello.com'},
+    {'name': 'Basecamp', 'website': 'https://basecamp.com'},
+    
+    # AI и Machine Learning стартапы
+    {'name': 'OpenAI', 'website': 'https://openai.com'},
+    {'name': 'Anthropic', 'website': 'https://www.anthropic.com'},
+    {'name': 'Hugging Face', 'website': 'https://huggingface.co'},
+    {'name': 'Stability AI', 'website': 'https://stability.ai'},
+    {'name': 'Midjourney', 'website': 'https://www.midjourney.com'},
+    {'name': 'Runway ML', 'website': 'https://runwayml.com'},
+    {'name': 'Jasper AI', 'website': 'https://www.jasper.ai'},
+    {'name': 'Copy.ai', 'website': 'https://copy.ai'},
+    {'name': 'Writesonic', 'website': 'https://writesonic.com'},
+    {'name': 'Grammarly', 'website': 'https://www.grammarly.com'},
+    
+    # SaaS стартапы
+    {'name': 'HubSpot', 'website': 'https://www.hubspot.com'},
+    {'name': 'Salesforce', 'website': 'https://www.salesforce.com'},
+    {'name': 'Stripe', 'website': 'https://stripe.com'},
+    {'name': 'Shopify', 'website': 'https://www.shopify.com'},
+    {'name': 'Square', 'website': 'https://www.squareup.com'},
+    {'name': 'Toast', 'website': 'https://pos.toasttab.com'},
+    {'name': 'Deel', 'website': 'https://www.deel.com'},
+    {'name': 'Remote', 'website': 'https://remote.com'},
+    {'name': 'Pilot', 'website': 'https://pilot.com'},
+    {'name': 'Oyster', 'website': 'https://www.oysterhr.com'},
+    
+    # Fintech стартапы
+    {'name': 'Plaid', 'website': 'https://plaid.com'},
+    {'name': 'Coinbase', 'website': 'https://www.coinbase.com'},
+    {'name': 'Robinhood', 'website': 'https://robinhood.com'},
+    {'name': 'Chime', 'website': 'https://www.chime.com'},
+    {'name': 'Nubank', 'website': 'https://nubank.com'},
+    {'name': 'Revolut', 'website': 'https://www.revolut.com'},
+    {'name': 'Wise', 'website': 'https://wise.com'},
+    {'name': 'Brex', 'website': 'https://www.brex.com'},
+    {'name': 'Ramp', 'website': 'https://ramp.com'},
+    {'name': 'Mercury', 'website': 'https://mercury.com'},
+    
+    # Healthtech стартапы
+    {'name': 'Teladoc', 'website': 'https://www.teladochealth.com'},
+    {'name': 'Ro', 'website': 'https://ro.co'},
+    {'name': 'Hims & Hers', 'website': 'https://www.hims.com'},
+    {'name': 'Cerebral', 'website': 'https://cerebral.com'},
+    {'name': 'BetterHelp', 'website': 'https://www.betterhelp.com'},
+    {'name': 'Talkspace', 'website': 'https://www.talkspace.com'},
+    {'name': 'Headspace', 'website': 'https://www.headspace.com'},
+    {'name': 'Calm', 'website': 'https://www.calm.com'},
+    {'name': 'Noom', 'website': 'https://www.noom.com'},
+    {'name': 'Oura', 'website': 'https://ouraring.com'},
+    
+    # Edtech стартапы
+    {'name': 'Coursera', 'website': 'https://www.coursera.org'},
+    {'name': 'Udemy', 'website': 'https://www.udemy.com'},
+    {'name': 'edX', 'website': 'https://www.edx.org'},
+    {'name': 'Khan Academy', 'website': 'https://www.khanacademy.org'},
+    {'name': 'Duolingo', 'website': 'https://www.duolingo.com'},
+    {'name': 'Quizlet', 'website': 'https://quizlet.com'},
+    {'name': 'Chegg', 'website': 'https://www.chegg.com'},
+    {'name': 'MasterClass', 'website': 'https://www.masterclass.com'},
+    {'name': 'Skillshare', 'website': 'https://www.skillshare.com'},
+    {'name': 'Pluralsight', 'website': 'https://www.pluralsight.com'},
+    
+    # Proptech стартапы
+    {'name': 'Zillow', 'website': 'https://www.zillow.com'},
+    {'name': 'Redfin', 'website': 'https://www.redfin.com'},
+    {'name': 'Opendoor', 'website': 'https://www.opendoor.com'},
+    {'name': 'Better.com', 'website': 'https://www.better.com'},
+    {'name': 'Knock', 'website': 'https://www.knock.com'},
+    {'name': 'Compass', 'website': 'https://www.compass.com'},
+    {'name': 'Offerpad', 'website': 'https://www.offerpad.com'},
+    {'name': 'Reali', 'website': 'https://www.reali.com'},
+    {'name': 'ZeroDown', 'website': 'https://www.zerodown.com'},
+    {'name': 'Flyhomes', 'website': 'https://www.flyhomes.com'},
+    
+    # Cybersecurity стартапы
+    {'name': 'CrowdStrike', 'website': 'https://www.crowdstrike.com'},
+    {'name': 'Palo Alto Networks', 'website': 'https://www.paloaltonetworks.com'},
+    {'name': 'Zscaler', 'website': 'https://www.zscaler.com'},
+    {'name': 'Okta', 'website': 'https://www.okta.com'},
+    {'name': 'Auth0', 'website': 'https://auth0.com'},
+    {'name': 'Snyk', 'website': 'https://snyk.io'},
+    {'name': 'HashiCorp', 'website': 'https://www.hashicorp.com'},
+    {'name': 'Tenable', 'website': 'https://www.tenable.com'},
+    {'name': 'Rapid7', 'website': 'https://www.rapid7.com'},
+    {'name': 'Darktrace', 'website': 'https://www.darktrace.com'},
+    
+    # Data Analytics стартапы
+    {'name': 'Snowflake', 'website': 'https://www.snowflake.com'},
+    {'name': 'Databricks', 'website': 'https://www.databricks.com'},
+    {'name': 'Looker', 'website': 'https://looker.com'},
+    {'name': 'Tableau', 'website': 'https://www.tableau.com'},
+    {'name': 'Mode Analytics', 'website': 'https://mode.com'},
+    {'name': 'Periscope Data', 'website': 'https://periscopedata.com'},
+    {'name': 'Mixpanel', 'website': 'https://mixpanel.com'},
+    {'name': 'Amplitude', 'website': 'https://amplitude.com'},
+    {'name': 'Heap', 'website': 'https://heap.io'},
+    {'name': 'Segment', 'website': 'https://segment.com'},
 ]
 
 # ══════════════════════════════════════════════════════
