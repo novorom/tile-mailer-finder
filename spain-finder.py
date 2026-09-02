@@ -37,8 +37,12 @@ log = logging.getLogger(__name__)
 SHEET_ID = os.environ.get('SPAIN_SHEET_ID', '')
 CREDS_JSON = os.environ.get('GOOGLE_CREDS', '')
 GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY', '')
+GOOGLE_API_KEY_2 = os.environ.get('GOOGLE_API_KEY_2', '')
+GOOGLE_API_KEY_6 = os.environ.get('GOOGLE_API_KEY_6', '')
 GOOGLE_CSE_ID = os.environ.get('GOOGLE_CSE_ID', '')
 GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', '')
+GEMINI_API_KEY_2 = os.environ.get('GEMINI_API_KEY_2', '')
+GEMINI_API_KEY_6 = os.environ.get('GEMINI_API_KEY_6', '')
 HUNTER_API_KEY = os.environ.get('HUNTER_API_KEY', '')
 
 HEADERS = {
@@ -252,17 +256,24 @@ def add_company_to_sheet(sheet, email, local_existing_emails):
 # ══════════════════════════════════════════════════════
 
 def search_google_web(category, location, num=10):
-    """Поиск через Google Custom Search"""
-    if not GOOGLE_API_KEY or not GOOGLE_CSE_ID:
+    """Поиск через Google Custom Search с 3 альтернативными ключами и round-robin"""
+    api_keys = [GOOGLE_API_KEY, GOOGLE_API_KEY_2, GOOGLE_API_KEY_6]
+    valid_keys = [k for k in api_keys if k and GOOGLE_CSE_ID]
+    
+    if not valid_keys:
         log.debug("     [Google Web] нет API ключа или CSE ID")
         return []
+    
+    # Round-robin: выбираем ключ по очереди для распределения нагрузки
+    import random
+    api_key = random.choice(valid_keys)
     
     log.info(f"     [Google Web] поиск: {category} {location}...")
     try:
         url = "https://www.googleapis.com/customsearch/v1"
         params = {
             'q': f"{category} {location}",
-            'key': GOOGLE_API_KEY,
+            'key': api_key,
             'cx': GOOGLE_CSE_ID,
             'num': num
         }
@@ -271,7 +282,19 @@ def search_google_web(category, location, num=10):
         
         if 'error' in data:
             log.error(f"     [Google Web] API error: {data['error'].get('message', 'Unknown')}")
-            return []
+            # Пробуем остальные ключи если первый не сработал
+            for fallback_key in valid_keys:
+                if fallback_key != api_key:
+                    try:
+                        params['key'] = fallback_key
+                        res = requests.get(url, params=params, timeout=10)
+                        data = res.json()
+                        if 'error' not in data:
+                            break
+                    except:
+                        continue
+            else:
+                return []
         
         items = data.get('items', [])
         companies = []
@@ -320,13 +343,20 @@ def search_duckduckgo(category, location, num=5):
 # ══════════════════════════════════════════════════════
 
 def search_gemini_leads(category, location, num=40):
-    """Генерация списка компаний через Gemini"""
-    if not GEMINI_API_KEY:
+    """Генерация списка компаний через Gemini с 3 альтернативными ключами и round-robin"""
+    api_keys = [GEMINI_API_KEY, GEMINI_API_KEY_2, GEMINI_API_KEY_6]
+    valid_keys = [k for k in api_keys if k]
+    
+    if not valid_keys:
         return []
+    
+    # Round-robin: выбираем ключ по очереди для распределения нагрузки
+    import random
+    api_key = random.choice(valid_keys)
     
     log.info(f"     [Gemini AI] генерация: {category} {location}...")
     try:
-        genai.configure(api_key=GEMINI_API_KEY)
+        genai.configure(api_key=api_key)
         models_to_try = ['gemini-3.1-flash-lite', 'gemini-1.5-flash', 'gemini-pro']
         model = None
         for m_name in models_to_try:
@@ -374,6 +404,51 @@ def search_gemini_leads(category, location, num=40):
             return []
     except Exception as e:
         log.error(f"     [Gemini AI] ошибка: {e}")
+        # Пробуем остальные ключи если первый не сработал
+        for fallback_key in valid_keys:
+            if fallback_key != api_key:
+                try:
+                    genai.configure(api_key=fallback_key)
+                    models_to_try = ['gemini-3.1-flash-lite', 'gemini-1.5-flash', 'gemini-pro']
+                    model = None
+                    for m_name in models_to_try:
+                        try:
+                            model = genai.GenerativeModel(m_name)
+                            model.generate_content("test", generation_config={"max_output_tokens": 1})
+                            log.info(f"     [Gemini AI fallback] модель: {m_name}")
+                            break
+                        except:
+                            continue
+                    
+                    if model:
+                        prompt = (
+                            f"Find {num} real companies in '{category}' in {location}. "
+                            "Include manufacturers, exporters, and suppliers. "
+                            "Return ONLY a JSON array with objects containing: "
+                            "name (company name), website (official website URL). "
+                            "No explanations, just the JSON."
+                        )
+                        
+                        response = model.generate_content(prompt, generation_config={"max_output_tokens": 2000})
+                        text = response.text.strip()
+                        
+                        json_match = re.search(r'\[.*\]', text, re.DOTALL)
+                        if json_match:
+                            json_str = json_match.group(0)
+                            companies_data = json_module.loads(json_str)
+                            companies = []
+                            for c in companies_data:
+                                if 'name' in c and 'website' in c:
+                                    companies.append({
+                                        'name': c['name'],
+                                        'website': c['website'],
+                                        'source': 'Gemini AI'
+                                    })
+                            log.info(f"     [Gemini AI fallback] найдено: {len(companies)}")
+                            return companies
+                except Exception as e2:
+                    log.debug(f"     [Gemini AI fallback] ошибка: {e2}")
+                    continue
         return []
 
 # ══════════════════════════════════════════════════════
