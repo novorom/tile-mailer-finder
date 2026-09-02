@@ -41,6 +41,7 @@ GOOGLE_API_KEY_2 = os.environ.get('GOOGLE_API_KEY_2', '')  # Альтернат�
 GOOGLE_CSE_ID = os.environ.get('GOOGLE_CSE_ID', '')
 GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', '')
 GEMINI_API_KEY_2 = os.environ.get('GEMINI_API_KEY_2', '')  # Альтернативный ключ
+GEMINI_API_KEY_6 = os.environ.get('GEMINI_API_KEY_6', '')  # Ключ 6
 HUNTER_API_KEY = os.environ.get('HUNTER_API_KEY', '')
 
 HEADERS = {
@@ -473,29 +474,76 @@ STATIC_AMERICAN_COMPANIES = [
     {'name': 'ZeroDown', 'website': 'https://www.zerodown.com'},
     {'name': 'Flyhomes', 'website': 'https://www.flyhomes.com'},
     
-    # Cybersecurity стартапы
-    {'name': 'CrowdStrike', 'website': 'https://www.crowdstrike.com'},
-    {'name': 'Palo Alto Networks', 'website': 'https://www.paloaltonetworks.com'},
-    {'name': 'Zscaler', 'website': 'https://www.zscaler.com'},
-    {'name': 'Okta', 'website': 'https://www.okta.com'},
-    {'name': 'Auth0', 'website': 'https://auth0.com'},
-    {'name': 'Snyk', 'website': 'https://snyk.io'},
-    {'name': 'HashiCorp', 'website': 'https://www.hashicorp.com'},
+    # Cybersecurity стартапы (средние компании)
     {'name': 'Tenable', 'website': 'https://www.tenable.com'},
     {'name': 'Rapid7', 'website': 'https://www.rapid7.com'},
     {'name': 'Darktrace', 'website': 'https://www.darktrace.com'},
+    {'name': 'Cylance', 'website': 'https://www.cylance.com'},
+    {'name': 'Carbon Black', 'website': 'https://www.carbonblack.com'},
+    {'name': 'SentinelOne', 'website': 'https://www.sentinelone.com'},
+    {'name': 'CyberArk', 'website': 'https://www.cyberark.com'},
+    {'name': 'Varonis', 'website': 'https://www.varonis.com'},
+    {'name': 'Exabeam', 'website': 'https://www.exabeam.com'},
+    {'name': 'LogRhythm', 'website': 'https://logrhythm.com'},
     
-    # Data Analytics стартапы
-    {'name': 'Snowflake', 'website': 'https://www.snowflake.com'},
-    {'name': 'Databricks', 'website': 'https://www.databricks.com'},
+    # Data Analytics стартапы (средние компании)
     {'name': 'Looker', 'website': 'https://looker.com'},
     {'name': 'Tableau', 'website': 'https://www.tableau.com'},
     {'name': 'Mode Analytics', 'website': 'https://mode.com'},
-    {'name': 'Periscope Data', 'website': 'https://periscopedata.com'},
     {'name': 'Mixpanel', 'website': 'https://mixpanel.com'},
     {'name': 'Amplitude', 'website': 'https://amplitude.com'},
     {'name': 'Heap', 'website': 'https://heap.io'},
     {'name': 'Segment', 'website': 'https://segment.com'},
+    {'name': 'Kissmetrics', 'website': 'https://kissmetrics.com'},
+    {'name': 'FullStory', 'website': 'https://www.fullstory.com'},
+    {'name': 'Hotjar', 'website': 'https://www.hotjar.com'},
+    
+    # Дополнительные технологические компании среднего размера
+    {'name': 'GitLab', 'website': 'https://about.gitlab.com'},
+    {'name': 'Atlassian', 'website': 'https://www.atlassian.com'},
+    {'name': 'Jira', 'website': 'https://www.atlassian.com/software/jira'},
+    {'name': 'Confluence', 'website': 'https://www.atlassian.com/software/confluence'},
+    {'name': 'Trello', 'website': 'https://trello.com'},
+    {'name': 'Miro', 'website': 'https://miro.com'},
+    {'name': 'Figma', 'website': 'https://www.figma.com'},
+    {'name': 'Sketch', 'website': 'https://www.sketch.com'},
+    {'name': 'InVision', 'website': 'https://www.invisionapp.com'},
+    {'name': 'Adobe Creative Cloud', 'website': 'https://www.adobe.com/creativecloud'},
+    
+    # Облачные сервисы среднего размера
+    {'name': 'DigitalOcean', 'website': 'https://www.digitalocean.com'},
+    {'name': 'Linode', 'website': 'https://www.linode.com'},
+    {'name': 'Vultr', 'website': 'https://www.vultr.com'},
+    {'name': 'Hetzner', 'website': 'https://www.hetzner.com'},
+    {'name': 'OVHcloud', 'website': 'https://www.ovhcloud.com'},
+    
+    # DevOps инструменты среднего размера
+    {'name': 'CircleCI', 'website': 'https://circleci.com'},
+    {'name': 'Travis CI', 'website': 'https://travis-ci.org'},
+    {'name': 'Jenkins', 'website': 'https://www.jenkins.io'},
+    {'name': 'GitLab CI', 'website': 'https://about.gitlab.com/stages-devops-lifecycle/continuous-integration'},
+    {'name': 'Bamboo', 'website': 'https://www.atlassian.com/software/bamboo'},
+    
+    # Monitoring и Observability
+    {'name': 'Datadog', 'website': 'https://www.datadoghq.com'},
+    {'name': 'New Relic', 'website': 'https://newrelic.com'},
+    {'name': 'AppDynamics', 'website': 'https://www.appdynamics.com'},
+    {'name': 'Splunk', 'website': 'https://www.splunk.com'},
+    {'name': 'Sumo Logic', 'website': 'https://www.sumologic.com'},
+    
+    # API и Integration
+    {'name': 'Postman', 'website': 'https://www.postman.com'},
+    {'name': 'Swagger', 'website': 'https://swagger.io'},
+    {'name': 'MuleSoft', 'website': 'https://www.mulesoft.com'},
+    {'name': 'Zapier', 'website': 'https://zapier.com'},
+    {'name': 'IFTTT', 'website': 'https://ifttt.com'},
+    
+    # E-commerce платформы среднего размера
+    {'name': 'BigCommerce', 'website': 'https://www.bigcommerce.com'},
+    {'name': 'Magento', 'website': 'https://magento.com'},
+    {'name': 'WooCommerce', 'website': 'https://woocommerce.com'},
+    {'name': 'Shopify Plus', 'website': 'https://www.shopify.com/plus'},
+    {'name': 'Salesforce Commerce Cloud', 'website': 'https://www.salesforce.com/products/commerce-cloud/'},
 ]
 
 # ══════════════════════════════════════════════════════
@@ -535,6 +583,48 @@ def add_company_to_sheet(sheet, company_name, email, website, job_title):
     except Exception as ex:
         log.warning(f'Ошибка добавления в таблицу: {ex}')
         return False
+
+# ══════════════════════════════════════════════════════
+#  ПОИСК ЧЕРЕЗ DUCKDUCKGO (альтернатива Google)
+# ══════════════════════════════════════════════════════
+
+def search_duckduckgo_web(query):
+    """Поиск через DuckDuckGo как альтернатива Google"""
+    try:
+        url = f'https://html.duckduckgo.com/html/?q={requests.utils.quote(query)}'
+        response = requests.get(url, headers=HEADERS, timeout=15)
+        response.raise_for_status()
+        soup = BeautifulSoup(response.text, 'html.parser')
+        
+        results = []
+        # DuckDuckGo возвращает результаты в <a class="result__a">
+        for link in soup.find_all('a', class_='result__a'):
+            href = link.get('href', '')
+            title = link.get_text(strip=True)
+            
+            # DuckDuckGo использует редиректы, извлекаем реальный URL
+            if 'uddg=' in href:
+                import urllib.parse
+                parsed = urllib.parse.parse_qs(urllib.parse.urlparse(href).query)
+                real_url = parsed.get('uddg', [href])[0]
+            else:
+                real_url = href
+            
+            if real_url and 'duckduckgo' not in real_url:
+                results.append({
+                    'title': title,
+                    'link': real_url,
+                    'snippet': ''
+                })
+        
+        if results:
+            log.info(f'     [DuckDuckGo] найдено: {len(results)}')
+            return results[:10]  # Берем первые 10
+            
+    except Exception as ex:
+        log.warning(f'DuckDuckGo error: {ex}')
+    
+    return []
 
 # ══════════════════════════════════════════════════════
 #  ПОИСК ЧЕРЕЗ GOOGLE CUSTOM SEARCH
@@ -671,8 +761,8 @@ def extract_emails_from_url(url):
 # ══════════════════════════════════════════════════════
 
 def search_gemini_leads(query):
-    """Поиск компаний через Gemini AI с альтернативным ключом и round-robin"""
-    api_keys = [GEMINI_API_KEY, GEMINI_API_KEY_2]
+    """Поиск компаний через Gemini AI с 3 альтернативными ключами и round-robin"""
+    api_keys = [GEMINI_API_KEY, GEMINI_API_KEY_2, GEMINI_API_KEY_6]
     valid_keys = [k for k in api_keys if k]
     
     if not valid_keys:
@@ -689,7 +779,7 @@ def search_gemini_leads(query):
         for model_name in models_to_try:
             try:
                 model = genai.GenerativeModel(model_name)
-                # Тестовый запрос для проверки доступности
+                # Быстрая проверка доступности
                 model.generate_content("test", generation_config={"max_output_tokens": 1})
                 log.info(f'     [Gemini AI] модель: {model_name}')
                 
@@ -723,7 +813,7 @@ def search_gemini_leads(query):
                 
     except Exception as ex:
         log.warning(f'Gemini API key error: {ex}')
-        # Пробуем второй ключ если первый не сработал
+        # Пробуем остальные ключи если первый не сработал
         for fallback_key in valid_keys:
             if fallback_key != api_key:
                 try:
@@ -774,7 +864,7 @@ def search_gemini_leads(query):
 # ══════════════════════════════════════════════════════
 
 def search_hunter_emails(domain):
-    """Поиск emails через Hunter.io"""
+    """Поиск emails через Hunter.io с усиленным fallback"""
     if not HUNTER_API_KEY:
         return []
     
@@ -785,11 +875,30 @@ def search_hunter_emails(domain):
         data = response.json()
         
         if data.get('data', {}).get('email'):
-            return [data['data']['email']]
-        return []
+            email = data['data']['email']
+            log.info(f'       [Hunter.io] найден: {email}')
+            return [email]
+        
+        # Если email-finder не сработал, пробуем domain search
+        url = f'https://api.hunter.io/v2/domain-search?domain={domain}&api_key={HUNTER_API_KEY}&limit=10'
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+        data = response.json()
+        
+        emails = []
+        if data.get('data', {}).get('emails'):
+            for email_data in data['data']['emails']:
+                if email_data.get('value'):
+                    emails.append(email_data['value'])
+        
+        if emails:
+            log.info(f'       [Hunter.io] найдено: {len(emails)}')
+            return emails[:5]  # Берем первые 5
+            
     except Exception as ex:
         log.warning(f'Hunter.io error: {ex}')
-        return []
+    
+    return []
 
 # ══════════════════════════════════════════════════════
 #  MAIN
@@ -855,24 +964,29 @@ def main():
             
             time.sleep(2)
     
-    # Затем пробуем поиск через категории (если Google Search работает)
+    # Затем пробуем поиск через категории (если Google Search работает или используем DuckDuckGo)
     google_search_works = False
     try:
         test_search = search_google_web('test')
         if test_search:
             google_search_works = True
-    except:
-        google_search_works = False
+            log.info('Google Search доступен')
+        else:
+            log.warning('Google Search недоступен, пробуем DuckDuckGo')
+    except Exception as e:
+        log.warning(f'Google Search test failed: {e}')
     
     if not google_search_works:
-        log.warning('Google Search недоступен (403), пропускаем динамический поиск')
-    else:
-        for category in REMOTE_JOB_CATEGORIES:
-            log.info(f'\n🔍 Категория: {category}')
-            
-            candidates = []
-            
-            # Google Search (основной источник)
+        log.info('Используем DuckDuckGo для динамического поиска')
+    
+    # Всегда пробуем динамический поиск (Google или DuckDuckGo)
+    for category in REMOTE_JOB_CATEGORIES[:30]:  # Ограничиваем 30 категорий для скорости
+        log.info(f'\n🔍 Категория: {category}')
+        
+        candidates = []
+        
+        # Google Search (основной источник)
+        if google_search_works:
             try:
                 google_results = search_google_web(category)
                 for result in google_results[:5]:
@@ -887,6 +1001,23 @@ def main():
                         })
             except Exception as e:
                 log.warning(f'Google Search error: {e}')
+        
+        # DuckDuckGo (альтернатива)
+        if not candidates or not google_search_works:
+            try:
+                ddg_results = search_duckduckgo_web(category)
+                for result in ddg_results[:5]:
+                    website = result.get('link', '')
+                    if website:
+                        domain = urlparse(website).netloc.lower().replace('www.', '')
+                        company_name = domain.split('.')[0].capitalize()
+                        candidates.append({
+                            'name': company_name,
+                            'website': website,
+                            'source': 'DuckDuckGo'
+                        })
+            except Exception as e:
+                log.warning(f'DuckDuckGo error: {e}')
             
             # Gemini fallback (с альтернативным ключом)
             try:
@@ -935,6 +1066,16 @@ def main():
                 
                 # Парсим emails с сайта
                 emails = extract_emails_from_url(website)
+                
+                # Если не нашли emails, пробуем Hunter.io
+                if not emails and HUNTER_API_KEY:
+                    try:
+                        hunter_emails = search_hunter_emails(domain)
+                        if hunter_emails:
+                            emails.extend(hunter_emails)
+                            log.info(f'       Hunter.io нашел: {len(hunter_emails)} emails')
+                    except Exception as e:
+                        log.warning(f'Hunter.io error: {e}')
                 
                 for email in emails:
                     if email.lower() not in existing_emails:
