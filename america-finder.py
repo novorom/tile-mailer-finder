@@ -38,6 +38,7 @@ SHEET_ID = os.environ.get('SPAIN_SHEET_ID', '')
 CREDS_JSON = os.environ.get('GOOGLE_CREDS', '')
 GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY', '')
 GOOGLE_API_KEY_2 = os.environ.get('GOOGLE_API_KEY_2', '')  # Альтернативный ключ
+GOOGLE_API_KEY_6 = os.environ.get('GOOGLE_API_KEY_6', '')  # Ключ 6
 GOOGLE_CSE_ID = os.environ.get('GOOGLE_CSE_ID', '')
 GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', '')
 GEMINI_API_KEY_2 = os.environ.get('GEMINI_API_KEY_2', '')  # Альтернативный ключ
@@ -631,8 +632,8 @@ def search_duckduckgo_web(query):
 # ══════════════════════════════════════════════════════
 
 def search_google_web(query):
-    """Поиск через Google Custom Search с альтернативным ключом и round-robin"""
-    api_keys = [GOOGLE_API_KEY, GOOGLE_API_KEY_2]
+    """Поиск через Google Custom Search с 3 альтернативными ключами и round-robin"""
+    api_keys = [GOOGLE_API_KEY, GOOGLE_API_KEY_2, GOOGLE_API_KEY_6]
     valid_keys = [k for k in api_keys if k and GOOGLE_CSE_ID]
     
     if not valid_keys:
@@ -660,7 +661,7 @@ def search_google_web(query):
             return results
     except Exception as ex:
         log.warning(f'Google Search error (key {api_key[:10]}...): {ex}')
-        # Пробуем второй ключ если первый не сработал
+        # Пробуем остальные ключи если первый не сработал
         for fallback_key in valid_keys:
             if fallback_key != api_key:
                 try:
