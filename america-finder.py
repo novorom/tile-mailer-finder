@@ -541,32 +541,57 @@ def add_company_to_sheet(sheet, company_name, email, website, job_title):
 # ══════════════════════════════════════════════════════
 
 def search_google_web(query):
-    """Поиск через Google Custom Search с альтернативным ключом"""
+    """Поиск через Google Custom Search с альтернативным ключом и round-robin"""
     api_keys = [GOOGLE_API_KEY, GOOGLE_API_KEY_2]
+    valid_keys = [k for k in api_keys if k and GOOGLE_CSE_ID]
     
-    for api_key in api_keys:
-        if not api_key or not GOOGLE_CSE_ID:
-            continue
-            
-        try:
-            url = f'https://www.googleapis.com/customsearch/v1?key={api_key}&cx={GOOGLE_CSE_ID}&q={query}&num=10'
-            response = requests.get(url, timeout=10)
-            response.raise_for_status()
-            data = response.json()
-            
-            if 'items' in data:
-                results = []
-                for item in data['items']:
-                    results.append({
-                        'title': item.get('title', ''),
-                        'link': item.get('link', ''),
-                        'snippet': item.get('snippet', '')
-                    })
-                log.info(f'     [Google Search] найдено: {len(results)}')
-                return results
-        except Exception as ex:
-            log.warning(f'Google Search error (key {api_key[:10]}...): {ex}')
-            continue
+    if not valid_keys:
+        return []
+    
+    # Round-robin: выбираем ключ по очереди для распределения нагрузки
+    import random
+    api_key = random.choice(valid_keys)
+    
+    try:
+        url = f'https://www.googleapis.com/customsearch/v1?key={api_key}&cx={GOOGLE_CSE_ID}&q={query}&num=10'
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+        data = response.json()
+        
+        if 'items' in data:
+            results = []
+            for item in data['items']:
+                results.append({
+                    'title': item.get('title', ''),
+                    'link': item.get('link', ''),
+                    'snippet': item.get('snippet', '')
+                })
+            log.info(f'     [Google Search] найдено: {len(results)}')
+            return results
+    except Exception as ex:
+        log.warning(f'Google Search error (key {api_key[:10]}...): {ex}')
+        # Пробуем второй ключ если первый не сработал
+        for fallback_key in valid_keys:
+            if fallback_key != api_key:
+                try:
+                    url = f'https://www.googleapis.com/customsearch/v1?key={fallback_key}&cx={GOOGLE_CSE_ID}&q={query}&num=10'
+                    response = requests.get(url, timeout=10)
+                    response.raise_for_status()
+                    data = response.json()
+                    
+                    if 'items' in data:
+                        results = []
+                        for item in data['items']:
+                            results.append({
+                                'title': item.get('title', ''),
+                                'link': item.get('link', ''),
+                                'snippet': item.get('snippet', '')
+                            })
+                        log.info(f'     [Google Search fallback] найдено: {len(results)}')
+                        return results
+                except Exception as ex2:
+                    log.warning(f'Google Search fallback error: {ex2}')
+                    continue
     
     return []
 
@@ -646,55 +671,101 @@ def extract_emails_from_url(url):
 # ══════════════════════════════════════════════════════
 
 def search_gemini_leads(query):
-    """Поиск компаний через Gemini AI с альтернативным ключом"""
+    """Поиск компаний через Gemini AI с альтернативным ключом и round-robin"""
     api_keys = [GEMINI_API_KEY, GEMINI_API_KEY_2]
+    valid_keys = [k for k in api_keys if k]
     
-    for api_key in api_keys:
-        if not api_key:
-            continue
-            
-        try:
-            genai.configure(api_key=api_key)
-            models_to_try = ['gemini-3.1-flash-lite', 'gemini-1.5-flash', 'gemini-pro']
-            
-            for model_name in models_to_try:
+    if not valid_keys:
+        return []
+    
+    # Round-robin: выбираем ключ по очереди для распределения нагрузки
+    import random
+    api_key = random.choice(valid_keys)
+    
+    try:
+        genai.configure(api_key=api_key)
+        models_to_try = ['gemini-3.1-flash-lite', 'gemini-1.5-flash', 'gemini-pro']
+        
+        for model_name in models_to_try:
+            try:
+                model = genai.GenerativeModel(model_name)
+                # Тестовый запрос для проверки доступности
+                model.generate_content("test", generation_config={"max_output_tokens": 1})
+                log.info(f'     [Gemini AI] модель: {model_name}')
+                
+                prompt = f"""
+                Find 5-10 US companies that are hiring for: {query}
+                
+                Return ONLY a JSON array with this format:
+                [
+                    {{
+                        "name": "Company Name",
+                        "website": "https://example.com"
+                    }}
+                ]
+                
+                Focus on companies in: startups, AI, technology, software development, QA, DevOps.
+                """
+                
+                response = model.generate_content(prompt, generation_config={"max_output_tokens": 2000})
+                text = response.text
+                
+                # Извлечение JSON из ответа
+                json_match = re.search(r'\[.*\]', text, re.DOTALL)
+                if json_match:
+                    json_str = json_match.group(0)
+                    companies = json_module.loads(json_str)
+                    return companies
+                
+            except Exception as ex:
+                log.warning(f'Gemini {model_name} error: {ex}')
+                continue
+                
+    except Exception as ex:
+        log.warning(f'Gemini API key error: {ex}')
+        # Пробуем второй ключ если первый не сработал
+        for fallback_key in valid_keys:
+            if fallback_key != api_key:
                 try:
-                    model = genai.GenerativeModel(model_name)
-                    # Тестовый запрос для проверки доступности
-                    model.generate_content("test", generation_config={"max_output_tokens": 1})
-                    log.info(f'     [Gemini AI] модель: {model_name}')
+                    genai.configure(api_key=fallback_key)
+                    models_to_try = ['gemini-3.1-flash-lite', 'gemini-1.5-flash', 'gemini-pro']
                     
-                    prompt = f"""
-                    Find 5-10 US companies that are hiring for: {query}
-                    
-                    Return ONLY a JSON array with this format:
-                    [
-                        {{
-                            "name": "Company Name",
-                            "website": "https://example.com"
-                        }}
-                    ]
-                    
-                    Focus on companies in: ceramic industry, construction materials, manufacturing, wholesale, export.
-                    """
-                    
-                    response = model.generate_content(prompt, generation_config={"max_output_tokens": 2000})
-                    text = response.text
-                    
-                    # Извлечение JSON из ответа
-                    json_match = re.search(r'\[.*\]', text, re.DOTALL)
-                    if json_match:
-                        json_str = json_match.group(0)
-                        companies = json_module.loads(json_str)
-                        return companies
-                    
-                except Exception as ex:
-                    log.warning(f'Gemini {model_name} error: {ex}')
+                    for model_name in models_to_try:
+                        try:
+                            model = genai.GenerativeModel(model_name)
+                            model.generate_content("test", generation_config={"max_output_tokens": 1})
+                            log.info(f'     [Gemini AI fallback] модель: {model_name}')
+                            
+                            prompt = f"""
+                            Find 5-10 US companies that are hiring for: {query}
+                            
+                            Return ONLY a JSON array with this format:
+                            [
+                                {{
+                                    "name": "Company Name",
+                                    "website": "https://example.com"
+                                }}
+                            ]
+                            
+                            Focus on companies in: startups, AI, technology, software development, QA, DevOps.
+                            """
+                            
+                            response = model.generate_content(prompt, generation_config={"max_output_tokens": 2000})
+                            text = response.text
+                            
+                            json_match = re.search(r'\[.*\]', text, re.DOTALL)
+                            if json_match:
+                                json_str = json_match.group(0)
+                                companies = json_module.loads(json_str)
+                                return companies
+                            
+                        except Exception as ex2:
+                            log.warning(f'Gemini fallback {model_name} error: {ex2}')
+                            continue
+                            
+                except Exception as ex2:
+                    log.warning(f'Gemini fallback key error: {ex2}')
                     continue
-                    
-        except Exception as ex:
-            log.warning(f'Gemini API key error: {ex}')
-            continue
     
     return []
 
