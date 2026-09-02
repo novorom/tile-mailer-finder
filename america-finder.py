@@ -789,6 +789,9 @@ def extract_emails_from_url(url):
             log.info(f'       Emails не найдены')
         
         return valid_emails
+    except Exception as ex:
+        log.warning(f'Ошибка парсинга {url}: {ex}')
+        return []
 
 # ══════════════════════════════════════════════════════
 #  ПОИСК ЧЕРЕЗ GEMINI AI
@@ -960,34 +963,10 @@ def main():
     total_added = 0
     processed_domains = set()
     
-    # Сначала обрабатываем статический список компаний
-    log.info(f'Статических компаний: {len(STATIC_AMERICAN_COMPANIES)}')
-    for company in STATIC_AMERICAN_COMPANIES:
-        domain = urlparse(company['website']).netloc.lower().replace('www.', '')
-        if domain not in processed_domains:
-            processed_domains.add(domain)
-            log.info(f'   » {company["name"]} (Static)')
-            
-            # Проверяем существование сайта
-            if not check_site_exists(company['website']):
-                log.info(f'     [!] Сайт недоступен')
-                continue
-            
-            # Парсим emails с сайта
-            emails = extract_emails_from_url(company['website'])
-            
-            for email in emails:
-                if email.lower() not in existing_emails:
-                    if add_company_to_sheet(sheet, company['name'], email, company['website'], 'Static'):
-                        existing_emails.add(email.lower())
-                        total_added += 1
-                        log.info(f'     [OK] Email: {email}')
-                else:
-                    log.info(f'     [!] Email уже есть в базе')
-            
-            time.sleep(2)
+    # Пропускаем статический список - уже пройден
+    log.info('Статический список пропущен - уже обработан ранее')
     
-    # Затем пробуем поиск через категории (если Google Search работает или используем DuckDuckGo)
+    # Используем только динамический поиск через категории
     google_search_works = False
     try:
         test_search = search_google_web('test')
