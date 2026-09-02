@@ -690,6 +690,25 @@ def search_google_web(query):
 #  ПАРСИНГ EMAIL
 # ══════════════════════════════════════════════════════
 
+def generate_common_emails(url):
+    """Генерация стандартных email шаблонов"""
+    try:
+        domain = urlparse(url).netloc.lower().replace('www.', '')
+        common_patterns = [
+            'info@',
+            'contact@',
+            'sales@',
+            'careers@',
+            'jobs@',
+            'hr@',
+            'recruiting@',
+            'business@',
+        ]
+        emails = [pattern + domain for pattern in common_patterns]
+        return emails
+    except:
+        return []
+
 def extract_emails_from_url(url):
     """Извлекает emails с веб-страницы с усиленным парсингом"""
     log.info(f"       Парсинг: {url}")
