@@ -982,7 +982,7 @@ def main():
         log.info('Используем DuckDuckGo для динамического поиска')
     
     # Всегда пробуем динамический поиск (Google или DuckDuckGo)
-    for category in REMOTE_JOB_CATEGORIES[:30]:  # Ограничиваем 30 категорий для скорости
+    for category in REMOTE_JOB_CATEGORIES[:10]:  # Ограничиваем 10 категорий для экономии Gemini quota
         log.info(f'\n🔍 Категория: {category}')
         
         candidates = []
@@ -1004,24 +1004,24 @@ def main():
             except Exception as e:
                 log.warning(f'Google Search error: {e}')
         
-        # DuckDuckGo (альтернатива)
-        if not candidates or not google_search_works:
-            try:
-                ddg_results = search_duckduckgo_web(category)
-                for result in ddg_results[:5]:
-                    website = result.get('link', '')
-                    if website:
-                        domain = urlparse(website).netloc.lower().replace('www.', '')
-                        company_name = domain.split('.')[0].capitalize()
-                        candidates.append({
-                            'name': company_name,
-                            'website': website,
-                            'source': 'DuckDuckGo'
-                        })
-            except Exception as e:
-                log.warning(f'DuckDuckGo error: {e}')
+        # DuckDuckGo (всегда используем как fallback или основной если Google недоступен)
+        try:
+            ddg_results = search_duckduckgo_web(category)
+            for result in ddg_results[:5]:
+                website = result.get('link', '')
+                if website:
+                    domain = urlparse(website).netloc.lower().replace('www.', '')
+                    company_name = domain.split('.')[0].capitalize()
+                    candidates.append({
+                        'name': company_name,
+                        'website': website,
+                        'source': 'DuckDuckGo'
+                    })
+        except Exception as e:
+            log.warning(f'DuckDuckGo error: {e}')
             
-            # Gemini fallback (с альтернативным ключом)
+        # Gemini fallback (с альтернативным ключом) - только если мало кандидатов
+        if len(candidates) < 3:
             try:
                 gemini_results = search_gemini_leads(category)
                 for company in gemini_results:
@@ -1068,6 +1068,13 @@ def main():
                 
                 # Парсим emails с сайта
                 emails = extract_emails_from_url(website)
+                
+                # Если не нашли emails, генерируем стандартные шаблоны
+                if not emails:
+                    common_emails = generate_common_emails(website)
+                    if common_emails:
+                        log.info(f'     Генерация стандартных шаблонов: {len(common_emails)}')
+                        emails = common_emails
                 
                 for email in emails:
                     if email.lower() not in existing_emails:
