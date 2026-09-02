@@ -144,6 +144,126 @@ REMOTE_JOB_CATEGORIES = [
     'remote sales manager real estate tech',
     'remote sales manager property management',
     'remote sales manager construction tech',
+    
+    # QA и тестирование ПО
+    'remote QA engineer USA',
+    'remote software tester USA',
+    'remote quality assurance engineer',
+    'remote test automation engineer',
+    'remote manual tester',
+    'remote QA analyst',
+    'remote software testing jobs',
+    'remote QA lead',
+    'remote test manager',
+    
+    # Разработка ПО
+    'remote software engineer USA',
+    'remote full stack developer',
+    'remote frontend developer',
+    'remote backend developer',
+    'remote web developer',
+    'remote mobile developer',
+    'remote DevOps engineer',
+    'remote site reliability engineer',
+    'remote software architect',
+    'remote technical lead',
+    
+    # Product Management
+    'remote product manager USA',
+    'remote product owner',
+    'remote technical product manager',
+    'remote product analyst',
+    'remote UX researcher',
+    'remote UI designer',
+    'remote product designer',
+    
+    # Data Science и Analytics
+    'remote data scientist USA',
+    'remote data analyst',
+    'remote machine learning engineer',
+    'remote AI engineer',
+    'remote data engineer',
+    'remote business intelligence analyst',
+    'remote research scientist',
+    
+    # IT Project Management
+    'remote project manager USA',
+    'remote scrum master',
+    'remote agile coach',
+    'remote program manager',
+    'remote delivery manager',
+    
+    # DevOps и Infrastructure
+    'remote DevOps engineer USA',
+    'remote cloud engineer',
+    'remote infrastructure engineer',
+    'remote platform engineer',
+    'remote site reliability engineer',
+    'remote Kubernetes engineer',
+    'remote AWS engineer',
+    'remote Azure engineer',
+    'remote GCP engineer',
+    
+    # Cybersecurity
+    'remote security engineer USA',
+    'remote penetration tester',
+    'remote security analyst',
+    'remote incident responder',
+    'remote security architect',
+    'remote compliance analyst',
+    
+    # Database и Backend
+    'remote database administrator',
+    'remote backend engineer',
+    'remote API developer',
+    'remote microservices engineer',
+    'remote system architect',
+    
+    # Mobile Development
+    'remote iOS developer',
+    'remote Android developer',
+    'remote React Native developer',
+    'remote Flutter developer',
+    'remote mobile app developer',
+    
+    # Frontend Development
+    'remote React developer',
+    'remote Angular developer',
+    'remote Vue.js developer',
+    'remote JavaScript developer',
+    'remote TypeScript developer',
+    'remote CSS developer',
+    
+    # Backend Development
+    'remote Python developer',
+    'remote Java developer',
+    'remote Node.js developer',
+    'remote Go developer',
+    'remote Ruby developer',
+    'remote PHP developer',
+    'remote C# developer',
+    'remote C++ developer',
+    
+    # Technical Writing и Documentation
+    'remote technical writer',
+    'remote documentation specialist',
+    'remote API documentation writer',
+    'remote developer advocate',
+    'remote developer relations',
+    
+    # Customer Success и Support
+    'remote customer success manager',
+    'remote technical support engineer',
+    'remote solutions architect',
+    'remote implementation manager',
+    'remote customer onboarding specialist',
+    
+    # Sales Engineering
+    'remote sales engineer',
+    'remote solutions consultant',
+    'remote pre-sales engineer',
+    'remote technical account manager',
+    'remote customer success engineer',
 ]
 
 # Статический список американских компаний для удаленной работы (fallback)
