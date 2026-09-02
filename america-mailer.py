@@ -52,7 +52,7 @@ SHEET_ID   = os.environ.get('SPAIN_SHEET_ID', '')
 CREDS_JSON = os.environ.get('GOOGLE_CREDS', '')
 
 SEND_HOUR_FROM = 9
-SEND_HOUR_TO   = 18
+SEND_HOUR_TO   = 20
 MSK = timezone(timedelta(hours=3))
 
 DAILY_LIMIT = 300
