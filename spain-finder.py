@@ -691,9 +691,8 @@ def main():
     total = 0
     processed_domains = set()
     
-    # Добавляем статический список компаний один раз за запуск
-    static_companies = get_static_ceramic_companies()
-    log.info(f'Статических компаний: {len(static_companies)}')
+    # Статический список убран - уже обработан ранее
+    log.info('Статический список пропущен - уже обработан ранее')
     
     # Объединяем все категории
     all_categories = CERAMIC_CATEGORIES + EXPORT_CATEGORIES
@@ -737,11 +736,9 @@ def main():
             g_res = search_gemini_leads(category, location)
             candidates.extend(g_res)
             
-            # Статический список добавляем только для первой категории и первой локации
-            if category == all_categories[0] and location == LOCATIONS[0]:
-                candidates.extend(static_companies)
+            # Статический список убран - уже обработан ранее
             
-            log.info(f"   Результаты: Web({len(w_res)}), Web2({len(w_res2)}), DDG({len(d_res)}), DDG2({len(d_res2)}), ASCER({len(ascer_res)}), ToS({len(tos_res)}), Cevisama({len(cev_res)}), Gemini({len(g_res)}), Static({len(static_companies) if category == all_categories[0] and location == LOCATIONS[0] else 0})")
+            log.info(f"   Результаты: Web({len(w_res)}), Web2({len(w_res2)}), DDG({len(d_res)}), DDG2({len(d_res2)}), ASCER({len(ascer_res)}), ToS({len(tos_res)}), Cevisama({len(cev_res)}), Gemini({len(g_res)})")
             
             # Уникализация
             unique = {}
