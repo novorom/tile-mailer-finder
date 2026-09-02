@@ -16,7 +16,7 @@ import os
 import time
 import logging
 import json as json_module
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Comment
 from datetime import datetime
 import gspread
 from google.oauth2.service_account import Credentials
@@ -691,7 +691,7 @@ def search_google_web(query):
 # ══════════════════════════════════════════════════════
 
 def extract_emails_from_url(url):
-    """Извлекает emails с веб-страницы"""
+    """Извлекает emails с веб-страницы с усиленным парсингом"""
     log.info(f"       Парсинг: {url}")
     try:
         res = requests.get(url, headers=HEADERS, timeout=20)
@@ -734,10 +734,42 @@ def extract_emails_from_url(url):
                 if email_match:
                     emails.add(email_match.group(0).lower())
         
+        # НОВОЕ: Поиск в JavaScript коде
+        for script in soup.find_all('script'):
+            if script.string:
+                js_emails = re.findall(email_pattern, script.string)
+                for email in js_emails:
+                    emails.add(email.lower())
+        
+        # НОВОЕ: Поиск в JSON данных
+        for script in soup.find_all('script', type='application/ld+json'):
+            if script.string:
+                try:
+                    json_data =json_module.loads(script.string)
+                    json_str = json_module.dumps(json_data)
+                    json_emails = re.findall(email_pattern, json_str)
+                    for email in json_emails:
+                        emails.add(email.lower())
+                except:
+                    pass
+        
+        # НОВОЕ: Поиск в комментариях
+        for comment in soup.find_all(string=lambda text: isinstance(text, Comment)):
+            comment_emails = re.findall(email_pattern, comment)
+            for email in comment_emails:
+                emails.add(email.lower())
+        
+        # НОВОЕ: Поиск в атрибутах onclick
+        for elem in soup.find_all(attrs={'onclick': True}):
+            onclick = elem['onclick']
+            onclick_emails = re.findall(email_pattern, onclick)
+            for email in onclick_emails:
+                emails.add(email.lower())
+        
         # Менее строгая фильтрация
         valid_emails = []
         skip_patterns = ['example', 'test', 'noreply', 'no-reply', 'donotreply', 
-                        'spam', 'devnull', 'null', 'localhost']
+                        'spam', 'devnull', 'null', 'localhost', 'sentry', 'imgur']
         
         for email in emails:
             email_lower = email.lower()
@@ -748,14 +780,15 @@ def extract_emails_from_url(url):
                         valid_emails.append(email)
         
         if valid_emails:
-            log.info(f"       Найдено emails: {len(valid_emails)}")
+            log.info(f'       Найдено emails: {len(valid_emails)}')
+            for email in valid_emails[:3]:  # Показываем первые 3
+                log.info(f'         - {email}')
+            if len(valid_emails) > 3:
+                log.info(f'         ... и еще {len(valid_emails) - 3}')
         else:
-            log.info(f"       Emails не найдены")
+            log.info(f'       Emails не найдены')
         
         return valid_emails
-    except Exception as ex:
-        log.warning(f'Ошибка парсинга {url}: {ex}')
-        return []
 
 # ══════════════════════════════════════════════════════
 #  ПОИСК ЧЕРЕЗ GEMINI AI
@@ -943,17 +976,6 @@ def main():
             # Парсим emails с сайта
             emails = extract_emails_from_url(company['website'])
             
-            # Если не нашли emails, пробуем Hunter.io
-            if not emails and HUNTER_API_KEY:
-                try:
-                    domain = urlparse(company['website']).netloc.lower().replace('www.', '')
-                    hunter_emails = search_hunter_emails(domain)
-                    if hunter_emails:
-                        emails.extend(hunter_emails)
-                        log.info(f'       Hunter.io нашел: {len(hunter_emails)} emails')
-                except Exception as e:
-                    log.warning(f'Hunter.io error: {e}')
-            
             for email in emails:
                 if email.lower() not in existing_emails:
                     if add_company_to_sheet(sheet, company['name'], email, company['website'], 'Static'):
@@ -1067,16 +1089,6 @@ def main():
                 
                 # Парсим emails с сайта
                 emails = extract_emails_from_url(website)
-                
-                # Если не нашли emails, пробуем Hunter.io
-                if not emails and HUNTER_API_KEY:
-                    try:
-                        hunter_emails = search_hunter_emails(domain)
-                        if hunter_emails:
-                            emails.extend(hunter_emails)
-                            log.info(f'       Hunter.io нашел: {len(hunter_emails)} emails')
-                    except Exception as e:
-                        log.warning(f'Hunter.io error: {e}')
                 
                 for email in emails:
                     if email.lower() not in existing_emails:
