@@ -87,153 +87,127 @@ REMOTE_JOB_CATEGORIES = [
 ]
 
 # Статический список американских компаний для удаленной работы (fallback)
+# Выбраны компании среднего размера, где email адреса более доступны
 STATIC_AMERICAN_COMPANIES = [
-    # Керамическая промышленность
-    {'name': 'Mohawk Industries', 'website': 'https://www.mohawkind.com'},
-    {'name': 'Dal-Tile Corporation', 'website': 'https://www.daltile.com'},
-    {'name': 'Shaw Industries', 'website': 'https://www.shawinc.com'},
-    {'name': 'Armstrong World Industries', 'website': 'https://www.armstrongceilings.com'},
-    {'name': 'Interface Inc', 'website': 'https://www.interface.com'},
+    # Керамическая промышленность (средние компании)
     {'name': 'Crossville Inc', 'website': 'https://www.crossvilleinc.com'},
     {'name': 'Florida Tile', 'website': 'https://www.floridatile.com'},
     {'name': 'Emser Tile', 'website': 'https://www.emser.com'},
     {'name': 'StonePeak Ceramics', 'website': 'https://www.stonepeakceramics.com'},
     {'name': 'MSI Surfaces', 'website': 'https://www.msinternational.com'},
-    {'name': 'Daltile', 'website': 'https://www.daltile.com'},
     {'name': 'Marazzi USA', 'website': 'https://www.marazziusa.com'},
     {'name': 'American Olean', 'website': 'https://www.americanolean.com'},
-    {'name': 'Panaria Ceramics', 'website': 'https://www.panariagroup.it'},
-    {'name': 'Ceramic Tiles of Italy', 'website': 'https://www.ceramictilesitaly.com'},
+    {'name': 'Daltile', 'website': 'https://www.daltile.com'},
     
-    # Строительные материалы
-    {'name': 'Home Depot', 'website': 'https://www.homedepot.com'},
-    {'name': 'Lowe\'s Companies', 'website': 'https://www.lowes.com'},
+    # Строительные материалы (региональные дистрибьюторы)
+    {'name': 'Floor & Decor', 'website': 'https://www.flooranddecor.com'},
+    {'name': 'Tile Shop', 'website': 'https://www.tileshop.com'},
+    {'name': 'Lumber Liquidators', 'website': 'https://www.lumberliquidators.com'},
     {'name': 'Builders FirstSource', 'website': 'https://www.bldr.com'},
     {'name': '84 Lumber', 'website': 'https://www.84lumber.com'},
     {'name': 'Menards', 'website': 'https://www.menards.com'},
-    {'name': 'ProBuild Holdings', 'website': 'https://www.probuild.com'},
-    {'name': 'Lumber Liquidators', 'website': 'https://www.lumberliquidators.com'},
-    {'name': 'Floor & Decor', 'website': 'https://www.flooranddecor.com'},
-    {'name': 'Tile Shop', 'website': 'https://www.tileshop.com'},
-    {'name': 'Wayfair', 'website': 'https://www.wayfair.com'},
+    {'name': 'Do It Best', 'website': 'https://www.doitbest.com'},
+    {'name': 'Ace Hardware', 'website': 'https://www.acehardware.com'},
     
-    # Оптовые дистрибьюторы
-    {'name': 'Ferguson Enterprises', 'website': 'https://www.ferguson.com'},
-    {'name': 'Watsco Inc', 'website': 'https://www.watsco.com'},
-    {'name': 'HD Supply', 'website': 'https://www.hdsupply.com'},
-    {'name': 'Sonepar', 'website': 'https://www.sonepar.com'},
+    # Оптовые дистрибьюторы (региональные)
     {'name': 'Anixter', 'website': 'https://www.anixter.com'},
     {'name': 'WESCO International', 'website': 'https://www.wesco.com'},
     {'name': 'Graybar Electric', 'website': 'https://www.graybar.com'},
     {'name': 'Rexel USA', 'website': 'https://www.rexelusa.com'},
     {'name': 'MSC Industrial Supply', 'website': 'https://www.mscdirect.com'},
     {'name': 'Fastenal', 'website': 'https://www.fastenal.com'},
+    {'name': 'Sonepar', 'website': 'https://www.sonepar.com'},
     
-    # Экспорт и международная торговля
-    {'name': 'C.H. Robinson', 'website': 'https://www.chrobinson.com'},
-    {'name': 'Expeditors International', 'website': 'https://www.expeditors.com'},
+    # Логистика и экспорт (средние компании)
     {'name': 'Flexport', 'website': 'https://www.flexport.com'},
-    {'name': 'Kuehne+Nagel', 'website': 'https://home.kuehne-nagel.com'},
-    {'name': 'DHL Supply Chain', 'website': 'https://www.dhl.com'},
-    {'name': 'DB Schenker', 'website': 'https://www.dbschenker.com'},
-    {'name': 'UPS Supply Chain Solutions', 'website': 'https://www.ups.com'},
-    {'name': 'FedEx Logistics', 'website': 'https://www.fedex.com'},
     {'name': 'XPO Logistics', 'website': 'https://www.xpo.com'},
     {'name': 'J.B. Hunt Transport', 'website': 'https://www.jbhunt.com'},
+    {'name': 'C.H. Robinson', 'website': 'https://www.chrobinson.com'},
+    {'name': 'Expeditors International', 'website': 'https://www.expeditors.com'},
     
-    # Производство и дистрибуция
+    # Производство (средние компании)
     {'name': 'USG Corporation', 'website': 'https://www.usg.com'},
     {'name': 'Owens Corning', 'website': 'https://www.owenscorning.com'},
     {'name': 'Johns Manville', 'website': 'https://www.jm.com'},
     {'name': 'CertainTeed', 'website': 'https://www.certainteed.com'},
-    {'name': 'Georgia-Pacific', 'website': 'https://www.gp.com'},
-    {'name': 'Koch Industries', 'website': 'https://www.kochind.com'},
-    {'name': '3M Company', 'website': 'https://www.3m.com'},
-    {'name': 'Honeywell', 'website': 'https://www.honeywell.com'},
-    {'name': 'General Electric', 'website': 'https://www.ge.com'},
-    {'name': 'Siemens USA', 'website': 'https://www.siemens.com'},
+    {'name': 'PPG Industries', 'website': 'https://www.ppg.com'},
     
-    # Дополнительные компании в строительной индустрии
+    # Строительные компании (региональные)
     {'name': 'Beacon Roofing Supply', 'website': 'https://www.beaconroofingsupply.com'},
     {'name': 'ABC Supply', 'website': 'https://www.abcsupply.com'},
     {'name': 'SRS Distribution', 'website': 'https://www.srsdistribution.com'},
-    {'name': 'Builders Warehouse', 'website': 'https://www.builderswarehouse.com'},
-    {'name': 'Stock Building Supply', 'website': 'https://www.stockbuilding.com'},
     {'name': 'Carter Lumber', 'website': 'https://www.carterlumber.com'},
-    {'name': 'Do It Best', 'website': 'https://www.doitbest.com'},
-    {'name': 'Ace Hardware', 'website': 'https://www.acehardware.com'},
-    {'name': 'True Value', 'website': 'https://www.truevalue.com'},
-    {'name': 'Orchard Supply Hardware', 'website': 'https://www.osh.com'},
+    {'name': 'Stock Building Supply', 'website': 'https://www.stockbuilding.com'},
     
-    # Крупные ритейлеры
-    {'name': 'Walmart', 'website': 'https://www.walmart.com'},
-    {'name': 'Target Corporation', 'website': 'https://www.target.com'},
-    {'name': 'Costco Wholesale', 'website': 'https://www.costco.com'},
-    {'name': 'BJ\'s Wholesale Club', 'website': 'https://www.bjs.com'},
-    {'name': 'Sam\'s Club', 'website': 'https://www.samsclub.com'},
+    # Технологии (средние компании)
+    {'name': 'Twilio', 'website': 'https://www.twilio.com'},
+    {'name': 'Zendesk', 'website': 'https://www.zendesk.com'},
+    {'name': 'Atlassian', 'website': 'https://www.atlassian.com'},
+    {'name': 'Shopify', 'website': 'https://www.shopify.com'},
+    {'name': 'Square', 'website': 'https://www.squareup.com'},
     
-    # Производители оборудования
-    {'name': 'Caterpillar Inc', 'website': 'https://www.caterpillar.com'},
-    {'name': 'Deere & Company', 'website': 'https://www.deere.com'},
-    {'name': 'Komatsu America', 'website': 'https://www.komatsu.com'},
-    {'name': 'Volvo Construction Equipment', 'website': 'https://www.volvoce.com'},
-    {'name': 'Hitachi Construction Machinery', 'website': 'https://www.hitachiconstruction.com'},
-    
-    # Химическая промышленность
-    {'name': 'Dow Chemical', 'website': 'https://www.dow.com'},
-    {'name': 'DuPont', 'website': 'https://www.dupont.com'},
-    {'name': 'BASF Corporation', 'website': 'https://www.basf.com'},
-    {'name': 'Eastman Chemical', 'website': 'https://www.eastman.com'},
-    {'name': 'PPG Industries', 'website': 'https://www.ppg.com'},
-    
-    # Металлургия и сталь
-    {'name': 'Nucor Corporation', 'website': 'https://www.nucor.com'},
-    {'name': 'United States Steel', 'website': 'https://www.ussteel.com'},
-    {'name': 'ArcelorMittal USA', 'website': 'https://www.arcelormittal.com'},
-    {'name': 'Steel Dynamics', 'website': 'https://www.steeldynamics.com'},
-    {'name': 'Commercial Metals Company', 'website': 'https://www.cmco.com'},
-    
-    # Автомобильная промышленность
-    {'name': 'General Motors', 'website': 'https://www.gm.com'},
-    {'name': 'Ford Motor Company', 'website': 'https://www.ford.com'},
-    {'name': 'Stellantis North America', 'website': 'https://www.stellantis.com'},
-    {'name': 'Tesla Inc', 'website': 'https://www.tesla.com'},
-    {'name': 'Toyota Motor North America', 'website': 'https://www.toyota.com'},
-    
-    # Фармацевтика и медицина
-    {'name': 'Pfizer Inc', 'website': 'https://www.pfizer.com'},
-    {'name': 'Johnson & Johnson', 'website': 'https://www.jnj.com'},
-    {'name': 'Merck & Co', 'website': 'https://www.merck.com'},
+    # Фармацевтика (средние компании)
     {'name': 'Abbott Laboratories', 'website': 'https://www.abbott.com'},
     {'name': 'Medtronic', 'website': 'https://www.medtronic.com'},
+    {'name': 'Baxter International', 'website': 'https://www.baxter.com'},
+    {'name': 'Boston Scientific', 'website': 'https://www.bostonscientific.com'},
+    {'name': 'Stryker Corporation', 'website': 'https://www.stryker.com'},
     
-    # Технологии и софт
-    {'name': 'Microsoft Corporation', 'website': 'https://www.microsoft.com'},
-    {'name': 'Amazon Web Services', 'website': 'https://aws.amazon.com'},
-    {'name': 'Google Cloud', 'website': 'https://cloud.google.com'},
-    {'name': 'IBM Corporation', 'website': 'https://www.ibm.com'},
-    {'name': 'Oracle Corporation', 'website': 'https://www.oracle.com'},
+    # Промышленное оборудование (средние компании)
+    {'name': 'Emerson Electric', 'website': 'https://www.emerson.com'},
+    {'name': 'Rockwell Automation', 'website': 'https://www.rockwellautomation.com'},
+    {'name': 'Danaher Corporation', 'website': 'https://www.danaher.com'},
+    {'name': 'Illinois Tool Works', 'website': 'https://www.itw.com'},
+    {'name': 'Parker Hannifin', 'website': 'https://www.parker.com'},
     
-    # Финансовые услуги
-    {'name': 'JPMorgan Chase', 'website': 'https://www.jpmorganchase.com'},
-    {'name': 'Bank of America', 'website': 'https://www.bankofamerica.com'},
-    {'name': 'Wells Fargo', 'website': 'https://www.wellsfargo.com'},
-    {'name': 'Citigroup', 'website': 'https://www.citi.com'},
-    {'name': 'Goldman Sachs', 'website': 'https://www.goldmansachs.com'},
+    # Энергетика (средние компании)
+    {'name': 'NextEra Energy', 'website': 'https://www.nexteraenergy.com'},
+    {'name': 'Duke Energy', 'website': 'https://www.duke-energy.com'},
+    {'name': 'Southern Company', 'website': 'https://www.southerncompany.com'},
+    {'name': 'American Electric Power', 'website': 'https://www.aep.com'},
+    {'name': 'Xcel Energy', 'website': 'https://www.xcelenergy.com'},
     
-    # Энергетика
-    {'name': 'ExxonMobil', 'website': 'https://www.exxonmobil.com'},
-    {'name': 'Chevron Corporation', 'website': 'https://www.chevron.com'},
-    {'name': 'ConocoPhillips', 'website': 'https://www.conocophillips.com'},
-    {'name': 'Schlumberger', 'website': 'https://www.slb.com'},
-    {'name': 'Halliburton', 'website': 'https://www.halliburton.com'},
+    # Химическая промышленность (средние компании)
+    {'name': 'Eastman Chemical', 'website': 'https://www.eastman.com'},
+    {'name': 'LyondellBasell', 'website': 'https://www.lyondellbasell.com'},
+    {'name': 'Celanese', 'website': 'https://www.celanese.com'},
+    {'name': 'Ashland Global', 'website': 'https://www.ashland.com'},
+    {'name': 'Huntsman Corporation', 'website': 'https://www.huntsman.com'},
     
-    # Пищевая промышленность
-    {'name': 'Nestlé USA', 'website': 'https://www.nestle.com'},
-    {'name': 'PepsiCo', 'website': 'https://www.pepsico.com'},
-    {'name': 'Coca-Cola Company', 'website': 'https://www.coca-colacompany.com'},
+    # Автомобильные поставщики (средние компании)
+    {'name': 'BorgWarner', 'website': 'https://www.borgwarner.com'},
+    {'name': 'Delphi Technologies', 'website': 'https://www.delphi.com'},
+    {'name': 'Visteon Corporation', 'website': 'https://www.visteon.com'},
+    {'name': 'Lear Corporation', 'website': 'https://www.lear.com'},
+    {'name': 'Adient', 'website': 'https://www.adient.com'},
+    
+    # Финансовые услуги (региональные банки)
+    {'name': 'US Bancorp', 'website': 'https://www.usbank.com'},
+    {'name': 'PNC Financial Services', 'website': 'https://www.pnc.com'},
+    {'name': 'Capital One Financial', 'website': 'https://www.capitalone.com'},
+    {'name': 'TD Bank', 'website': 'https://www.tdbank.com'},
+    {'name': 'Regions Financial', 'website': 'https://www.regions.com'},
+    
+    # Пищевая промышленность (средние компании)
     {'name': 'General Mills', 'website': 'https://www.generalmills.com'},
-    {'name': 'Kellogg Company', 'website': 'https://www.kelloggs.com'},
+    {'name': 'Campbell Soup Company', 'website': 'https://www.campbellsoupcompany.com'},
+    {'name': 'J.M. Smucker', 'website': 'https://www.jmsmucker.com'},
+    {'name': 'Hormel Foods', 'website': 'https://www.hormel.com'},
+    {'name': 'Conagra Brands', 'website': 'https://www.conagrabrands.com'},
+    
+    # Ритейл (региональные сети)
+    {'name': 'Kroger', 'website': 'https://www.kroger.com'},
+    {'name': 'Publix', 'website': 'https://www.publix.com'},
+    {'name': 'Albertsons', 'website': 'https://www.albertsons.com'},
+    {'name': 'Safeway', 'website': 'https://www.safeway.com'},
+    {'name': 'Meijer', 'website': 'https://www.meijer.com'},
+    
+    # Телекоммуникации (региональные)
+    {'name': 'Verizon Business', 'website': 'https://www.verizon.com/business'},
+    {'name': 'AT&T Business', 'website': 'https://www.att.com/business'},
+    {'name': 'Comcast Business', 'website': 'https://www.comcastbusiness.com'},
+    {'name': 'Charter Business', 'website': 'https://www.spectrum.com/business'},
+    {'name': 'Lumen Technologies', 'website': 'https://www.lumen.com'},
 ]
 
 # ══════════════════════════════════════════════════════
