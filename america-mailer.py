@@ -84,7 +84,7 @@ def is_send_window() -> bool:
 #  ПИСЬМО С РЕЗЮМЕ
 # ══════════════════════════════════════════════════════
 
-EMAIL_SUBJECT = "Remote Opportunities — Sales, AI, Automation, QA — Roman Novozhilov (20+ Years B2B Sales & Tech Experience)"
+EMAIL_SUBJECT = "Remote Sales / AI & Software — Roman Novozhilov (20+ Years B2B Experience)"
 
 EMAIL_BODY_HTML = """\
 <!DOCTYPE html>
