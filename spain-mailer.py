@@ -83,7 +83,7 @@ def is_send_window() -> bool:
 #  ПИСЬМО С РЕЗЮМЕ
 # ══════════════════════════════════════════════════════
 
-EMAIL_SUBJECT = "Solicitud de empleo: Jefe de Ventas / Exportaciones — Roman Novozhilov (CV adjunto)"
+EMAIL_SUBJECT = "Sales Manager / Export Sales — Roman Novozhilov (20+ años de experiencia B2B)"
 
 EMAIL_BODY_HTML = """\
 <!DOCTYPE html>
@@ -93,46 +93,48 @@ EMAIL_BODY_HTML = """\
 
   <p>Estimado/a Responsable de Selección de Personal,</p>
 
-  <p>Me dirijo a usted para solicitar el puesto de <strong>Jefe de Ventas</strong>, <strong>Jefe de Exportaciones</strong> o <strong>Director Comercial</strong> en su empresa.</p>
+  <p>Me dirijo a usted para expresar mi interés en oportunidades como <strong>Sales Manager, Export Sales Manager, Jefe de Ventas, Jefe de Exportaciones, Director Comercial o Ejecutivo de Ventas</strong> en su empresa.</p>
 
-  <p>Con <strong>más de 20 años de experiencia probada en ventas mayoristas B2B y exportación</strong>, actualmente resido en Benicàssim, España desde hace 4 años, y estoy listo para contribuir al crecimiento internacional de su empresa de inmediato.</p>
+  <p>Con más de 20 años de experiencia demostrada en ventas mayoristas B2B y exportación, actualmente resido en Benicàssim, España, desde hace 4 años y estoy disponible para incorporarme de inmediato.</p>
+
+  <p>Estoy abierto tanto a <strong>posiciones de Sales Manager / Ejecutivo de Ventas</strong>, donde pueda participar directamente en el desarrollo de clientes y las ventas, como a posiciones de responsabilidad acordes con mi experiencia. Para mí son especialmente importantes un producto interesante, un mercado con potencial y la posibilidad de generar resultados comerciales reales para la empresa.</p>
 
   <div style="background:#f5f5f5;padding:16px 20px;border-left:4px solid #e87722;margin:20px 0">
     <h3 style="margin:0 0 12px 0;color:#1a1a2e">Por qué puedo aportar valor a su empresa:</h3>
     <ul style="margin:0;padding-left:20px">
-      <li><strong>20+ años en ventas mayoristas B2B</strong> con importantes fabricantes rusos (azulejos cerámicos, porcelánico)</li>
-      <li><strong>Título de ingeniero en Sistemas Electrónicos</strong> — entiendo el producto, no solo el discurso de ventas</li>
-      <li><strong>Conocimiento profundo de los mercados de Rusia/CIS</strong> — valioso para su expansión de exportación</li>
-      <li><strong>Red extensa</strong> en los sectores de construcción, distribución y retail</li>
-      <li><strong>Historial comprobado en ventas de exportación</strong> y desarrollo de negocios internacionales</li>
-      <li><strong>Experto en IA y automatización</strong> — construyo proyectos automatizados usando asistentes de IA como Cascade (Devin IDE). Este email que está leyendo es parte de mi <strong>proyecto de automatización de búsqueda de empleo</strong> que vive completamente en GitHub y se ejecuta automáticamente mediante GitHub Actions. Escribí este sistema de automatización con ayuda de IA, demostrando mi capacidad para aprovechar herramientas de IA de vanguardia para soluciones comerciales prácticas y mostrando proactividad en la resolución de problemas complejos</li>
-      <li><strong>Experiencia en e-commerce</strong> — gestiono mis propias tiendas online (plitki-spb.ru, cersanit-spb.ru) con base de datos de 3,000+ contactos</li>
-      <li><strong>Experiencia entrenando equipos de ventas</strong> y gestión de ferias comerciales</li>
-      <li><strong>Fluido en ruso e inglés</strong> (C1), español básico</li>
-      <li><strong>Ya vivo en España desde hace 4 años</strong> — no necesita reubicación, disponible inmediatamente</li>
+      <li><strong>Más de 20 años de experiencia en ventas mayoristas B2B</strong> con importantes fabricantes rusos (azulejos cerámicos y porcelánico)</li>
+      <li><strong>Titulación de ingeniero en Sistemas Electrónicos</strong> — entiendo el producto y su componente técnico, no solo el proceso de ventas</li>
+      <li><strong>Conocimiento profundo de los mercados de Rusia y la CEI</strong> — puedo aportar valor en el desarrollo de las ventas de exportación</li>
+      <li><strong>Amplia red de contactos</strong> en los sectores de construcción, distribución y retail</li>
+      <li><strong>Experiencia demostrada en ventas de exportación</strong> y desarrollo de negocios internacionales</li>
+      <li><strong>Experiencia en IA y automatización</strong> — desarrollo proyectos automatizados utilizando herramientas modernas de IA. Entre ellos, he creado mi propio sistema de automatización para la búsqueda de empleo, completamente alojado en GitHub y ejecutado automáticamente mediante GitHub Actions. Esto demuestra mi capacidad para aprender rápidamente nuevas tecnologías, utilizarlas para resolver problemas comerciales prácticos y desarrollar proyectos complejos de forma autónoma</li>
+      <li><strong>Experiencia en e-commerce</strong> — gestiono mis propias tiendas online (plitki-spb.ru, cersanit-spb.ru) con una base de datos de más de 3.000 contactos</li>
+      <li><strong>Experiencia en formación de equipos comerciales</strong> y organización de ferias comerciales</li>
+      <li><strong>Fluidez en ruso e inglés</strong> (C1), español básico</li>
+      <li><strong>Vivo en España desde hace 4 años</strong> — no necesito reubicación y estoy disponible para incorporarme de inmediato</li>
     </ul>
   </div>
 
-  <p>Estoy particularmente interesado en empresas orientadas a la exportación en:</p>
+  <p><strong>Estoy especialmente interesado en empresas orientadas a la exportación en los siguientes sectores:</strong></p>
   <ul>
     <li>Azulejos cerámicos y materiales de construcción</li>
-    <li>Alimentos y productos agrícolas (cítricos, frutas, vino)</li>
+    <li>Alimentación y productos agrícolas (cítricos, frutas, vino)</li>
     <li>Muebles, textiles y calzado</li>
-    <li>Repuestos automotrices y maquinaria industrial</li>
-    <li>Químicos, plásticos y productos metálicos</li>
+    <li>Recambios de automoción y maquinaria industrial</li>
+    <li>Productos químicos, plásticos y productos metálicos</li>
   </ul>
 
-  <p>Estoy disponible para una entrevista personal en su conveniencia y puedo comenzar de inmediato.</p>
+  <p>Estoy disponible para una entrevista presencial o por videoconferencia en el momento que le resulte conveniente y puedo incorporarme de inmediato.</p>
 
-  <p>Por favor, encuentre mi perfil de LinkedIn para mi CV detallado. Agradezco la oportunidad de discutir cómo mi experiencia puede beneficiar el crecimiento de exportación de su organización.</p>
+  <p>Puede consultar mi perfil de LinkedIn para conocer mi CV y experiencia profesional con más detalle. Estaré encantado de conversar sobre cómo mi experiencia y conocimientos pueden contribuir al crecimiento de las ventas y del negocio de exportación de su empresa.</p>
 
   <div style="background:#1a1a2e;color:#fff;padding:16px 20px;border-radius:8px;margin-top:24px">
     <strong>Roman Novozhilov</strong><br>
-    Jefe de Ventas — 20+ años Ventas B2B Exportación<br><br>
+    Sales Manager / Export Sales — 20+ años de experiencia en ventas B2B y exportación<br><br>
     📞 <a href="tel:+34605650553" style="color:#e87722">+34 605 650 553</a><br>
     📧 <a href="mailto:novorom@gmail.com" style="color:#e87722">novorom@gmail.com</a><br>
-    🔗 <a href="https://www.linkedin.com/in/roman-novozhilov-b956b780/?locale=es-ES" style="color:#e87722">Perfil LinkedIn</a><br>
-    📍 Benicàssim, España (disponible inmediatamente)
+    🔗 <a href="https://www.linkedin.com/in/roman-novozhilov-b956b780/?locale=es-ES" style="color:#e87722">LinkedIn</a><br>
+    📍 Benicàssim, España — disponible inmediatamente
   </div>
 
   <hr style="margin:32px 0;border:0;border-top:1px solid #ddd">
@@ -141,9 +143,11 @@ EMAIL_BODY_HTML = """\
 
   <p>Dear Hiring Manager,</p>
 
-  <p>I am writing to apply for <strong>Sales Manager</strong>, <strong>Export Sales Manager</strong>, or <strong>Commercial Director</strong> positions at your company.</p>
+  <p>I am writing to express my strong interest in opportunities as <strong>Sales Manager, Export Sales Manager, Sales Executive, Commercial Director, or Business Development Manager</strong> at your company.</p>
 
-  <p>With <strong>20+ years of proven B2B wholesale sales and export experience</strong>, I have been residing in Benicàssim, Spain for 4 years, and ready to contribute to your company's international growth immediately.</p>
+  <p>With 20+ years of proven B2B wholesale sales and export experience, I have been residing in Benicàssim, Spain for 4 years, and ready to contribute to your company's international growth immediately.</p>
+
+  <p>I am open to both <strong>Sales Manager / Sales Executive</strong> positions where I can participate directly in client development and sales, as well as management positions appropriate to my experience. For me, an interesting product, a market with potential, and the opportunity to generate real commercial results for the company are especially important.</p>
 
   <div style="background:#f5f5f5;padding:16px 20px;border-left:4px solid #e87722;margin:20px 0">
     <h3 style="margin:0 0 12px 0;color:#1a1a2e">Why I Can Add Value to Your Company:</h3>
@@ -153,7 +157,7 @@ EMAIL_BODY_HTML = """\
       <li><strong>Deep knowledge of Russian/CIS markets</strong> — valuable for your export expansion</li>
       <li><strong>Extensive network</strong> in construction, distribution, and retail sectors</li>
       <li><strong>Proven export sales track record</strong> and international business development</li>
-      <li><strong>AI & automation expertise</strong> — built automated pipelines on GitHub Actions, using Claude, Windsurf, Devin for productivity. <strong>Developed this job search bot with AI assistance (Devin/Claude)</strong> that lives in GitHub and runs automatically via GitHub Actions, identifying potential employers and automating outreach, demonstrating proactivity and technical aptitude</li>
+      <li><strong>AI & automation expertise</strong> — I build automated projects using AI assistants like Cascade (Devin IDE). This email you're reading is part of my job search automation project that lives entirely on GitHub and runs automatically via GitHub Actions. I wrote this automation system with AI assistance, demonstrating my ability to leverage cutting-edge AI tools for practical business solutions and showing proactivity in solving complex problems</li>
       <li><strong>E-commerce experience</strong> — running own online stores (plitki-spb.ru, cersanit-spb.ru) with 3,000+ contact database</li>
       <li><strong>Sales team training</strong> and trade show management experience</li>
       <li><strong>Fluent in Russian and English</strong> (C1), basic Spanish</li>
@@ -161,7 +165,7 @@ EMAIL_BODY_HTML = """\
     </ul>
   </div>
 
-  <p>I am particularly interested in export-oriented companies in:</p>
+  <p><strong>I am particularly interested in export-oriented companies in the following sectors:</strong></p>
   <ul>
     <li>Ceramic tiles and construction materials</li>
     <li>Food and agricultural products (citrus, fruits, wine)</li>
@@ -170,17 +174,17 @@ EMAIL_BODY_HTML = """\
     <li>Chemicals, plastics, and metal products</li>
   </ul>
 
-  <p>I am available for a personal interview at your convenience and can start immediately.</p>
+  <p>I am available for an in-person or video interview at your convenience and can start immediately.</p>
 
-  <p>Please find my LinkedIn profile for my detailed CV. I would welcome the opportunity to discuss how my experience can benefit your organization's export growth.</p>
+  <p>You can consult my LinkedIn profile to learn more about my CV and professional experience. I would be delighted to discuss how my experience and knowledge can contribute to the growth of sales and export business of your company.</p>
 
   <div style="background:#1a1a2e;color:#fff;padding:16px 20px;border-radius:8px;margin-top:24px">
     <strong>Roman Novozhilov</strong><br>
-    Sales Manager — 20+ years B2B Export Sales<br><br>
+    Sales Manager / Export Sales — 20+ years B2B Export Sales<br><br>
     📞 <a href="tel:+34605650553" style="color:#e87722">+34 605 650 553</a><br>
     📧 <a href="mailto:novorom@gmail.com" style="color:#e87722">novorom@gmail.com</a><br>
-    🔗 <a href="https://www.linkedin.com/in/roman-novozhilov-b956b780/?locale=es-ES" style="color:#e87722">LinkedIn Profile</a><br>
-    📍 Benicàssim, Spain (available immediately)
+    🔗 <a href="https://www.linkedin.com/in/roman-novozhilov-b956b780/?locale=es-ES" style="color:#e87722">LinkedIn</a><br>
+    📍 Benicàssim, Spain — available immediately
   </div>
 
   <p style="font-size:11px;color:#aaa;margin-top:16px">
@@ -192,49 +196,53 @@ EMAIL_BODY_HTML = """\
 """
 
 EMAIL_BODY_TEXT = """\
-Estimado/a Responsable de Selección de Personal,
+Estimado/a Responsable de Selección de Personal:
 
-Me dirijo a usted para solicitar el puesto de Jefe de Ventas, Jefe de Exportaciones o Director Comercial en su empresa.
+Me dirijo a usted para expresar mi interés en oportunidades como Sales Manager, Export Sales Manager, Jefe de Ventas, Jefe de Exportaciones, Director Comercial o Ejecutivo de Ventas en su empresa.
 
-Con más de 20 años de experiencia probada en ventas mayoristas B2B y exportación, actualmente resido en Benicàssim, España desde hace 4 años, y estoy listo para contribuir al crecimiento internacional de su empresa de inmediato.
+Con más de 20 años de experiencia demostrada en ventas mayoristas B2B y exportación, actualmente resido en Benicàssim, España, desde hace 4 años y estoy disponible para incorporarme de inmediato.
+
+Estoy abierto tanto a posiciones de Sales Manager / Ejecutivo de Ventas, donde pueda participar directamente en el desarrollo de clientes y las ventas, como a posiciones de responsabilidad acordes con mi experiencia. Para mí son especialmente importantes un producto interesante, un mercado con potencial y la posibilidad de generar resultados comerciales reales para la empresa.
 
 Por qué puedo aportar valor a su empresa:
-- 20+ años en ventas mayoristas B2B con importantes fabricantes rusos (azulejos cerámicos, porcelánico)
-- Título de ingeniero en Sistemas Electrónicos — entiendo el producto, no solo el discurso de ventas
-- Conocimiento profundo de los mercados de Rusia/CIS — valioso para su expansión de exportación
-- Red extensa en los sectores de construcción, distribución y retail
-- Historial comprobado en ventas de exportación y desarrollo de negocios internacionales
-- Experto en IA y automatización — construyo proyectos automatizados usando asistentes de IA como Cascade (Devin IDE). Este email que está leyendo es parte de mi proyecto de automatización de búsqueda de empleo que vive completamente en GitHub y se ejecuta automáticamente mediante GitHub Actions. Escribí este sistema de automatización con ayuda de IA, demostrando mi capacidad para aprovechar herramientas de IA de vanguardia para soluciones comerciales prácticas y mostrando proactividad en la resolución de problemas complejos
-- Experiencia en e-commerce — gestiono mis propias tiendas online (plitki-spb.ru, cersanit-spb.ru) con base de datos de 3,000+ contactos
-- Experiencia entrenando equipos de ventas y gestión de ferias comerciales
-- Fluido en ruso e inglés (C1), español básico
-- Ya vivo en España desde hace 4 años — no necesita reubicación, disponible inmediatamente
+- Más de 20 años de experiencia en ventas mayoristas B2B con importantes fabricantes rusos (azulejos cerámicos y porcelánico)
+- Titulación de ingeniero en Sistemas Electrónicos — entiendo el producto y su componente técnico, no solo el proceso de ventas
+- Conocimiento profundo de los mercados de Rusia y la CEI — puedo aportar valor en el desarrollo de las ventas de exportación
+- Amplia red de contactos en los sectores de construcción, distribución y retail
+- Experiencia demostrada en ventas de exportación y desarrollo de negocios internacionales
+- Experiencia en IA y automatización — desarrollo proyectos automatizados utilizando herramientas modernas de IA. Entre ellos, he creado mi propio sistema de automatización para la búsqueda de empleo, completamente alojado en GitHub y ejecutado automáticamente mediante GitHub Actions. Esto demuestra mi capacidad para aprender rápidamente nuevas tecnologías, utilizarlas para resolver problemas comerciales prácticos y desarrollar proyectos complejos de forma autónoma
+- Experiencia en e-commerce — gestiono mis propias tiendas online (plitki-spb.ru, cersanit-spb.ru) con una base de datos de más de 3.000 contactos
+- Experiencia en formación de equipos comerciales y organización de ferias comerciales
+- Fluidez en ruso e inglés (C1), español básico
+- Vivo en España desde hace 4 años — no necesito reubicación y estoy disponible para incorporarme de inmediato
 
-Estoy particularmente interesado en empresas orientadas a la exportación en:
+Estoy especialmente interesado en empresas orientadas a la exportación en los siguientes sectores:
 - Azulejos cerámicos y materiales de construcción
-- Alimentos y productos agrícolas (cítricos, frutas, vino)
+- Alimentación y productos agrícolas (cítricos, frutas, vino)
 - Muebles, textiles y calzado
-- Repuestos automotrices y maquinaria industrial
-- Químicos, plásticos y productos metálicos
+- Recambios de automoción y maquinaria industrial
+- Productos químicos, plásticos y productos metálicos
 
-Estoy disponible para una entrevista personal en su conveniencia y puedo comenzar de inmediato.
+Estoy disponible para una entrevista presencial o por videoconferencia en el momento que le resulte conveniente y puedo incorporarme de inmediato.
 
-Por favor, encuentre mi perfil de LinkedIn para mi CV detallado. Agradezco la oportunidad de discutir cómo mi experiencia puede beneficiar el crecimiento de exportación de su organización.
+Puede consultar mi perfil de LinkedIn para conocer mi CV y experiencia profesional con más detalle. Estaré encantado de conversar sobre cómo mi experiencia y conocimientos pueden contribuir al crecimiento de las ventas y del negocio de exportación de su empresa.
 
 Roman Novozhilov
-Jefe de Ventas — 20+ años Ventas B2B Exportación
+Sales Manager / Export Sales — 20+ años de experiencia en ventas B2B y exportación
 +34 605 650 553
 novorom@gmail.com
 LinkedIn: https://www.linkedin.com/in/roman-novozhilov-b956b780/?locale=es-ES
-Benicàssim, España (disponible inmediatamente)
+Benicàssim, España — disponible inmediatamente
 
 — English version below / Versión en inglés abajo —
 
 Dear Hiring Manager,
 
-I am writing to apply for Sales Manager, Export Sales Manager, or Commercial Director positions at your company.
+I am writing to express my strong interest in opportunities as Sales Manager, Export Sales Manager, Sales Executive, Commercial Director, or Business Development Manager at your company.
 
 With 20+ years of proven B2B wholesale sales and export experience, I have been residing in Benicàssim, Spain for 4 years, and ready to contribute to your company's international growth immediately.
+
+I am open to both Sales Manager / Sales Executive positions where I can participate directly in client development and sales, as well as management positions appropriate to my experience. For me, an interesting product, a market with potential, and the opportunity to generate real commercial results for the company are especially important.
 
 Why I Can Add Value to Your Company:
 - 20+ years in B2B wholesale sales with major Russian manufacturers (ceramic tiles, porcelain)
@@ -248,23 +256,23 @@ Why I Can Add Value to Your Company:
 - Fluent in Russian and English (C1), basic Spanish
 - Already living in Spain for 4 years — no relocation needed, available immediately
 
-I am particularly interested in export-oriented companies in:
+I am particularly interested in export-oriented companies in the following sectors:
 - Ceramic tiles and construction materials
 - Food and agricultural products (citrus, fruits, wine)
 - Furniture, textiles, and footwear
 - Automotive parts and industrial machinery
 - Chemicals, plastics, and metal products
 
-I am available for a personal interview at your convenience and can start immediately.
+I am available for an in-person or video interview at your convenience and can start immediately.
 
-Please find my LinkedIn profile for my detailed CV. I would welcome the opportunity to discuss how my experience can benefit your organization's export growth.
+You can consult my LinkedIn profile to learn more about my CV and professional experience. I would be delighted to discuss how my experience and knowledge can contribute to the growth of sales and export business of your company.
 
 Roman Novozhilov
-Sales Manager — 20+ years B2B Export Sales
+Sales Manager / Export Sales — 20+ years B2B Export Sales
 +34 605 650 553
 novorom@gmail.com
 LinkedIn: https://www.linkedin.com/in/roman-novozhilov-b956b780/?locale=es-ES
-Benicàssim, Spain (available immediately)
+Benicàssim, Spain — available immediately
 
 If you are not interested in receiving job applications, please reply "Remove".
 """
