@@ -124,14 +124,14 @@ EMAIL_BODY_HTML = """\
 
   <p>Estoy disponible para una entrevista personal en su conveniencia y puedo comenzar de inmediato.</p>
 
-  <p>Adjunto mi CV detallado. Agradezco la oportunidad de discutir cómo mi experiencia puede beneficiar el crecimiento de exportación de su organización.</p>
+  <p>Por favor, encuentre mi perfil de LinkedIn para mi CV detallado. Agradezco la oportunidad de discutir cómo mi experiencia puede beneficiar el crecimiento de exportación de su organización.</p>
 
   <div style="background:#1a1a2e;color:#fff;padding:16px 20px;border-radius:8px;margin-top:24px">
     <strong>Roman Novozhilov</strong><br>
     Jefe de Ventas — 20+ años Ventas B2B Exportación<br><br>
     📞 <a href="tel:+34605650553" style="color:#e87722">+34 605 650 553</a><br>
     📧 <a href="mailto:novorom@gmail.com" style="color:#e87722">novorom@gmail.com</a><br>
-    🔗 <a href="https://www.linkedin.com/in/roman-novozhilov-b956b780/" style="color:#e87722">Perfil LinkedIn</a><br>
+    🔗 <a href="https://www.linkedin.com/in/roman-novozhilov-b956b780/?locale=es-ES" style="color:#e87722">Perfil LinkedIn</a><br>
     📍 Benicàssim, España (disponible inmediatamente)
   </div>
 
@@ -172,14 +172,14 @@ EMAIL_BODY_HTML = """\
 
   <p>I am available for a personal interview at your convenience and can start immediately.</p>
 
-  <p>Please find my detailed CV attached. I would welcome the opportunity to discuss how my experience can benefit your organization's export growth.</p>
+  <p>Please find my LinkedIn profile for my detailed CV. I would welcome the opportunity to discuss how my experience can benefit your organization's export growth.</p>
 
   <div style="background:#1a1a2e;color:#fff;padding:16px 20px;border-radius:8px;margin-top:24px">
     <strong>Roman Novozhilov</strong><br>
     Sales Manager — 20+ years B2B Export Sales<br><br>
     📞 <a href="tel:+34605650553" style="color:#e87722">+34 605 650 553</a><br>
     📧 <a href="mailto:novorom@gmail.com" style="color:#e87722">novorom@gmail.com</a><br>
-    🔗 <a href="https://www.linkedin.com/in/roman-novozhilov-b956b780/" style="color:#e87722">LinkedIn Profile</a><br>
+    🔗 <a href="https://www.linkedin.com/in/roman-novozhilov-b956b780/?locale=es-ES" style="color:#e87722">LinkedIn Profile</a><br>
     📍 Benicàssim, Spain (available immediately)
   </div>
 
@@ -219,13 +219,13 @@ Estoy particularmente interesado en empresas orientadas a la exportación en:
 
 Estoy disponible para una entrevista personal en su conveniencia y puedo comenzar de inmediato.
 
-Adjunto mi CV detallado. Agradezco la oportunidad de discutir cómo mi experiencia puede beneficiar el crecimiento de exportación de su organización.
+Por favor, encuentre mi perfil de LinkedIn para mi CV detallado. Agradezco la oportunidad de discutir cómo mi experiencia puede beneficiar el crecimiento de exportación de su organización.
 
 Roman Novozhilov
 Jefe de Ventas — 20+ años Ventas B2B Exportación
 +34 605 650 553
 novorom@gmail.com
-LinkedIn: https://www.linkedin.com/in/roman-novozhilov-b956b780/
+LinkedIn: https://www.linkedin.com/in/roman-novozhilov-b956b780/?locale=es-ES
 Benicàssim, España (disponible inmediatamente)
 
 — English version below / Versión en inglés abajo —
@@ -257,13 +257,13 @@ I am particularly interested in export-oriented companies in:
 
 I am available for a personal interview at your convenience and can start immediately.
 
-Please find my detailed CV attached. I would welcome the opportunity to discuss how my experience can benefit your organization's export growth.
+Please find my LinkedIn profile for my detailed CV. I would welcome the opportunity to discuss how my experience can benefit your organization's export growth.
 
 Roman Novozhilov
 Sales Manager — 20+ years B2B Export Sales
 +34 605 650 553
 novorom@gmail.com
-LinkedIn: https://www.linkedin.com/in/roman-novozhilov-b956b780/
+LinkedIn: https://www.linkedin.com/in/roman-novozhilov-b956b780/?locale=es-ES
 Benicàssim, Spain (available immediately)
 
 If you are not interested in receiving job applications, please reply "Remove".
@@ -371,22 +371,6 @@ def send_email(to_email):
         # HTML версия
         html_part = MIMEText(EMAIL_BODY_HTML, 'html', 'utf-8')
         msg.attach(html_part)
-
-        # Прикрепляем резюме (если файл есть)
-        cv_path = os.path.join(os.path.dirname(__file__), 'ROMAN NOVOZHILOV.docx')
-        if os.path.exists(cv_path):
-            with open(cv_path, 'rb') as f:
-                part = MIMEBase('application', 'octet-stream')
-                part.set_payload(f.read())
-                encoders.encode_base64(part)
-                part.add_header(
-                    'Content-Disposition',
-                    f'attachment; filename="Roman_Novozhilov_CV.docx"'
-                )
-                msg.attach(part)
-            log.info(f'Резюме прикреплено')
-        else:
-            log.warning(f'Резюме не найдено: {cv_path}')
 
         # Отправка через SMTP
         with smtplib.SMTP(BREVO_HOST, BREVO_PORT) as server:
