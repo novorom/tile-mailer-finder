@@ -105,7 +105,7 @@ EMAIL_BODY_HTML = """\
       <li><strong>Conocimiento profundo de los mercados de Rusia/CIS</strong> — valioso para su expansión de exportación</li>
       <li><strong>Red extensa</strong> en los sectores de construcción, distribución y retail</li>
       <li><strong>Historial comprobado en ventas de exportación</strong> y desarrollo de negocios internacionales</li>
-      <li><strong>Experto en IA y automatización</strong> — construí pipelines automatizados en GitHub Actions, usando Claude, Windsurf, Devin para productividad. <strong>Desarrollé este bot de búsqueda de empleo con ayuda de IA (Devin/Claude)</strong> que vive en GitHub y se ejecuta automáticamente mediante GitHub Actions, identificando empleadores potenciales y automatizando el contacto, demostrando proactividad y aptitud técnica</li>
+      <li><strong>Experto en IA y automatización</strong> — construyo proyectos automatizados usando asistentes de IA como Cascade (Devin IDE). Este email que está leyendo es parte de mi <strong>proyecto de automatización de búsqueda de empleo</strong> que vive completamente en GitHub y se ejecuta automáticamente mediante GitHub Actions. Escribí este sistema de automatización con ayuda de IA, demostrando mi capacidad para aprovechar herramientas de IA de vanguardia para soluciones comerciales prácticas y mostrando proactividad en la resolución de problemas complejos</li>
       <li><strong>Experiencia en e-commerce</strong> — gestiono mis propias tiendas online (plitki-spb.ru, cersanit-spb.ru) con base de datos de 3,000+ contactos</li>
       <li><strong>Experiencia entrenando equipos de ventas</strong> y gestión de ferias comerciales</li>
       <li><strong>Fluido en ruso e inglés</strong> (C1), español básico</li>
@@ -204,7 +204,7 @@ Por qué puedo aportar valor a su empresa:
 - Conocimiento profundo de los mercados de Rusia/CIS — valioso para su expansión de exportación
 - Red extensa en los sectores de construcción, distribución y retail
 - Historial comprobado en ventas de exportación y desarrollo de negocios internacionales
-- Experto en IA y automatización — construí pipelines automatizados en GitHub Actions, usando Claude, Windsurf, Devin para productividad. Desarrollé este bot de búsqueda de empleo con ayuda de IA (Devin/Claude) que vive en GitHub y se ejecuta automáticamente mediante GitHub Actions, identificando empleadores potenciales y automatiza el contacto, demostrando proactividad y aptitud técnica
+- Experto en IA y automatización — construyo proyectos automatizados usando asistentes de IA como Cascade (Devin IDE). Este email que está leyendo es parte de mi proyecto de automatización de búsqueda de empleo que vive completamente en GitHub y se ejecuta automáticamente mediante GitHub Actions. Escribí este sistema de automatización con ayuda de IA, demostrando mi capacidad para aprovechar herramientas de IA de vanguardia para soluciones comerciales prácticas y mostrando proactividad en la resolución de problemas complejos
 - Experiencia en e-commerce — gestiono mis propias tiendas online (plitki-spb.ru, cersanit-spb.ru) con base de datos de 3,000+ contactos
 - Experiencia entrenando equipos de ventas y gestión de ferias comerciales
 - Fluido en ruso e inglés (C1), español básico
@@ -242,7 +242,7 @@ Why I Can Add Value to Your Company:
 - Deep knowledge of Russian/CIS markets — valuable for your export expansion
 - Extensive network in construction, distribution, and retail sectors
 - Proven export sales track record and international business development
-- AI & automation expertise — built automated pipelines on GitHub Actions, using Claude, Windsurf, Devin for productivity. Developed this job search bot with AI assistance (Devin/Claude) that lives in GitHub and runs automatically via GitHub Actions, identifying potential employers and automating outreach, demonstrating proactivity and technical aptitude
+- AI & automation expertise — I build automated projects using AI assistants like Cascade (Devin IDE). This email you're reading is part of my job search automation project that lives entirely on GitHub and runs automatically via GitHub Actions. I wrote this automation system with AI assistance, demonstrating my ability to leverage cutting-edge AI tools for practical business solutions and showing proactivity in solving complex problems
 - E-commerce experience — running own online stores (plitki-spb.ru, cersanit-spb.ru) with 3,000+ contact database
 - Sales team training and trade show management experience
 - Fluent in Russian and English (C1), basic Spanish
