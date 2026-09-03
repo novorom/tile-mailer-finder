@@ -1862,9 +1862,9 @@ def main():
             combined_tasks.append((category, location))
     random.shuffle(combined_tasks)
     
-    # Ограничиваем количество комбинаций за один запуск (например, 10 комбинаций)
+    # Ограничиваем количество комбинаций за один запуск (например, 50 комбинаций)
     # чтобы не упираться в лимиты API и выполнять поиск стабильно каждый день
-    selected_tasks = combined_tasks[:10]
+    selected_tasks = combined_tasks[:50]  # Увеличили с 10 до 50 для больше результатов
     log.info(f'Выбрано {len(selected_tasks)} случайных поисковых комбинаций для этого запуска.')
     
     for category, location in selected_tasks:
@@ -1875,10 +1875,9 @@ def main():
         w_res = search_google_web(category, location)
         candidates.extend(w_res)
         
-        d_res = []
-        if len(w_res) == 0:
-            d_res = search_duckduckgo(category, location)
-            candidates.extend(d_res)
+        # DuckDuckGo всегда используем для больше результатов
+        d_res = search_duckduckgo(category, location)
+        candidates.extend(d_res)
         
         z_res = scrape_zoon(category)
         candidates.extend(z_res)
