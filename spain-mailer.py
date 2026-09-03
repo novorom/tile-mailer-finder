@@ -287,7 +287,7 @@ def retry_gspread_call(func, *args, max_retries=5, initial_delay=2, backoff_fact
                 raise ex
             jitter = random.uniform(0.5, 1.5)
             sleep_time = delay * jitter
-            log.warning(f"Ошибка Google Sheets API [{code}]: {ex.message}. Попытка {attempt+1}/{max_retries} через {sleep_time:.2f} сек...")
+            log.warning(f"Ошибка Google Sheets API [{code}]: {str(ex)}. Попытка {attempt+1}/{max_retries} через {sleep_time:.2f} сек...")
             time.sleep(sleep_time)
             delay *= backoff_factor
         except (requests.exceptions.RequestException, socket.error) as ex:
