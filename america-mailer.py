@@ -107,7 +107,7 @@ EMAIL_BODY_HTML = """\
       <li><strong>Deep knowledge of Russian/CIS markets</strong> — valuable for your export expansion to Eastern Europe</li>
       <li><strong>Extensive network</strong> in construction, distribution, and retail sectors</li>
       <li><strong>Proven export sales track record</strong> and international business development</li>
-      <li><strong>AI & automation expertise</strong> — built automated pipelines on GitHub Actions, using Claude, Windsurf, Devin for productivity. <strong>Developed this job search bot with AI assistance</strong> that lives in GitHub and runs automatically via GitHub Actions, demonstrating proactivity and technical aptitude</li>
+      <li><strong>AI & automation expertise</strong> — I build automated projects using AI assistants like Cascade (Devin IDE). This email you're reading is part of my <strong>job search automation project</strong> that lives entirely on GitHub and runs automatically via GitHub Actions. I wrote this automation system with AI assistance, demonstrating my ability to leverage cutting-edge AI tools for practical business solutions and showing proactivity in solving complex problems</li>
       <li><strong>E-commerce experience</strong> — running own online stores with 3,000+ contact database</li>
       <li><strong>Sales team training</strong> and trade show management experience</li>
       <li><strong>Fluent in Russian and English</strong> (C1), basic Spanish</li>
@@ -161,7 +161,7 @@ Why I Can Add Value to Your Remote Team:
 - Deep knowledge of Russian/CIS markets — valuable for your export expansion to Eastern Europe
 - Extensive network in construction, distribution, and retail sectors
 - Proven export sales track record and international business development
-- AI & automation expertise — built automated pipelines on GitHub Actions, using Claude, Windsurf, Devin for productivity. Developed this job search bot with AI assistance that lives in GitHub and runs automatically via GitHub Actions, demonstrating proactivity and technical aptitude
+- AI & automation expertise — I build automated projects using AI assistants like Cascade (Devin IDE). This email you're reading is part of my job search automation project that lives entirely on GitHub and runs automatically via GitHub Actions. I wrote this automation system with AI assistance, demonstrating my ability to leverage cutting-edge AI tools for practical business solutions and showing proactivity in solving complex problems
 - E-commerce experience — running own online stores with 3,000+ contact database
 - Sales team training and trade show management experience
 - Fluent in Russian and English (C1), basic Spanish
