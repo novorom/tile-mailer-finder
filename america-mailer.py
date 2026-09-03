@@ -123,6 +123,7 @@ EMAIL_BODY_HTML = """\
     <li>Wholesale and distribution</li>
     <li>Export and international trade</li>
     <li>B2B sales and business development</li>
+    <li>Artificial Intelligence and related fields</li>
   </ul>
 
   <p>I am available for a video interview at your convenience and can start immediately. I am comfortable with all standard remote collaboration tools (Slack, Teams, Zoom, Asana, Trello) and have a proven track record of successful remote collaboration.</p>
@@ -173,6 +174,7 @@ I am particularly interested in remote positions with US companies in:
 - Wholesale and distribution
 - Export and international trade
 - B2B sales and business development
+- Artificial Intelligence and related fields
 
 I am available for a video interview at your convenience and can start immediately. I am comfortable with all standard remote collaboration tools (Slack, Teams, Zoom, Asana, Trello) and have a proven track record of successful remote collaboration.
 
