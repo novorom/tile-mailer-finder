@@ -127,14 +127,14 @@ EMAIL_BODY_HTML = """\
 
   <p>I am available for a video interview at your convenience and can start immediately. I am comfortable with all standard remote collaboration tools (Slack, Teams, Zoom, Asana, Trello) and have a proven track record of successful remote collaboration.</p>
 
-  <p>Please find my detailed CV attached. I would welcome the opportunity to discuss how my experience can benefit your organization's growth and how I can contribute to your remote team.</p>
+  <p>Please find my LinkedIn profile for my detailed CV. I would welcome the opportunity to discuss how my experience can benefit your organization's growth and how I can contribute to your remote team.</p>
 
   <div style="background:#1a1a2e;color:#fff;padding:16px 20px;border-radius:8px;margin-top:24px">
     <strong>Roman Novozhilov</strong><br>
     Remote Sales Manager — 20+ years B2B Export Sales<br><br>
     📞 <a href="tel:+34605650553" style="color:#e87722">+34 605 650 553</a><br>
     📧 <a href="mailto:novorom@gmail.com" style="color:#e87722">novorom@gmail.com</a><br>
-    🔗 <a href="https://www.linkedin.com/in/roman-novozhilov-b956b780/" style="color:#e87722">LinkedIn Profile</a><br>
+    🔗 <a href="https://www.linkedin.com/in/roman-novozhilov-b956b780/?locale=en-US" style="color:#e87722">LinkedIn Profile</a><br>
     📍 Spain (Remote — EST+6 Timezone — Available Immediately)
   </div>
 
@@ -176,13 +176,13 @@ I am particularly interested in remote positions with US companies in:
 
 I am available for a video interview at your convenience and can start immediately. I am comfortable with all standard remote collaboration tools (Slack, Teams, Zoom, Asana, Trello) and have a proven track record of successful remote collaboration.
 
-Please find my detailed CV attached. I would welcome the opportunity to discuss how my experience can benefit your organization's growth and how I can contribute to your remote team.
+Please find my LinkedIn profile for my detailed CV. I would welcome the opportunity to discuss how my experience can benefit your organization's growth and how I can contribute to your remote team.
 
 Roman Novozhilov
 Remote Sales Manager — 20+ years B2B Export Sales
 +34 605 650 553
 novorom@gmail.com
-LinkedIn: https://www.linkedin.com/in/roman-novozhilov-b956b780/
+LinkedIn: https://www.linkedin.com/in/roman-novozhilov-b956b780/?locale=en-US
 Spain (Remote — EST+6 Timezone — Available Immediately)
 
 If you are not interested in receiving job applications, please reply "Remove".
@@ -295,25 +295,6 @@ def send_one_email(to_email):
     msg['To']      = to_email
     msg.attach(MIMEText(EMAIL_BODY_TEXT, 'plain', 'utf-8'))
     msg.attach(MIMEText(EMAIL_BODY_HTML, 'html',  'utf-8'))
-    
-    # Прикрепляем резюме
-    try:
-        resume_path = 'ROMAN_NOVOZHILOV_REMOTE.docx'
-        if os.path.exists(resume_path):
-            with open(resume_path, 'rb') as f:
-                part = MIMEBase('application', 'octet-stream')
-                part.set_payload(f.read())
-            encoders.encode_base64(part)
-            part.add_header(
-                'Content-Disposition',
-                f'attachment; filename="Roman_Novozhilov_Remote_Sales_Manager.docx"'
-            )
-            msg.attach(part)
-            log.info('Резюме прикреплено')
-        else:
-            log.warning(f'Резюме не найдено: {resume_path}')
-    except Exception as ex:
-        log.warning(f'Ошибка прикрепления резюме: {ex}')
     
     try:
         with smtplib.SMTP(BREVO_HOST, BREVO_PORT, timeout=15) as server:
