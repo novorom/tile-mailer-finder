@@ -1001,7 +1001,7 @@ def main():
         log.info('Используем DuckDuckGo для динамического поиска')
     
     # Всегда пробуем динамический поиск (Google или DuckDuckGo)
-    for category in REMOTE_JOB_CATEGORIES[:10]:  # Ограничиваем 10 категорий для экономии Gemini quota
+    for category in REMOTE_JOB_CATEGORIES[:25]:  # Увеличили с 10 до 25 для больше результатов
         log.info(f'\n🔍 Категория: {category}')
         
         candidates = []
@@ -1010,7 +1010,7 @@ def main():
         if google_search_works:
             try:
                 google_results = search_google_web(category)
-                for result in google_results[:5]:
+                for result in google_results[:10]:  # Увеличили с 5 до 10
                     website = result.get('link', '')
                     if website:
                         domain = urlparse(website).netloc.lower().replace('www.', '')
@@ -1026,7 +1026,7 @@ def main():
         # DuckDuckGo (всегда используем как fallback или основной если Google недоступен)
         try:
             ddg_results = search_duckduckgo_web(category)
-            for result in ddg_results[:5]:
+            for result in ddg_results[:10]:  # Увеличили с 5 до 10
                 website = result.get('link', '')
                 if website:
                     domain = urlparse(website).netloc.lower().replace('www.', '')
@@ -1039,8 +1039,8 @@ def main():
         except Exception as e:
             log.warning(f'DuckDuckGo error: {e}')
             
-        # Gemini fallback (с альтернативным ключом) - только если мало кандидатов
-        if len(candidates) < 3:
+        # Gemini fallback (с альтернативным ключом) - если мало кандидатов или для дополнения
+        if len(candidates) < 5:  # Увеличили с 3 до 5
             try:
                 gemini_results = search_gemini_leads(category)
                 for company in gemini_results:
