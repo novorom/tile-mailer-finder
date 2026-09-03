@@ -268,7 +268,11 @@ def reset_monthly_sent(sheet, records):
     log.info(f'Сброшено флагов: {len(updates)}')
 
 def mark_sent(sheet, row_num, month_str):
-    retry_gspread_call(sheet.update_cell, row_num, 3, month_str)
+    try:
+        retry_gspread_call(sheet.update_cell, row_num, 3, month_str)
+        log.info(f'✓ Отмечено как отправлено: строка {row_num}')
+    except Exception as ex:
+        log.warning(f'✗ Ошибка отметки отправки (строка {row_num}): {ex}')
 
 def mark_dead(sheet, row_num, reason):
     try:
