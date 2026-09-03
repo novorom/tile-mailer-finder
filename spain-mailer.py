@@ -337,8 +337,11 @@ def mark_sent(sheet, email, month_str):
     records, all_rows = load_all_records(sheet)
     if email in records:
         row_num = records[email]['row']
-        retry_gspread_call(sheet.update_cell, row_num, 3, month_str)
-        log.info(f'✓ Отмечено как отправлено: {email}')
+        try:
+            retry_gspread_call(sheet.update_cell, row_num, 3, month_str)
+            log.info(f'✓ Отмечено как отправлено: {email}')
+        except Exception as ex:
+            log.warning(f'✗ Ошибка отметки отправки ({email}): {ex}')
 
 def mark_dead(sheet, email):
     """Отмечает email как недействительный"""
