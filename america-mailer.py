@@ -84,7 +84,7 @@ def is_send_window() -> bool:
 #  ПИСЬМО С РЕЗЮМЕ
 # ══════════════════════════════════════════════════════
 
-EMAIL_SUBJECT = "Remote Sales Manager Application — Roman Novozhilov (20+ Years B2B Export Experience, Remote-Ready)"
+EMAIL_SUBJECT = "Remote Opportunities — Sales, AI, Automation, QA — Roman Novozhilov (20+ Years B2B Sales & Tech Experience)"
 
 EMAIL_BODY_HTML = """\
 <!DOCTYPE html>
@@ -94,49 +94,61 @@ EMAIL_BODY_HTML = """\
 
   <p>Dear Hiring Manager,</p>
 
-  <p>I am writing to express my strong interest in <strong>remote Sales Manager</strong>, <strong>Export Sales Manager</strong>, or <strong>Business Development Manager</strong> positions at your company.</p>
+  <p>I am writing to express my interest in <strong>remote opportunities</strong> with your company in <strong>Sales, Business Development, AI, automation, software testing, QA, and related technology roles</strong>.</p>
 
-  <p>With <strong>20+ years of proven B2B wholesale sales and export experience</strong>, I am currently based in Spain and seeking remote opportunities to contribute to US companies' international growth. I have successfully worked remotely since 2022, managing multiple e-commerce projects and automation systems with demonstrated results.</p>
+  <p>With <strong>20+ years of proven B2B wholesale sales, export, and international business development experience</strong>, I am currently based in Spain and looking for a remote opportunity with a US company. Since 2022, I have also been working independently on e-commerce, AI, automation, and technology-related projects, developing practical hands-on skills alongside my commercial background.</p>
+
+  <p>I am open to both <strong>Sales / Business Development positions</strong> and <strong>remote roles related to AI, automation, software testing, QA, and technology</strong>, particularly where my combination of business experience, technical background, and ability to work with modern AI tools can bring value.</p>
 
   <div style="background:#f5f5f5;padding:16px 20px;border-left:4px solid #e87722;margin:20px 0">
-    <h3 style="margin:0 0 12px 0;color:#1a1a2e">Why I Can Add Value to Your Remote Team:</h3>
+    <h3 style="margin:0 0 12px 0;color:#1a1a2e">Why I Can Add Value to Your Team:</h3>
     <ul style="margin:0;padding-left:20px">
-      <li><strong>20+ years in B2B wholesale sales</strong> with major manufacturers (ceramic tiles, porcelain, construction materials)</li>
-      <li><strong>Proven remote work experience</strong> — successfully managed independent e-commerce projects and automation systems since 2022</li>
-      <li><strong>Engineering degree in Electronic Systems</strong> — technical background that helps me understand complex products</li>
-      <li><strong>Deep knowledge of Russian/CIS markets</strong> — valuable for your export expansion to Eastern Europe</li>
-      <li><strong>Extensive network</strong> in construction, distribution, and retail sectors</li>
-      <li><strong>Proven export sales track record</strong> and international business development</li>
-      <li><strong>AI & automation expertise</strong> — I build automated projects using AI assistants like Cascade (Devin IDE). This email you're reading is part of my <strong>job search automation project</strong> that lives entirely on GitHub and runs automatically via GitHub Actions. I wrote this automation system with AI assistance, demonstrating my ability to leverage cutting-edge AI tools for practical business solutions and showing proactivity in solving complex problems</li>
-      <li><strong>E-commerce experience</strong> — running own online stores with 3,000+ contact database</li>
-      <li><strong>Sales team training</strong> and trade show management experience</li>
-      <li><strong>Fluent in Russian and English</strong> (C1), basic Spanish</li>
-      <li><strong>Flexible timezone coverage</strong> — based in Spain (EST+6), available for US business hours with overlap</li>
-      <li><strong>Self-motivated and disciplined</strong> — proven ability to work independently and deliver results remotely</li>
+      <li><strong>20+ years of B2B wholesale sales and international business development</strong> with major manufacturers in ceramic tiles, porcelain, and construction materials</li>
+      <li><strong>Extensive export sales experience</strong> and deep knowledge of international markets, distributors, and B2B customer development</li>
+      <li><strong>Engineering degree in Electronic Systems</strong> — strong technical background and ability to understand complex products and technologies</li>
+      <li><strong>Hands-on experience with AI and automation</strong> — building automated workflows and projects using modern AI tools and development environments</li>
+      <li><strong>AI-assisted development experience</strong> — working with tools such as Claude, Cascade, Devin, Windsurf and GitHub Actions to build and automate practical projects</li>
+      <li><strong>AI automation project</strong> — I developed my own automated job-search system, hosted entirely on GitHub and running automatically through GitHub Actions. This project demonstrates my ability to combine AI tools, automation, APIs, GitHub workflows, and business logic into a working system</li>
+      <li><strong>Software testing and QA interest</strong> — experienced in testing, troubleshooting, identifying problems, analyzing results, and improving automated workflows and software-based processes</li>
+      <li><strong>E-commerce experience</strong> — running my own online stores and managing a database of 3,000+ contacts</li>
+      <li><strong>Sales team training and trade show management</strong> experience</li>
+      <li><strong>Strong problem-solving and self-learning ability</strong> — comfortable learning new software, platforms, AI tools, and technologies independently</li>
+      <li><strong>Fluent in Russian and English (C1)</strong>, with basic Spanish</li>
+      <li><strong>Remote-ready since 2022</strong> — experienced working independently, managing projects, meeting deadlines, and delivering results without direct supervision</li>
+      <li><strong>Based in Spain (EST+6)</strong> — available to work US business hours with the necessary time-zone overlap</li>
+      <li><strong>Available immediately</strong></li>
     </ul>
   </div>
 
-  <p>I am particularly interested in remote positions with US companies in:</p>
+  <p><strong>I am particularly interested in remote opportunities with US companies in:</strong></p>
   <ul>
-    <li>Ceramic tiles and construction materials</li>
-    <li>Building materials and manufacturing</li>
-    <li>Wholesale and distribution</li>
-    <li>Export and international trade</li>
-    <li>B2B sales and business development</li>
-    <li>Artificial Intelligence and related fields</li>
+    <li>Sales / Sales Management / Business Development</li>
+    <li>Export Sales and International Business Development</li>
+    <li>AI and AI-powered business solutions</li>
+    <li>AI Operations and AI-assisted workflows</li>
+    <li>AI evaluation, testing, and training</li>
+    <li>Automation and AI-powered process optimization</li>
+    <li>Software Testing / QA</li>
+    <li>SaaS and technology companies</li>
+    <li>Technical Sales / Sales Engineering</li>
+    <li>AI/SaaS Business Development</li>
+    <li>Other remote roles where my combination of commercial and technical skills can be valuable</li>
   </ul>
 
-  <p>I am available for a video interview at your convenience and can start immediately. I am comfortable with all standard remote collaboration tools (Slack, Teams, Zoom, Asana, Trello) and have a proven track record of successful remote collaboration.</p>
+  <p>I am particularly interested in opportunities where I can combine my <strong>extensive business and sales experience with my growing expertise in AI, automation, software, and modern technology</strong>.</p>
 
-  <p>Please find my LinkedIn profile for my detailed CV. I would welcome the opportunity to discuss how my experience can benefit your organization's growth and how I can contribute to your remote team.</p>
+  <p>I am available for a video interview at your convenience and can start immediately. I am comfortable working with remote collaboration and project-management tools such as Slack, Microsoft Teams, Zoom, Asana, Trello, and GitHub.</p>
+
+  <p>Please find my LinkedIn profile for my detailed CV and professional background. I would welcome the opportunity to discuss how my experience, technical skills, and ability to work with AI and automation can contribute to your company.</p>
 
   <div style="background:#1a1a2e;color:#fff;padding:16px 20px;border-radius:8px;margin-top:24px">
     <strong>Roman Novozhilov</strong><br>
-    Remote Sales Manager — 20+ years B2B Export Sales<br><br>
+    Remote Sales / AI & Automation / QA & Software<br>
+    20+ years of B2B Sales & International Business Development<br><br>
     📞 <a href="tel:+34605650553" style="color:#e87722">+34 605 650 553</a><br>
     📧 <a href="mailto:novorom@gmail.com" style="color:#e87722">novorom@gmail.com</a><br>
-    🔗 <a href="https://www.linkedin.com/in/roman-novozhilov-b956b780/?locale=en-US" style="color:#e87722">LinkedIn Profile</a><br>
-    📍 Spain (Remote — EST+6 Timezone — Available Immediately)
+    🔗 <a href="https://www.linkedin.com/in/roman-novozhilov-b956b780/?locale=en-US" style="color:#e87722">LinkedIn</a><br>
+    📍 Spain — Remote / EST+6 — Available Immediately
   </div>
 
   <p style="font-size:11px;color:#aaa;margin-top:16px">
@@ -150,42 +162,56 @@ EMAIL_BODY_HTML = """\
 EMAIL_BODY_TEXT = """\
 Dear Hiring Manager,
 
-I am writing to express my strong interest in remote Sales Manager, Export Sales Manager, or Business Development Manager positions at your company.
+I am writing to express my interest in remote opportunities with your company in Sales, Business Development, AI, automation, software testing, QA, and related technology roles.
 
-With 20+ years of proven B2B wholesale sales and export experience, I am currently based in Spain and seeking remote opportunities to contribute to US companies' international growth. I have successfully worked remotely since 2022, managing multiple e-commerce projects and automation systems with demonstrated results.
+With 20+ years of proven B2B wholesale sales, export, and international business development experience, I am currently based in Spain and looking for a remote opportunity with a US company. Since 2022, I have also been working independently on e-commerce, AI, automation, and technology-related projects, developing practical hands-on skills alongside my commercial background.
 
-Why I Can Add Value to Your Remote Team:
-- 20+ years in B2B wholesale sales with major manufacturers (ceramic tiles, porcelain, construction materials)
-- Proven remote work experience — successfully managed independent e-commerce projects and automation systems since 2022
-- Engineering degree in Electronic Systems — technical background that helps me understand complex products
-- Deep knowledge of Russian/CIS markets — valuable for your export expansion to Eastern Europe
-- Extensive network in construction, distribution, and retail sectors
-- Proven export sales track record and international business development
-- AI & automation expertise — I build automated projects using AI assistants like Cascade (Devin IDE). This email you're reading is part of my job search automation project that lives entirely on GitHub and runs automatically via GitHub Actions. I wrote this automation system with AI assistance, demonstrating my ability to leverage cutting-edge AI tools for practical business solutions and showing proactivity in solving complex problems
-- E-commerce experience — running own online stores with 3,000+ contact database
+I am open to both Sales / Business Development positions and remote roles related to AI, automation, software testing, QA, and technology, particularly where my combination of business experience, technical background, and ability to work with modern AI tools can bring value.
+
+Why I Can Add Value to Your Team:
+- 20+ years of B2B wholesale sales and international business development with major manufacturers in ceramic tiles, porcelain, and construction materials
+- Extensive export sales experience and deep knowledge of international markets, distributors, and B2B customer development
+- Engineering degree in Electronic Systems — strong technical background and ability to understand complex products and technologies
+- Hands-on experience with AI and automation — building automated workflows and projects using modern AI tools and development environments
+- AI-assisted development experience — working with tools such as Claude, Cascade, Devin, Windsurf and GitHub Actions to build and automate practical projects
+- AI automation project — I developed my own automated job-search system, hosted entirely on GitHub and running automatically through GitHub Actions. This project demonstrates my ability to combine AI tools, automation, APIs, GitHub workflows, and business logic into a working system
+- Software testing and QA interest — experienced in testing, troubleshooting, identifying problems, analyzing results, and improving automated workflows and software-based processes
+- E-commerce experience — running my own online stores and managing a database of 3,000+ contacts
 - Sales team training and trade show management experience
-- Fluent in Russian and English (C1), basic Spanish
-- Flexible timezone coverage — based in Spain (EST+6), available for US business hours with overlap
-- Self-motivated and disciplined — proven ability to work independently and deliver results remotely
+- Strong problem-solving and self-learning ability — comfortable learning new software, platforms, AI tools, and technologies independently
+- Fluent in Russian and English (C1), with basic Spanish
+- Remote-ready since 2022 — experienced working independently, managing projects, meeting deadlines, and delivering results without direct supervision
+- Based in Spain (EST+6) — available to work US business hours with the necessary time-zone overlap
+- Available immediately
 
-I am particularly interested in remote positions with US companies in:
-- Ceramic tiles and construction materials
-- Building materials and manufacturing
-- Wholesale and distribution
-- Export and international trade
-- B2B sales and business development
-- Artificial Intelligence and related fields
+I am particularly interested in remote opportunities with US companies in:
+- Sales / Sales Management / Business Development
+- Export Sales and International Business Development
+- AI and AI-powered business solutions
+- AI Operations and AI-assisted workflows
+- AI evaluation, testing, and training
+- Automation and AI-powered process optimization
+- Software Testing / QA
+- SaaS and technology companies
+- Technical Sales / Sales Engineering
+- AI/SaaS Business Development
+- Other remote roles where my combination of commercial and technical skills can be valuable
 
-I am available for a video interview at your convenience and can start immediately. I am comfortable with all standard remote collaboration tools (Slack, Teams, Zoom, Asana, Trello) and have a proven track record of successful remote collaboration.
+I am particularly interested in opportunities where I can combine my extensive business and sales experience with my growing expertise in AI, automation, software, and modern technology.
 
-Please find my LinkedIn profile for my detailed CV. I would welcome the opportunity to discuss how my experience can benefit your organization's growth and how I can contribute to your remote team.
+I am available for a video interview at your convenience and can start immediately. I am comfortable working with remote collaboration and project-management tools such as Slack, Microsoft Teams, Zoom, Asana, Trello, and GitHub.
+
+Please find my LinkedIn profile for my detailed CV and professional background. I would welcome the opportunity to discuss how my experience, technical skills, and ability to work with AI and automation can contribute to your company.
+
+Best regards,
 
 Roman Novozhilov
-Remote Sales Manager — 20+ years B2B Export Sales
+Remote Sales / AI & Automation / QA & Software
+20+ years of B2B Sales & International Business Development
 +34 605 650 553
 novorom@gmail.com
 LinkedIn: https://www.linkedin.com/in/roman-novozhilov-b956b780/?locale=en-US
-Spain (Remote — EST+6 Timezone — Available Immediately)
+Spain — Remote / EST+6 — Available Immediately
 
 If you are not interested in receiving job applications, please reply "Remove".
 """
