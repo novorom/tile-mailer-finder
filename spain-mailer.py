@@ -44,8 +44,8 @@ BREVO_USER = os.environ.get("BREVO_USER", "a5784a001@smtp-brevo.com")
 BREVO_PASS = os.environ.get('BREVO_PASS', '')
 
 SENDER_EMAIL = 'pasechnick616@gmail.com'
-SENDER_NAME  = 'Roman Novozhilov — Ceramic Industry Professional'
-REPLY_TO     = 'novorom@mail.ru'
+SENDER_NAME  = 'Roman Novozhilov — Sales Manager'
+REPLY_TO     = 'novorom@gmail.com'
 
 SHEET_ID   = os.environ.get('SPAIN_SHEET_ID', '')
 CREDS_JSON = os.environ.get('GOOGLE_CREDS', '')
