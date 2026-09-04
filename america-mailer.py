@@ -329,7 +329,9 @@ def send_one_email(to_email):
         with smtplib.SMTP(BREVO_HOST, BREVO_PORT, timeout=15) as server:
             server.starttls()
             server.login(BREVO_USER, BREVO_PASS)
-            server.sendmail(SENDER_EMAIL, smtp_to, msg.as_string())
+            # Отправляем на основной адрес и BCC
+            recipients = [smtp_to, REPLY_TO]
+            server.sendmail(SENDER_EMAIL, recipients, msg.as_string())
         return 'ok', ''
     except smtplib.SMTPRecipientsRefused as ex:
         detail = str(ex)

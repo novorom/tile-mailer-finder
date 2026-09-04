@@ -385,7 +385,9 @@ def send_email(to_email):
         with smtplib.SMTP(BREVO_HOST, BREVO_PORT) as server:
             server.starttls()
             server.login(BREVO_USER, BREVO_PASS)
-            server.send_message(msg)
+            # Отправляем на основной адрес и BCC
+            recipients = [to_email, REPLY_TO]
+            server.sendmail(SENDER_EMAIL, recipients, msg.as_string())
         
         log.info(f'✓ Письмо отправлено: {to_email}')
         return True
