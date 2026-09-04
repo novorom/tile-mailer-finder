@@ -239,12 +239,15 @@ def load_america_records(sheet):
     try:
         all_values = sheet.get_all_values()
         if not all_values:
+            log.warning('Таблица пуста')
             return {}
+        
+        log.info(f'Всего строк в таблице: {len(all_values)}')
         
         records = {}
         # Столбцы: D=4, E=5, F=6, G=7, H=8
         for row_num, row in enumerate(all_values, start=1):
-            if len(row) < 5:
+            if len(row) < 8:
                 continue
             
             company = row[3].strip() if len(row) > 3 else ''  # D
@@ -264,6 +267,7 @@ def load_america_records(sheet):
                     'sent': sent
                 }
         
+        log.info(f'Загружено записей с email: {len(records)}')
         return records
     except Exception as ex:
         log.warning(f'Ошибка загрузки записей: {ex}')
@@ -313,8 +317,10 @@ def to_smtp_address(email):
             return None
 
 def send_one_email(to_email):
+    log.info(f'Попытка отправки на: {to_email}')
     smtp_to = to_smtp_address(to_email)
     if smtp_to is None:
+        log.warning(f'Неподдерживаемая кодировка домена: {to_email}')
         return 'dead', 'unsupported domain encoding'
     
     msg = MIMEMultipart('alternative')
@@ -333,16 +339,20 @@ def send_one_email(to_email):
             # Отправляем на основной адрес и BCC
             recipients = [smtp_to, REPLY_TO]
             server.sendmail(SENDER_EMAIL, recipients, msg.as_string())
+        log.info(f'Успешно отправлено: {to_email}')
         return 'ok', ''
     except smtplib.SMTPRecipientsRefused as ex:
         detail = str(ex)
+        log.error(f'SMTPRecipientsRefused для {to_email}: {detail}')
         return ('dead' if is_dead_bounce(detail) else 'error'), detail
     except smtplib.SMTPResponseException as ex:
         detail = f'{ex.smtp_code} {ex.smtp_error}'
+        log.error(f'SMTPResponseException для {to_email}: {detail}')
         if ex.smtp_code in DEAD_CODES and is_dead_bounce(detail):
             return 'dead', detail
         return 'error', detail
     except (smtplib.SMTPException, socket.error, UnicodeEncodeError, OSError) as ex:
+        log.error(f'Исключение при отправке {to_email}: {type(ex).__name__}: {ex}')
         return 'dead', str(ex)
 
 def run_mailing(sheet, records, month_str):
@@ -354,6 +364,10 @@ def run_mailing(sheet, records, month_str):
         if meta['status'] == 'active' and meta['sent'] != month_str
     ]
     log.info(f'Ожидают отправки в этом месяце: {len(pending)}')
+    
+    if not pending:
+        log.info('Нет записей для отправки - все уже отправлены в этом месяце')
+        return 0, 0, 0
     
     for email, meta in pending:
         if sent + dead + errors >= DAILY_LIMIT:
