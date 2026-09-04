@@ -242,7 +242,7 @@ def load_america_records(sheet):
             return {}
         
         records = {}
-        # Столбцы: D=4, E=5, F=6, G=7
+        # Столбцы: D=4, E=5, F=6, G=7, H=8
         for row_num, row in enumerate(all_values, start=1):
             if len(row) < 5:
                 continue
@@ -251,6 +251,7 @@ def load_america_records(sheet):
             email = row[4].strip() if len(row) > 4 else ''    # E
             website = row[5].strip() if len(row) > 5 else ''  # F
             job_title = row[6].strip() if len(row) > 6 else '' # G
+            sent = row[7].strip() if len(row) > 7 else ''      # H
             
             if email and '@' in email:
                 records[email] = {
@@ -260,7 +261,7 @@ def load_america_records(sheet):
                     'website': website,
                     'job_title': job_title,
                     'status': 'active',
-                    'sent': ''
+                    'sent': sent
                 }
         
         return records
