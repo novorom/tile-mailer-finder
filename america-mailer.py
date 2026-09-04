@@ -336,8 +336,8 @@ def send_one_email(to_email):
         with smtplib.SMTP(BREVO_HOST, BREVO_PORT, timeout=15) as server:
             server.starttls()
             server.login(BREVO_USER, BREVO_PASS)
-            # Отправляем на основной адрес и BCC
-            recipients = [smtp_to, REPLY_TO]
+            # Отправляем только на основной адрес (без BCC из-за ограничений Brevo)
+            recipients = [smtp_to]
             log.info(f'Отправка на получателей: {recipients}')
             result = server.sendmail(SENDER_EMAIL, recipients, msg.as_string())
             log.info(f'Результат sendmail: {result}')

@@ -365,32 +365,31 @@ def mark_dead(sheet, email):
 
 def send_email(to_email):
     """Отправляет письмо с резюме"""
+    msg = MIMEMultipart('alternative')
+    msg['Subject'] = EMAIL_SUBJECT
+    msg['From'] = f"{SENDER_NAME} <{SENDER_EMAIL}>"
+    msg['To'] = to_email
+    msg['Reply-To'] = REPLY_TO
+    msg['Bcc'] = REPLY_TO  # Отправляем копию на REPLY_TO для контроля
+
+    # Текстовая версия
+    text_part = MIMEText(EMAIL_BODY_TEXT, 'plain', 'utf-8')
+    msg.attach(text_part)
+
+    # HTML версия
+    html_part = MIMEText(EMAIL_BODY_HTML, 'html', 'utf-8')
+    msg.attach(html_part)
+
+    # Отправка через SMTP
     try:
-        msg = MIMEMultipart('alternative')
-        msg['Subject'] = EMAIL_SUBJECT
-        msg['From'] = f"{SENDER_NAME} <{SENDER_EMAIL}>"
-        msg['To'] = to_email
-        msg['Reply-To'] = REPLY_TO
-        msg['Bcc'] = REPLY_TO  # Отправляем копию на REPLY_TO для контроля
-
-        # Текстовая версия
-        text_part = MIMEText(EMAIL_BODY_TEXT, 'plain', 'utf-8')
-        msg.attach(text_part)
-
-        # HTML версия
-        html_part = MIMEText(EMAIL_BODY_HTML, 'html', 'utf-8')
-        msg.attach(html_part)
-
-        # Отправка через SMTP
-        with smtplib.SMTP(BREVO_HOST, BREVO_PORT) as server:
+        with smtplib.SMTP(BREVO_HOST, BREVO_PORT, timeout=15) as server:
             server.starttls()
             server.login(BREVO_USER, BREVO_PASS)
-            # Отправляем на основной адрес и BCC
-            recipients = [to_email, REPLY_TO]
+            # Отправляем только на основной адрес (без BCC из-за ограничений Brevo)
+            recipients = [to_email]
             server.sendmail(SENDER_EMAIL, recipients, msg.as_string())
-        
         log.info(f'✓ Письмо отправлено: {to_email}')
-        return True
+        return 'ok', ''
     except Exception as e:
         log.error(f'❌ Ошибка отправки {to_email}: {e}')
         return False
