@@ -350,9 +350,9 @@ def run_mailing(sheet, records, month_str):
     pending = [
         (email, meta)
         for email, meta in records.items()
-        if meta['status'] == 'active' and meta['sent'] != month_str and (meta['row'] % TOTAL_MAILERS) == (MAILER_INDEX % TOTAL_MAILERS)
+        if meta['status'] == 'active' and meta['sent'] != month_str
     ]
-    log.info(f'Ожидают отправки в этом месяце (канал {MAILER_INDEX + 1}/{TOTAL_MAILERS}): {len(pending)}')
+    log.info(f'Ожидают отправки в этом месяце: {len(pending)}')
     
     for email, meta in pending:
         if sent + dead + errors >= DAILY_LIMIT:
