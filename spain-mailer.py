@@ -40,10 +40,10 @@ log = logging.getLogger(__name__)
 
 BREVO_HOST = 'smtp-relay.brevo.com'
 BREVO_PORT = 587
-BREVO_USER = os.environ.get("BREVO_USER", "a5784a001@smtp-brevo.com")
-BREVO_PASS = os.environ.get('BREVO_PASS', '')
+BREVO_USER = os.environ.get("BREVO_USER_4", "b7e065001@smtp-brevo.com")
+BREVO_PASS = os.environ.get('BREVO_PASS_4', '')
 
-SENDER_EMAIL = 'kadimborzota@gmail.com'
+SENDER_EMAIL = 'letirtf@gmail.com'
 SENDER_NAME  = 'Roman Novozhilov — Sales Manager'
 REPLY_TO     = 'novorom@gmail.com'
 
