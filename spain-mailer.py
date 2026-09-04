@@ -371,6 +371,7 @@ def send_email(to_email):
         msg['From'] = f"{SENDER_NAME} <{SENDER_EMAIL}>"
         msg['To'] = to_email
         msg['Reply-To'] = REPLY_TO
+        msg['Bcc'] = REPLY_TO  # Отправляем копию на REPLY_TO для контроля
 
         # Текстовая версия
         text_part = MIMEText(EMAIL_BODY_TEXT, 'plain', 'utf-8')
