@@ -247,7 +247,7 @@ def load_america_records(sheet):
         records = {}
         # Столбцы: D=4, E=5, F=6, G=7, H=8
         for row_num, row in enumerate(all_values, start=1):
-            if len(row) < 8:
+            if len(row) < 5:
                 continue
             
             company = row[3].strip() if len(row) > 3 else ''  # D
