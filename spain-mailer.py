@@ -43,6 +43,9 @@ BREVO_PORT = 587
 BREVO_USER = os.environ.get("BREVO_USER_4", "b7e065001@smtp-brevo.com")
 BREVO_PASS = os.environ.get('BREVO_PASS_4', '')
 
+log.info(f"BREVO_USER: {BREVO_USER}")
+log.info(f"BREVO_PASS (first 10 chars): {BREVO_PASS[:10] if BREVO_PASS else 'EMPTY'}")
+
 SENDER_EMAIL = 'letirtf@gmail.com'
 SENDER_NAME  = 'Roman Novozhilov — Sales Manager'
 REPLY_TO     = 'novorom@gmail.com'
