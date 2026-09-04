@@ -338,12 +338,15 @@ def send_one_email(to_email):
             server.login(BREVO_USER, BREVO_PASS)
             # Отправляем на основной адрес и BCC
             recipients = [smtp_to, REPLY_TO]
-            server.sendmail(SENDER_EMAIL, recipients, msg.as_string())
+            log.info(f'Отправка на получателей: {recipients}')
+            result = server.sendmail(SENDER_EMAIL, recipients, msg.as_string())
+            log.info(f'Результат sendmail: {result}')
         log.info(f'Успешно отправлено: {to_email}')
         return 'ok', ''
     except smtplib.SMTPRecipientsRefused as ex:
         detail = str(ex)
         log.error(f'SMTPRecipientsRefused для {to_email}: {detail}')
+        log.error(f'Отклоненные получатели: {ex.recipients}')
         return ('dead' if is_dead_bounce(detail) else 'error'), detail
     except smtplib.SMTPResponseException as ex:
         detail = f'{ex.smtp_code} {ex.smtp_error}'
