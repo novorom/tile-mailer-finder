@@ -320,6 +320,7 @@ def send_one_email(to_email):
     msg['Subject'] = EMAIL_SUBJECT
     msg['From']    = f'{SENDER_NAME} <{SENDER_EMAIL}>'
     msg['Reply-To'] = REPLY_TO
+    msg['Bcc']     = REPLY_TO  # Отправляем копию на REPLY_TO для контроля
     msg['To']      = to_email
     msg.attach(MIMEText(EMAIL_BODY_TEXT, 'plain', 'utf-8'))
     msg.attach(MIMEText(EMAIL_BODY_HTML, 'html',  'utf-8'))
