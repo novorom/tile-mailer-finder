@@ -7,7 +7,7 @@ Tile Mailer Agent — Плитка & Керамогранит СПб
 • Добавляет новые адреса в Google Sheets
 • Удаляет мёртвые (bounced) email из базы
 • Рассылает письмо через Brevo SMTP (бесплатно, база без ограничений)
-• Отправка каждый день с 9:00 до 24:00 МСК (без выходных)
+• Отправка каждый день с 9:00 до 1:00 МСК (без выходных)
 • 4 рассыльщика × 250 писем = 1000 писем/день — каждый день продолжает с того места где остановился
 • 1-го числа месяца — сброс прогресса, новая рассылка
 """
@@ -53,7 +53,7 @@ SHEET_ID   = os.environ.get('SHEET_ID', '')
 CREDS_JSON = os.environ.get('GOOGLE_CREDS', '')
 
 SEND_HOUR_FROM = 9
-SEND_HOUR_TO   = 24
+SEND_HOUR_TO   = 1
 MSK = timezone(timedelta(hours=3))
 
 DAILY_LIMIT = 300
@@ -66,12 +66,20 @@ TOTAL_MAILERS = int(os.environ.get('TOTAL_MAILERS', '1'))
 # ══════════════════════════════════════════════════════
 
 def is_send_window() -> bool:
-    """Возвращает True если сейчас 9:00–24:00 МСК (без ограничений по выходным)"""
+    """Возвращает True если сейчас 9:00–1:00 МСК (без ограничений по выходным)"""
     now = datetime.now(MSK)
     hour = now.hour
-    if not (SEND_HOUR_FROM <= hour < SEND_HOUR_TO):
-        log.info(f'Сейчас {now.strftime("%H:%M")} МСК — вне окна {SEND_HOUR_FROM}:00–{SEND_HOUR_TO}:00, рассылка пропущена')
-        return False
+    # Окно через полночь: 9:00-24:00 ИЛИ 0:00-1:00
+    if SEND_HOUR_FROM > SEND_HOUR_TO:
+        # Окно через полночь
+        if not (hour >= SEND_HOUR_FROM or hour < SEND_HOUR_TO):
+            log.info(f'Сейчас {now.strftime("%H:%M")} МСК — вне окна {SEND_HOUR_FROM}:00–{SEND_HOUR_TO}:00, рассылка пропущена')
+            return False
+    else:
+        # Обычное окно
+        if not (SEND_HOUR_FROM <= hour < SEND_HOUR_TO):
+            log.info(f'Сейчас {now.strftime("%H:%M")} МСК — вне окна {SEND_HOUR_FROM}:00–{SEND_HOUR_TO}:00, рассылка пропущена')
+            return False
     return True
 
 # ══════════════════════════════════════════════════════
@@ -475,7 +483,7 @@ def main():
         records, _ = load_all_records(sheet)
 
     if not is_send_window():
-        log.info('Рассылка пропущена — вне окна 9:00–24:00 МСК')
+        log.info('Рассылка пропущена — вне окна 9:00–1:00 МСК')
         return
 
     log.info(f'─── Рассылка — месяц {month_str} ───')
