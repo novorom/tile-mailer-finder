@@ -91,43 +91,45 @@ EMAIL_SUBJECT = "Керамическая плитка и керамограни
 EMAIL_BODY_TEXT = """\
 Добрый день!
 
+🔥 СПЕЦИАЛЬНОЕ ПРЕДЛОЖЕНИЕ:
+
+Строительная плитка 20×30 — 1-й сорт
+399 руб./м²
+Керамический гранит 30×30 «Соль и перец»
+660 руб./м²
+
 Плитка CERSANIT (Церсанит) в наличии на складе в СПб — большая товарная программа!
 
-────────────────────────────────────────
 КЕРАМОГРАНИТ Cersanit, 598×185 мм — под дерево, под паркет
-Цена: 995 руб./м²
+995 руб./м²
 https://cersanit.ru/catalog/2d/collections/f/size-is-18x60/
 
-ШАХТИНСКАЯ облицовочная строительная плитка (глянец), разных цветов и белая, 20×30 см
-Цена: 412 руб./м²
+ШАХТИНСКАЯ плитка облицовочная, глянец, разных цветов и белая, 20×30 см
+412 руб./м²
 
 ДЕТСКАЯ плитка Нефрит-Керамика для школ и детских садов — серия Kids
-Цена: от 617 руб./м²
+от 617 руб./м²
 https://nefrit.ru/collections/Kids/
 
-УРАЛЬСКИЙ ГРАНИТ — GRANITEA / Гранитея / IDALGO / Идальго / Керамика Будущего
+УРАЛЬСКИЙ ГРАНИТ — GRANITEA / IDALGO / Керамика Будущего
 U100 (молочный, моноколор) 60×60 матовый
-Цена: 774 руб./м²
+774 руб./м²
 https://www.uralgres.com/catalog/ural-granite/ural-facades/u100/
 
-KERAMA MARAZZI — Керама-Марацци
-SG701390R Фрегат бежевый обрезной КГ 20×80
-Цена: 1 502 руб./м²
+KERAMA MARAZZI — SG701390R Фрегат бежевый обрезной КГ 20×80
+1 502 руб./м²
 https://kerama-marazzi.com/catalog/gres/sg701390r/
-────────────────────────────────────────
 
 Наши заводы-производители:
-Cersanit · Шахтинская плитка (GraciaCeramica) · Нефрит-Керамика · Квадро-Декор
-Керама-Марацци · Азори (Керабуд) · Уральский Гранит (Idalgo) · Керамика Будущего
-Granitea (Гранитея) · Daco (Дагестан)
+Cersanit · Шахтинская плитка (GraciaCeramica) · Нефрит-Керамика · Квадро-Декор · Керама-Марацци · Азори (Керабуд) · Уральский Гранит (Idalgo) · Керамика Будущего · Granitea · Daco
 
-Склад и большой шоурум в Янино.
-Доставка и самовывоз.
+Склад и большой шоурум в Янино — доставка и самовывоз
 
-С уважением,
 Менеджер по продажам Роман Новожилов
 +7 (905) 205-09-00
-www.plitki-spb.ru
+www.cersanit-spb.ru
+
+Если вы не хотите получать наши письма — просто ответьте «Отписаться».
 """
 
 EMAIL_BODY_HTML = """\
@@ -137,6 +139,26 @@ EMAIL_BODY_HTML = """\
 <body style="font-family:Arial,sans-serif;font-size:14px;color:#222;line-height:1.7;max-width:620px;margin:0 auto;padding:20px">
 
   <p>Добрый день!</p>
+  
+  <div style="background:#ff6b35;color:#fff;padding:12px 16px;border-radius:6px;margin:16px 0">
+    <strong>🔥 СПЕЦИАЛЬНОЕ ПРЕДЛОЖЕНИЕ:</strong>
+  </div>
+
+  <table width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+      <td style="padding:12px 0;border-bottom:1px solid #eee">
+        <strong style="color:#1a1a2e">Строительная плитка 20×30 — 1-й сорт</strong><br>
+        <span style="font-size:18px;font-weight:bold;color:#e87722">399 руб./м²</span>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:12px 0;border-bottom:1px solid #eee">
+        <strong style="color:#1a1a2e">Керамический гранит 30×30 «Соль и перец»</strong><br>
+        <span style="font-size:18px;font-weight:bold;color:#e87722">660 руб./м²</span>
+      </td>
+    </tr>
+  </table>
+
   <p><strong>Плитка CERSANIT (Церсанит) в наличии на складе в СПб — большая товарная программа!</strong></p>
 
   <hr style="border:none;border-top:2px solid #e87722;margin:20px 0">
@@ -183,15 +205,14 @@ EMAIL_BODY_HTML = """\
 
   <p style="font-size:13px;color:#555">
     <strong>Наши заводы-производители:</strong><br>
-    Cersanit · Шахтинская плитка (GraciaCeramica) · Нефрит-Керамика · Квадро-Декор ·
-    Керама-Марацци · Азори (Керабуд) · Уральский Гранит (Idalgo) · Керамика Будущего · Granitea · Daco
+    Cersanit · Шахтинская плитка (GraciaCeramica) · Нефрит-Керамика · Квадро-Декор · Керама-Марацци · Азори (Керабуд) · Уральский Гранит (Idalgo) · Керамика Будущего · Granitea · Daco
   </p>
 
   <div style="background:#1a1a2e;color:#fff;padding:16px 20px;border-radius:8px;margin-top:20px">
     <strong>Склад и большой шоурум в Янино</strong> — доставка и самовывоз<br><br>
     Менеджер по продажам <strong>Роман Новожилов</strong><br>
     📞 <a href="tel:+79052050900" style="color:#e87722">+7 (905) 205-09-00</a><br>
-    🌐 <a href="http://www.plitki-spb.ru" style="color:#e87722">www.plitki-spb.ru</a>
+    🌐 <a href="http://www.cersanit-spb.ru" style="color:#e87722">www.cersanit-spb.ru</a>
   </div>
 
   <p style="font-size:11px;color:#aaa;margin-top:16px">
