@@ -160,13 +160,31 @@ EXPORT_CATEGORIES = [
     'industrial machinery export Spain',
 ]
 
-# Локации в радиусе 100 км от Беникасима (Benicàssim) - уменьшено для ускорения
+# Локации в радиусе 100 км от Беникасима (Benicàssim)
 LOCATIONS = [
+    'Benicàssim',
+    'Benicasim',
+    'Castellón de la Plana',
     'Castellón',
     'Villarreal',
+    'Vila-real',
+    'Onda',
+    'Alcora',
+    'Nules',
+    'Burriana',
+    'Sagunto',
     'Valencia',
+    'Gandia',
+    'Paterna',
+    'Torrent',
+    'Alzira',
+    'Requena',
+    'Vinaròs',
+    'Sant Mateu',
+    'Morella',
     'Comunidad Valenciana',
-    'Spain',
+    'Provincia de Castellón',
+    'Provincia de Valencia',
 ]
 
 # ══════════════════════════════════════════════════════
@@ -678,9 +696,6 @@ def main():
     
     # Объединяем все категории
     all_categories = CERAMIC_CATEGORIES + EXPORT_CATEGORIES
-    
-    # Ограничиваем количество категорий для ускорения (40 категорий × 5 локаций = 200 комбинаций)
-    all_categories = all_categories[:20]
     
     for category in all_categories:
         for location in LOCATIONS:
