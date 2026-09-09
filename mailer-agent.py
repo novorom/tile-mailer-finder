@@ -7,7 +7,7 @@ Tile Mailer Agent — Плитка & Керамогранит СПб
 • Добавляет новые адреса в Google Sheets
 • Удаляет мёртвые (bounced) email из базы
 • Рассылает письмо через Brevo SMTP (бесплатно, база без ограничений)
-• Отправка каждый день с 12:00 до 16:00 МСК (без выходных)
+• Отправка каждый день с 9:00 до 24:00 МСК (без выходных)
 • 4 рассыльщика × 250 писем = 1000 писем/день — каждый день продолжает с того места где остановился
 • 1-го числа месяца — сброс прогресса, новая рассылка
 """
@@ -52,8 +52,8 @@ REPLY_TO     = 'novorom@mail.ru'
 SHEET_ID   = os.environ.get('SHEET_ID', '')
 CREDS_JSON = os.environ.get('GOOGLE_CREDS', '')
 
-SEND_HOUR_FROM = 12
-SEND_HOUR_TO   = 16
+SEND_HOUR_FROM = 9
+SEND_HOUR_TO   = 24
 MSK = timezone(timedelta(hours=3))
 
 DAILY_LIMIT = 300
@@ -66,7 +66,7 @@ TOTAL_MAILERS = int(os.environ.get('TOTAL_MAILERS', '1'))
 # ══════════════════════════════════════════════════════
 
 def is_send_window() -> bool:
-    """Возвращает True если сейчас 12:00–16:00 МСК (без ограничений по выходным)"""
+    """Возвращает True если сейчас 9:00–24:00 МСК (без ограничений по выходным)"""
     now = datetime.now(MSK)
     hour = now.hour
     if not (SEND_HOUR_FROM <= hour < SEND_HOUR_TO):
@@ -475,7 +475,7 @@ def main():
         records, _ = load_all_records(sheet)
 
     if not is_send_window():
-        log.info('Рассылка пропущена — вне окна 12:00–16:00 МСК')
+        log.info('Рассылка пропущена — вне окна 9:00–24:00 МСК')
         return
 
     log.info(f'─── Рассылка — месяц {month_str} ───')
