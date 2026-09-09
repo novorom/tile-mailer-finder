@@ -40,8 +40,8 @@ log = logging.getLogger(__name__)
 
 BREVO_HOST = 'smtp-relay.brevo.com'
 BREVO_PORT = 587
-BREVO_USER = os.environ.get("BREVO_USER_4", "b7e065001@smtp-brevo.com")
-BREVO_PASS = os.environ.get('BREVO_PASS_4', '')
+BREVO_USER = os.environ.get("BREVO_USER", "b7e065001@smtp-brevo.com")
+BREVO_PASS = os.environ.get('BREVO_PASS', '')
 
 log.info(f"BREVO_USER: {BREVO_USER}")
 log.info(f"BREVO_PASS (first 10 chars): {BREVO_PASS[:10] if BREVO_PASS else 'EMPTY'}")
@@ -426,9 +426,7 @@ def run_mailing(sheet, records):
         if success:
             mark_sent(sheet, email, 'sent')
             sent_count += 1
-        else:
-            # Если ошибка - помечаем как dead
-            mark_dead(sheet, email)
+        # Не помечаем как dead при ошибке - это может быть временная проблема с SMTP
         
         time.sleep(2)  # Пауза между отправками
     
