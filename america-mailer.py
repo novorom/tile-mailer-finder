@@ -52,7 +52,7 @@ SHEET_ID   = os.environ.get('SPAIN_SHEET_ID', '')
 CREDS_JSON = os.environ.get('GOOGLE_CREDS', '')
 
 SEND_HOUR_FROM = 9
-SEND_HOUR_TO   = 20
+SEND_HOUR_TO   = 3
 MSK = timezone(timedelta(hours=3))
 
 DAILY_LIMIT = 300
@@ -68,17 +68,20 @@ SKIP_TIME_CHECK = os.environ.get('SKIP_TIME_CHECK', '').lower() == 'true'
 # ══════════════════════════════════════════════════════
 
 def is_send_window() -> bool:
-    """Возвращает True если сейчас 9:00–18:00 МСК или SKIP_TIME_CHECK=true"""
+    """Возвращает True если сейчас 9:00–3:00 МСК (следующий день) или SKIP_TIME_CHECK=true"""
     if SKIP_TIME_CHECK:
         log.info('SKIP_TIME_CHECK=true, проверка времени отключена')
         return True
     
     now = datetime.now(MSK)
     hour = now.hour
-    if not (SEND_HOUR_FROM <= hour < SEND_HOUR_TO):
-        log.info(f'Сейчас {now.strftime("%H:%M")} МСК — вне окна {SEND_HOUR_FROM}:00–{SEND_HOUR_TO}:00, рассылка пропущена')
-        return False
-    return True
+    
+    # Окно 9:00–3:00 означает: с 9:00 до полуночи И с полуночи до 3:00
+    if SEND_HOUR_FROM <= hour or hour < SEND_HOUR_TO:
+        return True
+    
+    log.info(f'Сейчас {now.strftime("%H:%M")} МСК — вне окна {SEND_HOUR_FROM}:00–{SEND_HOUR_TO}:00, рассылка пропущена')
+    return False
 
 # ══════════════════════════════════════════════════════
 #  ПИСЬМО С РЕЗЮМЕ
