@@ -127,7 +127,7 @@ Cersanit · Шахтинская плитка (GraciaCeramica) · Нефрит-�
 
 Менеджер по продажам Роман Новожилов
 +7 (905) 205-09-00
-www.cersanit-spb.ru
+www.plitki-spb.ru
 
 Если вы не хотите получать наши письма — просто ответьте «Отписаться».
 """
@@ -212,7 +212,7 @@ EMAIL_BODY_HTML = """\
     <strong>Склад и большой шоурум в Янино</strong> — доставка и самовывоз<br><br>
     Менеджер по продажам <strong>Роман Новожилов</strong><br>
     📞 <a href="tel:+79052050900" style="color:#e87722">+7 (905) 205-09-00</a><br>
-    🌐 <a href="http://www.cersanit-spb.ru" style="color:#e87722">www.cersanit-spb.ru</a>
+    🌐 <a href="http://www.plitki-spb.ru" style="color:#e87722">www.plitki-spb.ru</a>
   </div>
 
   <p style="font-size:11px;color:#aaa;margin-top:16px">
