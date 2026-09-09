@@ -46,7 +46,7 @@ BREVO_PASS = os.environ.get('BREVO_PASS', '')
 log.info(f"BREVO_USER: {BREVO_USER}")
 log.info(f"BREVO_PASS (first 10 chars): {BREVO_PASS[:10] if BREVO_PASS else 'EMPTY'}")
 
-SENDER_EMAIL = 'letirtf@gmail.com'
+SENDER_EMAIL = 'werwwort@gmail.com'
 SENDER_NAME  = 'Roman Novozhilov — Sales Manager'
 REPLY_TO     = 'novorom@gmail.com'
 
