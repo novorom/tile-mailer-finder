@@ -54,7 +54,7 @@ SHEET_ID   = os.environ.get('SPAIN_SHEET_ID', '')
 CREDS_JSON = os.environ.get('GOOGLE_CREDS', '')
 
 SEND_HOUR_FROM = 9
-SEND_HOUR_TO   = 18
+SEND_HOUR_TO   = 24
 MSK = timezone(timedelta(hours=3))
 
 DAILY_LIMIT = 300
@@ -70,7 +70,7 @@ SKIP_TIME_CHECK = os.environ.get('SKIP_TIME_CHECK', '').lower() == 'true'
 # ══════════════════════════════════════════════════════
 
 def is_send_window() -> bool:
-    """Возвращает True если сейчас 9:00–18:00 МСК или SKIP_TIME_CHECK=true"""
+    """Возвращает True если сейчас 9:00–24:00 МСК или SKIP_TIME_CHECK=true"""
     if SKIP_TIME_CHECK:
         log.info('SKIP_TIME_CHECK=true, проверка времени отключена')
         return True
