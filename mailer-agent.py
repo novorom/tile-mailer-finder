@@ -371,6 +371,49 @@ DEAD_KEYWORDS = [
 def is_dead_bounce(error_msg):
     return any(kw in str(error_msg).lower() for kw in DEAD_KEYWORDS)
 
+def is_valid_email_format(email):
+    """Проверяет базовую валидность формата email"""
+    if not email or not isinstance(email, str):
+        return False
+    
+    # Проверка на переносы строк и пробелы
+    if '\n' in email or '\r' in email or ' ' in email:
+        return False
+    
+    # Проверка на лишние символы
+    if email.startswith('>') or email.startswith('<') or email.endswith('>') or email.endswith('<'):
+        return False
+    
+    # Проверка на несколько @
+    if email.count('@') != 1:
+        return False
+    
+    # Разделяем на локальную часть и домен
+    local, domain = email.rsplit('@', 1)
+    
+    # Проверка локальной части
+    if not local or len(local) > 64:
+        return False
+    
+    # Проверка на точку в начале/конце локальной части
+    if local.startswith('.') or local.endswith('.'):
+        return False
+    
+    # Проверка домена
+    if not domain or len(domain) > 255:
+        return False
+    
+    # Проверка на точку в начале/конце домена
+    if domain.startswith('.') or domain.endswith('.'):
+        return False
+    
+    # Базовая проверка на допустимые символы
+    import re
+    if not re.match(r'^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$', email):
+        return False
+    
+    return True
+
 def to_smtp_address(email):
     if '@' not in email:
         return None
@@ -386,6 +429,10 @@ def to_smtp_address(email):
             return None
 
 def send_one_email(to_email):
+    # Проверка валидности формата email
+    if not is_valid_email_format(to_email):
+        return 'dead', 'invalid email format'
+    
     smtp_to = to_smtp_address(to_email)
     if smtp_to is None:
         return 'dead', 'unsupported domain encoding'
