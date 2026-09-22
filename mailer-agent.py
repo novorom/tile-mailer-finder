@@ -46,7 +46,7 @@ BREVO_USER = os.environ.get("BREVO_USER", "a5784a001@smtp-brevo.com")
 BREVO_PASS = os.environ.get('BREVO_PASS', '')
 
 SENDER_EMAIL = 'pasechnick616@gmail.com'
-SENDER_NAME  = 'Роман Новожилов — Керамогранит и плитка'
+SENDER_NAME  = 'ООО ТФ Керамика'
 REPLY_TO     = 'novorom@mail.ru'
 
 SHEET_ID   = os.environ.get('SHEET_ID', '')
@@ -86,139 +86,338 @@ def is_send_window() -> bool:
 #  ПИСЬМО
 # ══════════════════════════════════════════════════════
 
-EMAIL_SUBJECT = "Керамическая плитка и керамогранит — сентябрь СПб — опт, розница, объектные продажи"
+EMAIL_SUBJECT = "Плитка и керамогранит от 400 ₽/м² — спеццены для строительных организаций"
 
 EMAIL_BODY_TEXT = """\
 Добрый день!
 
-🔥 СПЕЦИАЛЬНОЕ ПРЕДЛОЖЕНИЕ:
+Распродаём остатки облицовочной плитки и керамогранита по специальным ценам, ниже обычных.
+Подборка на этот месяц для строительных организаций и подрядчиков.
 
-Строительная плитка 20×30 — 1-й сорт
-399 руб./м²
-Керамический гранит 30×30 «Соль и перец»
-660 руб./м²
+ОБЛИЦОВОЧНАЯ ПЛИТКА (Нефрит-Керамика):
+Риф бежевый — 600 × 200 × 9 мм, Стандарт — 400 ₽/м²
+Гермес коричневый — 400 × 250 × 8 мм, Стандарт — 450 ₽/м²
+Нарни серый — 600 × 200 × 9 мм, Стандарт — 450 ₽/м²
+Лия бежевый — 600 × 300 × 9 мм, Стандарт — 450 ₽/м²
 
-Плитка CERSANIT (Церсанит) в наличии на складе в СПб — большая товарная программа!
+КЕРАМОГРАНИТ:
+Astaria Ice белый — 450 × 450 × 8 мм, ГОСТ (М-квадрат) — 600 ₽/м²
+«Соль-перец», светло-серый, матовый — 300 × 300 × 7 мм (Квадро Декор) — 610 ₽/м²
+Matera бежевый — 597 × 597 × 10 мм, ГОСТ (М-квадрат) — 950 ₽/м²
 
-КЕРАМОГРАНИТ Cersanit, 598×185 мм — под дерево, под паркет
-995 руб./м²
-https://cersanit.ru/catalog/2d/collections/f/size-is-18x60/
+Цены указаны с НДС. Количество ограничено, остатки по каждой позиции уточняйте у менеджера.
 
-ШАХТИНСКАЯ плитка облицовочная, глянец, разных цветов и белая, 20×30 см
-412 руб./м²
+Преимущества:
+• Работаем по счёту — оплата безналом для организаций
+• Расчёт количества — посчитаем нужный объём под ваш объект бесплатно
+• Фото и сертификаты — пришлём по любой позиции по запросу
 
-ДЕТСКАЯ плитка Нефрит-Керамика для школ и детских садов — серия Kids
-от 617 руб./м²
-https://nefrit.ru/collections/Kids/
+Наш склад:
+Ленинградская область, Тосненский район, Тельмановское городское поселение, посёлок Войскорово, 14В
+Пн–Пт, с 08:00 до 18:00
 
-УРАЛЬСКИЙ ГРАНИТ — GRANITEA / IDALGO / Керамика Будущего
-U100 (молочный, моноколор) 60×60 матовый
-774 руб./м²
-https://www.uralgres.com/catalog/ural-granite/ural-facades/u100/
-
-KERAMA MARAZZI — SG701390R Фрегат бежевый обрезной КГ 20×80
-1 502 руб./м²
-https://kerama-marazzi.com/catalog/gres/sg701390r/
-
-Наши заводы-производители:
-Cersanit · Шахтинская плитка (GraciaCeramica) · Нефрит-Керамика · Квадро-Декор · Керама-Марацци · Азори (Керабуд) · Уральский Гранит (Idalgo) · Керамика Будущего · Granitea · Daco
-
-Склад и большой шоурум в Янино — доставка и самовывоз
-
-Менеджер по продажам Роман Новожилов
-+7 (905) 205-09-00
-www.plitki-spb.ru
-
-Если вы не хотите получать наши письма — просто ответьте «Отписаться».
+С уважением,
+Роман Новожилов
+Менеджер по продажам, ООО «ТФ Керамика»
++7 905 205-09-00
+novorom@mail.ru
 """
 
 EMAIL_BODY_HTML = """\
 <!DOCTYPE html>
-<html>
-<head><meta charset="UTF-8"></head>
-<body style="font-family:Arial,sans-serif;font-size:14px;color:#222;line-height:1.7;max-width:620px;margin:0 auto;padding:20px">
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="x-apple-disable-message-reformatting">
+<title>Плитка и керамогранит от 400 ₽/м² — спеццены для строительных организаций</title>
+<style>
+  body { margin:0; padding:0; background:#dcd9d2; }
+  table { border-collapse:collapse; }
+  a { color:#23272b; }
+  @media (max-width:640px) {
+    .wrap { width:100% !important; }
+    .px { padding-left:18px !important; padding-right:18px !important; }
+    .h1 { font-size:29px !important; line-height:34px !important; }
+    .benefit { display:block !important; width:100% !important; padding:0 0 14px 0 !important; }
+    .btn-cell { display:block !important; width:100% !important; padding:0 0 10px 0 !important; }
+    .tag-price { font-size:26px !important; }
+  }
+</style>
+</head>
+<body style="margin:0;padding:0;background:#dcd9d2;">
 
-  <p>Добрый день!</p>
-  
-  <div style="background:#ff6b35;color:#fff;padding:12px 16px;border-radius:6px;margin:16px 0">
-    <strong>🔥 СПЕЦИАЛЬНОЕ ПРЕДЛОЖЕНИЕ:</strong>
-  </div>
+<!-- Прехедер: текст, который видно в списке писем -->
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;color:#dcd9d2;font-size:1px;line-height:1px;">
+  Облицовочная плитка от 400 ₽/м², керамогранит от 600 ₽/м². Остатки со склада в Ленинградской области, работаем по счёту.
+</div>
 
-  <table width="100%" cellpadding="0" cellspacing="0">
-    <tr>
-      <td style="padding:12px 0;border-bottom:1px solid #eee">
-        <strong style="color:#1a1a2e">Строительная плитка 20×30 — 1-й сорт</strong><br>
-        <span style="font-size:18px;font-weight:bold;color:#e87722">399 руб./м²</span>
-      </td>
-    </tr>
-    <tr>
-      <td style="padding:12px 0;border-bottom:1px solid #eee">
-        <strong style="color:#1a1a2e">Керамический гранит 30×30 «Соль и перец»</strong><br>
-        <span style="font-size:18px;font-weight:bold;color:#e87722">660 руб./м²</span>
-      </td>
-    </tr>
-  </table>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#dcd9d2">
+<tr><td align="center" style="padding:24px 12px;">
 
-  <p><strong>Плитка CERSANIT (Церсанит) в наличии на складе в СПб — большая товарная программа!</strong></p>
+<table role="presentation" class="wrap" width="640" cellpadding="0" cellspacing="0" border="0" style="width:640px;max-width:640px;background:#f4f2ee;">
 
-  <hr style="border:none;border-top:2px solid #e87722;margin:20px 0">
+  <!-- ШАПКА -->
+  <tr>
+    <td class="px" bgcolor="#23272b" style="background:#23272b;padding:22px 32px;font-family:Georgia,'Times New Roman',serif;font-size:22px;line-height:26px;font-weight:bold;color:#ffffff;">
+      ТФ Керамика
+      <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:18px;font-weight:normal;color:#b9b6ae;padding-top:4px;">
+        Ежемесячное предложение для строительных организаций
+      </div>
+    </td>
+  </tr>
 
-  <table width="100%" cellpadding="0" cellspacing="0">
-    <tr>
-      <td style="padding:12px 0;border-bottom:1px solid #eee">
-        <strong style="color:#e87722">КЕРАМОГРАНИТ Cersanit</strong>, 598×185 мм — под дерево, под паркет<br>
-        <span style="font-size:18px;font-weight:bold;color:#1a1a2e">995 руб./м²</span><br>
-        <a href="https://cersanit.ru/catalog/2d/collections/f/size-is-18x60/" style="color:#1565c0">Смотреть коллекцию →</a>
-      </td>
-    </tr>
-    <tr>
-      <td style="padding:12px 0;border-bottom:1px solid #eee">
-        <strong style="color:#e87722">ШАХТИНСКАЯ плитка</strong> облицовочная, глянец, разных цветов и белая, 20×30 см<br>
-        <span style="font-size:18px;font-weight:bold;color:#1a1a2e">412 руб./м²</span>
-      </td>
-    </tr>
-    <tr>
-      <td style="padding:12px 0;border-bottom:1px solid #eee">
-        <strong style="color:#e87722">ДЕТСКАЯ плитка Нефрит-Керамика</strong> для школ и детских садов — серия Kids<br>
-        <span style="font-size:18px;font-weight:bold;color:#1a1a2e">от 617 руб./м²</span><br>
-        <a href="https://nefrit.ru/collections/Kids/" style="color:#1565c0">Смотреть коллекцию →</a>
-      </td>
-    </tr>
-    <tr>
-      <td style="padding:12px 0;border-bottom:1px solid #eee">
-        <strong style="color:#e87722">УРАЛЬСКИЙ ГРАНИТ — GRANITEA / IDALGO / Керамика Будущего</strong><br>
-        U100 (молочный, моноколор) 60×60 матовый<br>
-        <span style="font-size:18px;font-weight:bold;color:#1a1a2e">774 руб./м²</span><br>
-        <a href="https://www.uralgres.com/catalog/ural-granite/ural-facades/u100/" style="color:#1565c0">Смотреть →</a>
-      </td>
-    </tr>
-    <tr>
-      <td style="padding:12px 0">
-        <strong style="color:#e87722">KERAMA MARAZZI</strong> — SG701390R Фрегат бежевый обрезной КГ 20×80<br>
-        <span style="font-size:18px;font-weight:bold;color:#1a1a2e">1 502 руб./м²</span><br>
-        <a href="https://kerama-marazzi.com/catalog/gres/sg701390r/" style="color:#1565c0">Смотреть →</a>
-      </td>
-    </tr>
-  </table>
+  <!-- ПОЛОСА-«ПЛИТКА»: образцы цветов из подборки -->
+  <tr>
+    <td style="padding:0;font-size:0;line-height:0;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td width="16.66%" height="14" bgcolor="#d8c6a5" style="height:14px;line-height:14px;font-size:0;">&nbsp;</td>
+          <td width="16.66%" height="14" bgcolor="#8d9297" style="height:14px;line-height:14px;font-size:0;">&nbsp;</td>
+          <td width="16.66%" height="14" bgcolor="#f7f5ef" style="height:14px;line-height:14px;font-size:0;">&nbsp;</td>
+          <td width="16.66%" height="14" bgcolor="#6a4a36" style="height:14px;line-height:14px;font-size:0;">&nbsp;</td>
+          <td width="16.66%" height="14" bgcolor="#b8b3a9" style="height:14px;line-height:14px;font-size:0;">&nbsp;</td>
+          <td width="16.7%" height="14" bgcolor="#d8c6a5" style="height:14px;line-height:14px;font-size:0;">&nbsp;</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
 
-  <hr style="border:none;border-top:2px solid #e87722;margin:20px 0">
+  <!-- ГЛАВНЫЙ БЛОК -->
+  <tr>
+    <td class="px" style="padding:36px 32px 8px 32px;font-family:Arial,Helvetica,sans-serif;">
+      <div class="h1" style="font-family:Georgia,'Times New Roman',serif;font-size:36px;line-height:42px;font-weight:bold;color:#23272b;">
+        Плитка и керамогранит от&nbsp;400&nbsp;₽/м²
+      </div>
+      <div style="font-size:16px;line-height:24px;color:#4a4f55;padding-top:14px;">
+        Добрый день! Распродаём остатки облицовочной плитки и керамогранита по специальным ценам, ниже обычных.
+        Подборка на этот месяц для строительных организаций и подрядчиков.
+      </div>
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:18px;">
+        <tr>
+          <td bgcolor="#f2b705" style="background:#f2b705;padding:9px 14px;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:18px;font-weight:bold;color:#23272b;">
+            Цены действуют до 31 октября или до окончания остатков
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
 
-  <p style="font-size:13px;color:#555">
-    <strong>Наши заводы-производители:</strong><br>
-    Cersanit · Шахтинская плитка (GraciaCeramica) · Нефрит-Керамика · Квадро-Декор · Керама-Марацци · Азори (Керабуд) · Уральский Гранит (Idalgo) · Керамика Будущего · Granitea · Daco
-  </p>
+  <!-- ОБЛИЦОВОЧНАЯ ПЛИТКА -->
+  <tr>
+    <td class="px" style="padding:30px 32px 10px 32px;font-family:Georgia,'Times New Roman',serif;font-size:22px;line-height:28px;font-weight:bold;color:#23272b;">
+      Облицовочная плитка
+      <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:18px;font-weight:normal;color:#6b7075;padding-top:2px;">Производитель: Нефрит-Керамика</div>
+    </td>
+  </tr>
+  <tr>
+    <td class="px" style="padding:0 32px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" style="background:#ffffff;">
 
-  <div style="background:#1a1a2e;color:#fff;padding:16px 20px;border-radius:8px;margin-top:20px">
-    <strong>Склад и большой шоурум в Янино</strong> — доставка и самовывоз<br><br>
-    Менеджер по продажам <strong>Роман Новожилов</strong><br>
-    📞 <a href="tel:+79052050900" style="color:#e87722">+7 (905) 205-09-00</a><br>
-    🌐 <a href="http://www.plitki-spb.ru" style="color:#e87722">www.plitki-spb.ru</a>
-  </div>
+        <tr>
+          <td style="padding:16px 18px;border-bottom:1px solid #e4e1da;font-family:Arial,Helvetica,sans-serif;">
+            <div style="font-size:17px;line-height:22px;font-weight:bold;color:#23272b;">Риф бежевый</div>
+            <div style="font-size:14px;line-height:20px;color:#6b7075;padding-top:2px;">600 × 200 × 9 мм, Стандарт</div>
+          </td>
+          <td width="118" align="center" bgcolor="#f2b705" style="width:118px;background:#f2b705;padding:12px 8px;border-bottom:1px solid #ffffff;font-family:Arial,Helvetica,sans-serif;color:#23272b;">
+            <div class="tag-price" style="font-size:30px;line-height:32px;font-weight:bold;">400</div>
+            <div style="font-size:12px;line-height:16px;">₽ за м²</div>
+          </td>
+        </tr>
 
-  <p style="font-size:11px;color:#aaa;margin-top:16px">
-    Если вы не хотите получать наши письма — просто ответьте «Отписаться».
-  </p>
+        <tr>
+          <td style="padding:16px 18px;border-bottom:1px solid #e4e1da;font-family:Arial,Helvetica,sans-serif;">
+            <div style="font-size:17px;line-height:22px;font-weight:bold;color:#23272b;">Гермес коричневый</div>
+            <div style="font-size:14px;line-height:20px;color:#6b7075;padding-top:2px;">400 × 250 × 8 мм, Стандарт</div>
+          </td>
+          <td width="118" align="center" bgcolor="#f2b705" style="width:118px;background:#f2b705;padding:12px 8px;border-bottom:1px solid #ffffff;font-family:Arial,Helvetica,sans-serif;color:#23272b;">
+            <div class="tag-price" style="font-size:30px;line-height:32px;font-weight:bold;">450</div>
+            <div style="font-size:12px;line-height:16px;">₽ за м²</div>
+          </td>
+        </tr>
 
+        <tr>
+          <td style="padding:16px 18px;border-bottom:1px solid #e4e1da;font-family:Arial,Helvetica,sans-serif;">
+            <div style="font-size:17px;line-height:22px;font-weight:bold;color:#23272b;">Нарни серый</div>
+            <div style="font-size:14px;line-height:20px;color:#6b7075;padding-top:2px;">600 × 200 × 9 мм, Стандарт</div>
+          </td>
+          <td width="118" align="center" bgcolor="#f2b705" style="width:118px;background:#f2b705;padding:12px 8px;border-bottom:1px solid #ffffff;font-family:Arial,Helvetica,sans-serif;color:#23272b;">
+            <div class="tag-price" style="font-size:30px;line-height:32px;font-weight:bold;">450</div>
+            <div style="font-size:12px;line-height:16px;">₽ за м²</div>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="padding:16px 18px;font-family:Arial,Helvetica,sans-serif;">
+            <div style="font-size:17px;line-height:22px;font-weight:bold;color:#23272b;">Лия бежевый</div>
+            <div style="font-size:14px;line-height:20px;color:#6b7075;padding-top:2px;">600 × 300 × 9 мм, Стандарт</div>
+          </td>
+          <td width="118" align="center" bgcolor="#f2b705" style="width:118px;background:#f2b705;padding:12px 8px;font-family:Arial,Helvetica,sans-serif;color:#23272b;">
+            <div class="tag-price" style="font-size:30px;line-height:32px;font-weight:bold;">450</div>
+            <div style="font-size:12px;line-height:16px;">₽ за м²</div>
+          </td>
+        </tr>
+
+      </table>
+    </td>
+  </tr>
+
+  <!-- КЕРАМОГРАНИТ -->
+  <tr>
+    <td class="px" style="padding:32px 32px 10px 32px;font-family:Georgia,'Times New Roman',serif;font-size:22px;line-height:28px;font-weight:bold;color:#23272b;">
+      Керамогранит
+    </td>
+  </tr>
+  <tr>
+    <td class="px" style="padding:0 32px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" style="background:#ffffff;">
+
+        <tr>
+          <td style="padding:16px 18px;border-bottom:1px solid #e4e1da;font-family:Arial,Helvetica,sans-serif;">
+            <div style="font-size:17px;line-height:22px;font-weight:bold;color:#23272b;">Astaria Ice белый</div>
+            <div style="font-size:14px;line-height:20px;color:#6b7075;padding-top:2px;">450 × 450 × 8 мм, ГОСТ</div>
+            <div style="font-size:13px;line-height:18px;color:#6b7075;">М-квадрат (ProGRES Ceramica)</div>
+          </td>
+          <td width="118" align="center" bgcolor="#f2b705" style="width:118px;background:#f2b705;padding:12px 8px;border-bottom:1px solid #ffffff;font-family:Arial,Helvetica,sans-serif;color:#23272b;">
+            <div class="tag-price" style="font-size:30px;line-height:32px;font-weight:bold;">600</div>
+            <div style="font-size:12px;line-height:16px;">₽ за м²</div>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="padding:16px 18px;border-bottom:1px solid #e4e1da;font-family:Arial,Helvetica,sans-serif;">
+            <div style="font-size:17px;line-height:22px;font-weight:bold;color:#23272b;">«Соль-перец», светло-серый, матовый</div>
+            <div style="font-size:14px;line-height:20px;color:#6b7075;padding-top:2px;">Технический, 300 × 300 × 7 мм</div>
+            <div style="font-size:13px;line-height:18px;color:#6b7075;">Квадро Декор</div>
+          </td>
+          <td width="118" align="center" bgcolor="#f2b705" style="width:118px;background:#f2b705;padding:12px 8px;border-bottom:1px solid #ffffff;font-family:Arial,Helvetica,sans-serif;color:#23272b;">
+            <div class="tag-price" style="font-size:30px;line-height:32px;font-weight:bold;">610</div>
+            <div style="font-size:12px;line-height:16px;">₽ за м²</div>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="padding:16px 18px;font-family:Arial,Helvetica,sans-serif;">
+            <div style="font-size:17px;line-height:22px;font-weight:bold;color:#23272b;">Matera бежевый</div>
+            <div style="font-size:14px;line-height:20px;color:#6b7075;padding-top:2px;">597 × 597 × 10 мм, ГОСТ</div>
+            <div style="font-size:13px;line-height:18px;color:#6b7075;">М-квадрат (ProGRES Ceramica)</div>
+          </td>
+          <td width="118" align="center" bgcolor="#f2b705" style="width:118px;background:#f2b705;padding:12px 8px;font-family:Arial,Helvetica,sans-serif;color:#23272b;">
+            <div class="tag-price" style="font-size:30px;line-height:32px;font-weight:bold;">950</div>
+            <div style="font-size:12px;line-height:16px;">₽ за м²</div>
+          </td>
+        </tr>
+
+      </table>
+    </td>
+  </tr>
+
+  <!-- ПРИМЕЧАНИЕ -->
+  <tr>
+    <td class="px" style="padding:14px 32px 0 32px;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#6b7075;">
+      Цены указаны с НДС. Количество ограничено, остатки по каждой позиции уточняйте у менеджера.
+    </td>
+  </tr>
+
+  <!-- ПРЕИМУЩЕСТВА -->
+  <tr>
+    <td class="px" style="padding:30px 32px 6px 32px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td class="benefit" width="33%" valign="top" style="padding-right:12px;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:20px;color:#4a4f55;">
+            <div style="font-size:15px;line-height:20px;font-weight:bold;color:#23272b;padding-bottom:3px;border-top:3px solid #23272b;padding-top:9px;">Работаем по счёту</div>
+            Оплата безналом для организаций
+          </td>
+          <td class="benefit" width="33%" valign="top" style="padding:0 6px;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:20px;color:#4a4f55;">
+            <div style="font-size:15px;line-height:20px;font-weight:bold;color:#23272b;padding-bottom:3px;border-top:3px solid #23272b;padding-top:9px;">Расчёт количества</div>
+            Посчитаем нужный объём под ваш объект бесплатно
+          </td>
+          <td class="benefit" width="33%" valign="top" style="padding-left:12px;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:20px;color:#4a4f55;">
+            <div style="font-size:15px;line-height:20px;font-weight:bold;color:#23272b;padding-bottom:3px;border-top:3px solid #23272b;padding-top:9px;">Фото и сертификаты</div>
+            Пришлём по любой позиции по запросу
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <!-- ПРИЗЫВ К ДЕЙСТВИЮ -->
+  <tr>
+    <td class="px" style="padding:24px 32px 8px 32px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#23272b" style="background:#23272b;">
+        <tr>
+          <td style="padding:26px 26px 24px 26px;font-family:Arial,Helvetica,sans-serif;">
+            <div style="font-family:Georgia,'Times New Roman',serif;font-size:22px;line-height:28px;font-weight:bold;color:#ffffff;">
+              Нужна плитка на объект?
+            </div>
+            <div style="font-size:15px;line-height:22px;color:#c9c6be;padding:8px 0 18px 0;">
+              Назовите объём, подберём, зарезервируем и выставим счёт.
+            </div>
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td class="btn-cell" style="padding-right:10px;">
+                  <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                      <td bgcolor="#f2b705" style="background:#f2b705;">
+                        <a href="tel:+79052050900" style="display:block;padding:13px 22px;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:20px;font-weight:bold;color:#23272b;text-decoration:none;text-align:center;">Позвонить +7 905 205-09-00</a>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td class="btn-cell">
+                  <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                      <td style="border:2px solid #f2b705;">
+                        <a href="https://t.me/flyroman" style="display:block;padding:11px 20px;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:20px;font-weight:bold;color:#f2b705;text-decoration:none;text-align:center;">Написать в Telegram</a>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <!-- СКЛАД -->
+  <tr>
+    <td class="px" style="padding:26px 32px 6px 32px;font-family:Arial,Helvetica,sans-serif;">
+      <div style="font-family:Georgia,'Times New Roman',serif;font-size:20px;line-height:26px;font-weight:bold;color:#23272b;padding-bottom:8px;">Наш склад</div>
+      <div style="font-size:15px;line-height:23px;color:#4a4f55;">
+        Ленинградская область, Тосненский район, Тельмановское городское поселение, посёлок Войскорово, 14В<br>
+        Пн–Пт, с 08:00 до 18:00
+      </div>
+      <div style="padding-top:10px;font-size:15px;line-height:22px;">
+        <a href="https://yandex.ru/maps/?text=%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D0%B3%D1%80%D0%B0%D0%B4%D1%81%D0%BA%D0%B0%D1%8F%20%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C%2C%20%D0%92%D0%BE%D0%B9%D1%81%D0%BA%D0%BE%D1%80%D0%BE%D0%B2%D0%BE%2C%2014%D0%92" style="color:#23272b;font-weight:bold;">Открыть на карте</a>
+      </div>
+    </td>
+  </tr>
+
+  <!-- ПОДПИСЬ -->
+  <tr>
+    <td class="px" style="padding:26px 32px 30px 32px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:22px;color:#4a4f55;">
+      С уважением,<br>
+      <b style="color:#23272b;">Роман Новожилов</b><br>
+      Менеджер по продажам, ООО «ТФ Керамика»<br>
+      <a href="tel:+79052050900" style="color:#23272b;text-decoration:none;">+7 905 205-09-00</a>,
+      <a href="mailto:novorom@mail.ru" style="color:#23272b;">novorom@mail.ru</a>
+    </td>
+  </tr>
+
+  <!-- ПОДВАЛ -->
+  <tr>
+    <td class="px" bgcolor="#e9e6df" style="background:#e9e6df;padding:18px 32px;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:18px;color:#6b7075;">
+      Вы получили это письмо как клиент ООО «ТФ Керамика». Цены и наличие актуальны на дату рассылки.<br>
+      Если не хотите получать наши предложения, <a href="#unsubscribe" style="color:#6b7075;">отпишитесь здесь</a> или ответьте на письмо словом «Отписаться».
+    </td>
+  </tr>
+
+</table>
+
+</td></tr>
+</table>
 </body>
 </html>
 """
