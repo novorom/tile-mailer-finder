@@ -120,6 +120,8 @@ Astaria Ice Белый — 450 × 450 × 8 мм, М-Квадрат, ГОСТ —
 Соль-Перец Светло-Серый Матовая — 300 × 300 × 7 мм, Квадро Декор — 610 ₽/м²
 Matera Бежевый — 600 × 600 × 10 мм, М-Квадрат, ГОСТ — 960 ₽/м²
 
+Смотреть все остатки: https://tfkeramika.ru/#prices
+
 Цены и остатки могут меняться — перед заказом сверяйте их в каталоге:
 https://tfkeramika.ru/#prices
 
@@ -295,6 +297,11 @@ EMAIL_BODY_HTML = """\
             </td>
             <td valign="middle" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#535a60;"><a href="https://tfkeramika.ru/products/matera-bezhevyy-600-600-10-mm-gost/" style="color:#1f2429;font-weight:bold;text-decoration:none;">Matera Бежевый</a> · 600 × 600 × 10 мм · М-Квадрат, ГОСТ <b style="color:#1f2429;">960 ₽/м²</b></td>
           </tr></table>
+        </td></tr>
+      </table>
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:14px;">
+        <tr><td bgcolor="#f2c400" style="background:#f2c400;border-radius:5px;">
+          <a href="https://tfkeramika.ru/#prices" style="display:block;padding:12px 18px;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:19px;font-weight:bold;color:#1f2429;text-decoration:none;text-align:center;">Смотреть все остатки&nbsp; →</a>
         </td></tr>
       </table>
     </td>
