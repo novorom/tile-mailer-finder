@@ -100,6 +100,13 @@ https://tfkeramika.ru/catalog/keramicheskaya-plitka-spb/
 Керамогранит:
 https://tfkeramika.ru/catalog/keramogranit-spb/
 
+Отдельно рекомендуем:
+
+Bianco Белый — 450 × 450 × 8 мм, М-Квадрат, ГОСТ, артикул 731200
+В наличии: 6 708 м²
+Цена: 650 ₽/м² с НДС
+Карточка товара: https://tfkeramika.ru/products/bianco-belyy-450-450-8-mm-gost/
+
 Примеры позиций из каталога:
 
 Керамическая плитка:
@@ -203,6 +210,26 @@ EMAIL_BODY_HTML = """\
                 <div style="padding-top:5px;font-size:13px;line-height:19px;color:#687078;">Каталог для пола, стен и технических задач</div>
               </td></tr>
             </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td class="px" style="padding:18px 32px 16px;font-family:Arial,Helvetica,sans-serif;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#fff9d9" style="background:#fff9d9;border:1px solid #eadb8d;border-radius:6px;">
+        <tr>
+          <td width="142" valign="middle" style="width:142px;padding:14px;">
+            <a href="https://tfkeramika.ru/products/bianco-belyy-450-450-8-mm-gost/" style="display:block;">
+              <img src="https://tfkeramika.ru/img/photos/003.jpg" width="118" height="118" alt="Bianco Белый, керамогранит 450 × 450 мм" style="display:block;width:118px;height:118px;object-fit:cover;border:1px solid #deddd7;border-radius:5px;background:#ffffff;">
+            </a>
+          </td>
+          <td valign="middle" style="padding:14px 16px 14px 0;font-family:Arial,Helvetica,sans-serif;">
+            <div style="font-size:11px;line-height:16px;font-weight:bold;letter-spacing:.4px;color:#665500;">ПОПУЛЯРНАЯ ПОЗИЦИЯ</div>
+            <a href="https://tfkeramika.ru/products/bianco-belyy-450-450-8-mm-gost/" style="display:block;padding-top:3px;font-size:18px;line-height:23px;font-weight:bold;color:#1f2429;text-decoration:none;">Bianco Белый</a>
+            <div style="padding-top:4px;font-size:13px;line-height:19px;color:#535a60;">Керамогранит · 450 × 450 × 8 мм<br>М-Квадрат · ГОСТ · артикул 731200</div>
+            <div style="padding-top:8px;font-size:14px;line-height:20px;color:#1f2429;"><b>В наличии 6 708 м²</b> · <b>650 ₽/м² с НДС</b></div>
+            <a href="https://tfkeramika.ru/products/bianco-belyy-450-450-8-mm-gost/" style="display:inline-block;margin-top:9px;padding:8px 12px;background:#1f2429;border-radius:4px;color:#ffffff;font-size:13px;line-height:17px;font-weight:bold;text-decoration:none;">Открыть карточку товара →</a>
           </td>
         </tr>
       </table>
