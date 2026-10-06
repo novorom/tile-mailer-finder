@@ -241,25 +241,60 @@ EMAIL_BODY_HTML = """\
       <div style="font-size:13px;line-height:20px;color:#687078;padding-bottom:12px;">Ниже — товары из каталога. Наличие и актуальные цены проверяйте на сайте.</div>
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" style="background:#ffffff;border:1px solid #deddd7;">
         <tr><td style="padding:13px 16px;border-bottom:1px solid #ecebe7;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#535a60;">
-          <a href="https://tfkeramika.ru/products/rif-bezhevyy-600-200-9-mm-standart/" style="color:#1f2429;font-weight:bold;text-decoration:none;">Риф Бежевый</a> · 600 × 200 × 9 мм · Нефрит-Керамика, Стандарт <b style="color:#1f2429;">400 ₽/м²</b>
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+            <td width="68" valign="middle" style="width:68px;padding-right:12px;">
+              <a href="https://tfkeramika.ru/products/rif-bezhevyy-600-200-9-mm-standart/" style="display:block;"><img src="https://tfkeramika.ru/img/photos/018.jpg" width="56" height="56" alt="Риф Бежевый" style="display:block;width:56px;height:56px;object-fit:cover;border:1px solid #deddd7;border-radius:4px;background:#ffffff;"></a>
+            </td>
+            <td valign="middle" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#535a60;"><a href="https://tfkeramika.ru/products/rif-bezhevyy-600-200-9-mm-standart/" style="color:#1f2429;font-weight:bold;text-decoration:none;">Риф Бежевый</a> · 600 × 200 × 9 мм · Нефрит-Керамика, Стандарт <b style="color:#1f2429;">400 ₽/м²</b></td>
+          </tr></table>
         </td></tr>
         <tr><td style="padding:13px 16px;border-bottom:1px solid #ecebe7;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#535a60;">
-          <a href="https://tfkeramika.ru/products/germes-korichnevyy-400-250-8-mm-standart/" style="color:#1f2429;font-weight:bold;text-decoration:none;">Гермес Коричневый</a> · 400 × 250 × 8 мм · Нефрит-Керамика, Стандарт <b style="color:#1f2429;">450 ₽/м²</b>
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+            <td width="68" valign="middle" style="width:68px;padding-right:12px;">
+              <a href="https://tfkeramika.ru/products/germes-korichnevyy-400-250-8-mm-standart/" style="display:block;"><img src="https://tfkeramika.ru/img/photos/germes-korichnevyj.jpg" width="56" height="56" alt="Гермес Коричневый" style="display:block;width:56px;height:56px;object-fit:cover;border:1px solid #deddd7;border-radius:4px;background:#ffffff;"></a>
+            </td>
+            <td valign="middle" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#535a60;"><a href="https://tfkeramika.ru/products/germes-korichnevyy-400-250-8-mm-standart/" style="color:#1f2429;font-weight:bold;text-decoration:none;">Гермес Коричневый</a> · 400 × 250 × 8 мм · Нефрит-Керамика, Стандарт <b style="color:#1f2429;">450 ₽/м²</b></td>
+          </tr></table>
         </td></tr>
         <tr><td style="padding:13px 16px;border-bottom:1px solid #ecebe7;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#535a60;">
-          <a href="https://tfkeramika.ru/products/narni-seryy-600-200-9-mm-standart/" style="color:#1f2429;font-weight:bold;text-decoration:none;">Нарни Серый</a> · 600 × 200 × 9 мм · Нефрит-Керамика, Стандарт <b style="color:#1f2429;">450 ₽/м²</b>
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+            <td width="68" valign="middle" style="width:68px;padding-right:12px;">
+              <a href="https://tfkeramika.ru/products/narni-seryy-600-200-9-mm-standart/" style="display:block;"><img src="https://tfkeramika.ru/img/photos/041.jpg" width="56" height="56" alt="Нарни Серый" style="display:block;width:56px;height:56px;object-fit:cover;border:1px solid #deddd7;border-radius:4px;background:#ffffff;"></a>
+            </td>
+            <td valign="middle" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#535a60;"><a href="https://tfkeramika.ru/products/narni-seryy-600-200-9-mm-standart/" style="color:#1f2429;font-weight:bold;text-decoration:none;">Нарни Серый</a> · 600 × 200 × 9 мм · Нефрит-Керамика, Стандарт <b style="color:#1f2429;">450 ₽/м²</b></td>
+          </tr></table>
         </td></tr>
         <tr><td style="padding:13px 16px;border-bottom:1px solid #ecebe7;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#535a60;">
-          <a href="https://tfkeramika.ru/products/liya-bezhevyy-600-300-9-mm-standart/" style="color:#1f2429;font-weight:bold;text-decoration:none;">Лия Бежевый</a> · 600 × 300 × 9 мм · Нефрит-Керамика, Стандарт <b style="color:#1f2429;">450 ₽/м²</b>
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+            <td width="68" valign="middle" style="width:68px;padding-right:12px;">
+              <a href="https://tfkeramika.ru/products/liya-bezhevyy-600-300-9-mm-standart/" style="display:block;"><img src="https://tfkeramika.ru/img/photos/лия-бежевый.jpg" width="56" height="56" alt="Лия Бежевый" style="display:block;width:56px;height:56px;object-fit:cover;border:1px solid #deddd7;border-radius:4px;background:#ffffff;"></a>
+            </td>
+            <td valign="middle" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#535a60;"><a href="https://tfkeramika.ru/products/liya-bezhevyy-600-300-9-mm-standart/" style="color:#1f2429;font-weight:bold;text-decoration:none;">Лия Бежевый</a> · 600 × 300 × 9 мм · Нефрит-Керамика, Стандарт <b style="color:#1f2429;">450 ₽/м²</b></td>
+          </tr></table>
         </td></tr>
         <tr><td style="padding:13px 16px;border-bottom:1px solid #ecebe7;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#535a60;">
-          <a href="https://tfkeramika.ru/products/astaria-ice-belyy-450-450-8-mm-gost/" style="color:#1f2429;font-weight:bold;text-decoration:none;">Astaria Ice Белый</a> · 450 × 450 × 8 мм · М-Квадрат, ГОСТ <b style="color:#1f2429;">650 ₽/м²</b>
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+            <td width="68" valign="middle" style="width:68px;padding-right:12px;">
+              <a href="https://tfkeramika.ru/products/astaria-ice-belyy-450-450-8-mm-gost/" style="display:block;"><img src="https://tfkeramika.ru/img/photos/005.jpg" width="56" height="56" alt="Astaria Ice Белый" style="display:block;width:56px;height:56px;object-fit:cover;border:1px solid #deddd7;border-radius:4px;background:#ffffff;"></a>
+            </td>
+            <td valign="middle" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#535a60;"><a href="https://tfkeramika.ru/products/astaria-ice-belyy-450-450-8-mm-gost/" style="color:#1f2429;font-weight:bold;text-decoration:none;">Astaria Ice Белый</a> · 450 × 450 × 8 мм · М-Квадрат, ГОСТ <b style="color:#1f2429;">650 ₽/м²</b></td>
+          </tr></table>
         </td></tr>
         <tr><td style="padding:13px 16px;border-bottom:1px solid #ecebe7;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#535a60;">
-          <a href="https://tfkeramika.ru/products/keramogranit-tekhnicheskiy-sol-perets-svetlo-seryy-matovaya-300-300-7-mm/" style="color:#1f2429;font-weight:bold;text-decoration:none;">Соль-Перец Светло-Серый Матовая</a> · 300 × 300 × 7 мм · Квадро Декор <b style="color:#1f2429;">610 ₽/м²</b>
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+            <td width="68" valign="middle" style="width:68px;padding-right:12px;">
+              <a href="https://tfkeramika.ru/products/keramogranit-tekhnicheskiy-sol-perets-svetlo-seryy-matovaya-300-300-7-mm/" style="display:block;"><img src="https://tfkeramika.ru/img/photos/037.jpg" width="56" height="56" alt="Соль-Перец Светло-Серый Матовая" style="display:block;width:56px;height:56px;object-fit:cover;border:1px solid #deddd7;border-radius:4px;background:#ffffff;"></a>
+            </td>
+            <td valign="middle" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#535a60;"><a href="https://tfkeramika.ru/products/keramogranit-tekhnicheskiy-sol-perets-svetlo-seryy-matovaya-300-300-7-mm/" style="color:#1f2429;font-weight:bold;text-decoration:none;">Соль-Перец Светло-Серый Матовая</a> · 300 × 300 × 7 мм · Квадро Декор <b style="color:#1f2429;">610 ₽/м²</b></td>
+          </tr></table>
         </td></tr>
         <tr><td style="padding:13px 16px;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#535a60;">
-          <a href="https://tfkeramika.ru/products/matera-bezhevyy-600-600-10-mm-gost/" style="color:#1f2429;font-weight:bold;text-decoration:none;">Matera Бежевый</a> · 600 × 600 × 10 мм · М-Квадрат, ГОСТ <b style="color:#1f2429;">960 ₽/м²</b>
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+            <td width="68" valign="middle" style="width:68px;padding-right:12px;">
+              <a href="https://tfkeramika.ru/products/matera-bezhevyy-600-600-10-mm-gost/" style="display:block;"><img src="https://tfkeramika.ru/img/photos/026.jpg" width="56" height="56" alt="Matera Бежевый" style="display:block;width:56px;height:56px;object-fit:cover;border:1px solid #deddd7;border-radius:4px;background:#ffffff;"></a>
+            </td>
+            <td valign="middle" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#535a60;"><a href="https://tfkeramika.ru/products/matera-bezhevyy-600-600-10-mm-gost/" style="color:#1f2429;font-weight:bold;text-decoration:none;">Matera Бежевый</a> · 600 × 600 × 10 мм · М-Квадрат, ГОСТ <b style="color:#1f2429;">960 ₽/м²</b></td>
+          </tr></table>
         </td></tr>
       </table>
     </td>
