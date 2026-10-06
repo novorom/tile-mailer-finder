@@ -133,6 +133,7 @@ https://tfkeramika.ru/#prices
 Посмотреть каталог: https://tfkeramika.ru/
 Написать в Telegram: https://t.me/flyroman
 Написать на почту: novorom@mail.ru
+Заказать звонок: https://tfkeramika.ru/#callback
 Позвонить: +7 905 205-09-00
 
 С уважением,
@@ -332,6 +333,9 @@ EMAIL_BODY_HTML = """\
           </td>
           <td style="padding-bottom:8px;">
             <a href="mailto:novorom@mail.ru" style="display:inline-block;padding:11px 16px;border:1px solid #c9c8c1;border-radius:4px;color:#1f2429;text-decoration:none;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:18px;font-weight:bold;">Написать на почту</a>
+          </td>
+          <td style="padding:0 0 8px 10px;">
+            <a href="https://tfkeramika.ru/#callback" style="display:inline-block;padding:11px 16px;background:#f2c400;border:1px solid #f2c400;border-radius:4px;color:#1f2429;text-decoration:none;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:18px;font-weight:bold;">Заказать звонок</a>
           </td>
         </tr>
       </table>
