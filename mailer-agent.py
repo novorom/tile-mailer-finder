@@ -86,41 +86,35 @@ def is_send_window() -> bool:
 #  ПИСЬМО
 # ══════════════════════════════════════════════════════
 
-EMAIL_SUBJECT = "Плитка и керамогранит от 400 ₽/м² — спеццены для строительных организаций"
+EMAIL_SUBJECT = 'Плитка и керамогранит в наличии — весь каталог ТФ Керамика'
 
 EMAIL_BODY_TEXT = """\
-Добрый день!
+Здравствуйте!
 
-Распродаём остатки облицовочной плитки и керамогранита по специальным ценам, ниже обычных.
-Подборка на этот месяц для строительных организаций и подрядчиков.
+Все наши остатки плитки и керамогранита, размеры, артикулы, сорта, наличие и цены собраны в каталоге ТФ Керамика:
+https://tfkeramika.ru/#prices
 
-ОБЛИЦОВОЧНАЯ ПЛИТКА (Нефрит-Керамика):
-Риф бежевый — 600 × 200 × 9 мм, Стандарт — 400 ₽/м²
-Гермес коричневый — 400 × 250 × 8 мм, Стандарт — 450 ₽/м²
-Нарни серый — 600 × 200 × 9 мм, Стандарт — 450 ₽/м²
-Лия бежевый — 600 × 300 × 9 мм, Стандарт — 450 ₽/м²
+Керамическая плитка:
+https://tfkeramika.ru/catalog/keramicheskaya-plitka-spb/
 
-КЕРАМОГРАНИТ:
-Astaria Ice белый — 450 × 450 × 8 мм, ГОСТ (М-квадрат) — 600 ₽/м²
-«Соль-перец», светло-серый, матовый — 300 × 300 × 7 мм (Квадро Декор) — 610 ₽/м²
-Matera бежевый — 597 × 597 × 10 мм, ГОСТ (М-квадрат) — 950 ₽/м²
+Керамогранит:
+https://tfkeramika.ru/catalog/keramogranit-spb/
 
-Цены указаны с НДС. Количество ограничено, остатки по каждой позиции уточняйте у менеджера.
+Работаем по безналичному счёту с НДС. Поможем рассчитать количество для объекта, подтвердить актуальный остаток и согласовать самовывоз или доставку по Санкт-Петербургу и Ленинградской области.
 
-Преимущества:
-• Работаем по счёту — оплата безналом для организаций
-• Расчёт количества — посчитаем нужный объём под ваш объект бесплатно
-• Фото и сертификаты — пришлём по любой позиции по запросу
+Склад: Ленинградская область, Тосненский район, посёлок Войскорово, 14В
+Пн–Пт, 09:00–18:00
 
-Наш склад:
-Ленинградская область, Тосненский район, Тельмановское городское поселение, посёлок Войскорово, 14В
-Пн–Пт, с 08:00 до 18:00
+Посмотреть каталог: https://tfkeramika.ru/
+Написать в Telegram: https://t.me/flyroman
+Написать на почту: novorom@mail.ru
+Позвонить: +7 905 205-09-00
 
 С уважением,
 Роман Новожилов
 Менеджер по продажам, ООО «ТФ Керамика»
-+7 905 205-09-00
-novorom@mail.ru
+
+Если не хотите получать наши предложения, ответьте на письмо словом «Отписаться».
 """
 
 EMAIL_BODY_HTML = """\
@@ -130,292 +124,120 @@ EMAIL_BODY_HTML = """\
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="x-apple-disable-message-reformatting">
-<title>Плитка и керамогранит от 400 ₽/м² — спеццены для строительных организаций</title>
+<title>Плитка и керамогранит в наличии — каталог ТФ Керамика</title>
 <style>
-  body { margin:0; padding:0; background:#dcd9d2; }
+  body { margin:0; padding:0; background:#e9e8e4; }
   table { border-collapse:collapse; }
-  a { color:#23272b; }
+  a { color:#1f2429; }
   @media (max-width:640px) {
     .wrap { width:100% !important; }
     .px { padding-left:18px !important; padding-right:18px !important; }
-    .h1 { font-size:29px !important; line-height:34px !important; }
-    .benefit { display:block !important; width:100% !important; padding:0 0 14px 0 !important; }
-    .btn-cell { display:block !important; width:100% !important; padding:0 0 10px 0 !important; }
-    .tag-price { font-size:26px !important; }
+    .h1 { font-size:30px !important; line-height:36px !important; }
+    .half { display:block !important; width:100% !important; padding:0 0 10px !important; }
+    .cta { display:block !important; width:auto !important; }
   }
 </style>
 </head>
-<body style="margin:0;padding:0;background:#dcd9d2;">
-
-<!-- Прехедер: текст, который видно в списке писем -->
-<div style="display:none;max-height:0;overflow:hidden;opacity:0;color:#dcd9d2;font-size:1px;line-height:1px;">
-  Облицовочная плитка от 400 ₽/м², керамогранит от 600 ₽/м². Остатки со склада в Ленинградской области, работаем по счёту.
+<body style="margin:0;padding:0;background:#e9e8e4;">
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;color:#e9e8e4;font-size:1px;line-height:1px;">
+  Полный список плитки и керамогранита, размеры, артикулы, остатки и цены — на сайте ТФ Керамика.
 </div>
-
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#dcd9d2">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#e9e8e4">
 <tr><td align="center" style="padding:24px 12px;">
-
-<table role="presentation" class="wrap" width="640" cellpadding="0" cellspacing="0" border="0" style="width:640px;max-width:640px;background:#f4f2ee;">
-
-  <!-- ШАПКА -->
+<table role="presentation" class="wrap" width="640" cellpadding="0" cellspacing="0" border="0" style="width:640px;max-width:640px;background:#f8f7f4;">
+  <tr><td height="7" bgcolor="#f2c400" style="height:7px;font-size:0;line-height:7px;">&nbsp;</td></tr>
   <tr>
-    <td class="px" bgcolor="#23272b" style="background:#23272b;padding:22px 32px;font-family:Georgia,'Times New Roman',serif;font-size:22px;line-height:26px;font-weight:bold;color:#ffffff;">
-      ТФ Керамика
-      <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:18px;font-weight:normal;color:#b9b6ae;padding-top:4px;">
-        Ежемесячное предложение для строительных организаций
-      </div>
+    <td class="px" bgcolor="#1f2429" style="background:#1f2429;padding:20px 32px;color:#ffffff;font-family:Arial,Helvetica,sans-serif;">
+      <a href="https://tfkeramika.ru/" style="color:#ffffff;text-decoration:none;font-size:22px;line-height:28px;font-weight:bold;">ТФ Керамика</a>
+      <div style="padding-top:4px;color:#c7c9ca;font-size:13px;line-height:18px;">Склад плитки и керамогранита · Санкт-Петербург и Ленинградская область</div>
     </td>
   </tr>
-
-  <!-- ПОЛОСА-«ПЛИТКА»: образцы цветов из подборки -->
   <tr>
-    <td style="padding:0;font-size:0;line-height:0;">
+    <td class="px" style="padding:34px 32px 18px;font-family:Arial,Helvetica,sans-serif;">
+      <div style="display:inline-block;padding:6px 10px;background:#fff3b0;color:#554500;font-size:12px;line-height:16px;font-weight:bold;letter-spacing:.3px;">СТРОИТЕЛЯМ И ПОДРЯДЧИКАМ</div>
+      <div class="h1" style="padding-top:16px;font-family:Arial,Helvetica,sans-serif;font-size:36px;line-height:42px;font-weight:800;color:#1f2429;">Все остатки — в каталоге на сайте</div>
+      <div style="padding-top:12px;font-size:16px;line-height:25px;color:#535a60;">
+        На сайте собраны все наши позиции плитки и керамогранита: фотографии, размеры, артикулы, сорта, наличие и цены. Откройте каталог, чтобы выбрать материал для объекта.
+      </div>
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:22px;">
+        <tr><td bgcolor="#f2c400" style="background:#f2c400;border-radius:5px;">
+          <a href="https://tfkeramika.ru/#prices" style="display:block;padding:14px 22px;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:20px;font-weight:bold;color:#1f2429;text-decoration:none;text-align:center;">Смотреть все остатки и цены&nbsp; →</a>
+        </td></tr>
+      </table>
+      <div style="padding-top:12px;font-size:13px;line-height:20px;color:#70777d;">Каталог обновляется по складским данным. Перед заказом мы подтвердим актуальное наличие и стоимость.</div>
+    </td>
+  </tr>
+  <tr>
+    <td class="px" style="padding:8px 32px 0;font-family:Arial,Helvetica,sans-serif;">
+      <div style="padding-bottom:12px;font-size:18px;line-height:24px;font-weight:bold;color:#1f2429;">Перейти сразу к нужному разделу</div>
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td width="16.66%" height="14" bgcolor="#d8c6a5" style="height:14px;line-height:14px;font-size:0;">&nbsp;</td>
-          <td width="16.66%" height="14" bgcolor="#8d9297" style="height:14px;line-height:14px;font-size:0;">&nbsp;</td>
-          <td width="16.66%" height="14" bgcolor="#f7f5ef" style="height:14px;line-height:14px;font-size:0;">&nbsp;</td>
-          <td width="16.66%" height="14" bgcolor="#6a4a36" style="height:14px;line-height:14px;font-size:0;">&nbsp;</td>
-          <td width="16.66%" height="14" bgcolor="#b8b3a9" style="height:14px;line-height:14px;font-size:0;">&nbsp;</td>
-          <td width="16.7%" height="14" bgcolor="#d8c6a5" style="height:14px;line-height:14px;font-size:0;">&nbsp;</td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-
-  <!-- ГЛАВНЫЙ БЛОК -->
-  <tr>
-    <td class="px" style="padding:36px 32px 8px 32px;font-family:Arial,Helvetica,sans-serif;">
-      <div class="h1" style="font-family:Georgia,'Times New Roman',serif;font-size:36px;line-height:42px;font-weight:bold;color:#23272b;">
-        Плитка и керамогранит от&nbsp;400&nbsp;₽/м²
-      </div>
-      <div style="font-size:16px;line-height:24px;color:#4a4f55;padding-top:14px;">
-        Добрый день! Распродаём остатки облицовочной плитки и керамогранита по специальным ценам, ниже обычных.
-        Подборка на этот месяц для строительных организаций и подрядчиков.
-      </div>
-      <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:18px;">
-        <tr>
-          <td bgcolor="#f2b705" style="background:#f2b705;padding:9px 14px;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:18px;font-weight:bold;color:#23272b;">
-            Цены действуют до 31 октября или до окончания остатков
+          <td class="half" width="50%" valign="top" style="padding:0 6px 12px 0;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" style="background:#ffffff;border:1px solid #deddd7;">
+              <tr><td style="padding:17px 18px;">
+                <a href="https://tfkeramika.ru/catalog/keramicheskaya-plitka-spb/" style="font-size:16px;line-height:22px;font-weight:bold;color:#1f2429;text-decoration:none;">Керамическая плитка&nbsp; →</a>
+                <div style="padding-top:5px;font-size:13px;line-height:19px;color:#687078;">Позиции, размеры, артикулы и наличие</div>
+              </td></tr>
+            </table>
           </td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-
-  <!-- ОБЛИЦОВОЧНАЯ ПЛИТКА -->
-  <tr>
-    <td class="px" style="padding:30px 32px 10px 32px;font-family:Georgia,'Times New Roman',serif;font-size:22px;line-height:28px;font-weight:bold;color:#23272b;">
-      Облицовочная плитка
-      <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:18px;font-weight:normal;color:#6b7075;padding-top:2px;">Производитель: Нефрит-Керамика</div>
-    </td>
-  </tr>
-  <tr>
-    <td class="px" style="padding:0 32px;">
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" style="background:#ffffff;">
-
-        <tr>
-          <td style="padding:16px 18px;border-bottom:1px solid #e4e1da;font-family:Arial,Helvetica,sans-serif;">
-            <div style="font-size:17px;line-height:22px;font-weight:bold;color:#23272b;">Риф бежевый</div>
-            <div style="font-size:14px;line-height:20px;color:#6b7075;padding-top:2px;">600 × 200 × 9 мм, Стандарт</div>
-          </td>
-          <td width="118" align="center" bgcolor="#f2b705" style="width:118px;background:#f2b705;padding:12px 8px;border-bottom:1px solid #ffffff;font-family:Arial,Helvetica,sans-serif;color:#23272b;">
-            <div class="tag-price" style="font-size:30px;line-height:32px;font-weight:bold;">400</div>
-            <div style="font-size:12px;line-height:16px;">₽ за м²</div>
-          </td>
-        </tr>
-
-        <tr>
-          <td style="padding:16px 18px;border-bottom:1px solid #e4e1da;font-family:Arial,Helvetica,sans-serif;">
-            <div style="font-size:17px;line-height:22px;font-weight:bold;color:#23272b;">Гермес коричневый</div>
-            <div style="font-size:14px;line-height:20px;color:#6b7075;padding-top:2px;">400 × 250 × 8 мм, Стандарт</div>
-          </td>
-          <td width="118" align="center" bgcolor="#f2b705" style="width:118px;background:#f2b705;padding:12px 8px;border-bottom:1px solid #ffffff;font-family:Arial,Helvetica,sans-serif;color:#23272b;">
-            <div class="tag-price" style="font-size:30px;line-height:32px;font-weight:bold;">450</div>
-            <div style="font-size:12px;line-height:16px;">₽ за м²</div>
-          </td>
-        </tr>
-
-        <tr>
-          <td style="padding:16px 18px;border-bottom:1px solid #e4e1da;font-family:Arial,Helvetica,sans-serif;">
-            <div style="font-size:17px;line-height:22px;font-weight:bold;color:#23272b;">Нарни серый</div>
-            <div style="font-size:14px;line-height:20px;color:#6b7075;padding-top:2px;">600 × 200 × 9 мм, Стандарт</div>
-          </td>
-          <td width="118" align="center" bgcolor="#f2b705" style="width:118px;background:#f2b705;padding:12px 8px;border-bottom:1px solid #ffffff;font-family:Arial,Helvetica,sans-serif;color:#23272b;">
-            <div class="tag-price" style="font-size:30px;line-height:32px;font-weight:bold;">450</div>
-            <div style="font-size:12px;line-height:16px;">₽ за м²</div>
-          </td>
-        </tr>
-
-        <tr>
-          <td style="padding:16px 18px;font-family:Arial,Helvetica,sans-serif;">
-            <div style="font-size:17px;line-height:22px;font-weight:bold;color:#23272b;">Лия бежевый</div>
-            <div style="font-size:14px;line-height:20px;color:#6b7075;padding-top:2px;">600 × 300 × 9 мм, Стандарт</div>
-          </td>
-          <td width="118" align="center" bgcolor="#f2b705" style="width:118px;background:#f2b705;padding:12px 8px;font-family:Arial,Helvetica,sans-serif;color:#23272b;">
-            <div class="tag-price" style="font-size:30px;line-height:32px;font-weight:bold;">450</div>
-            <div style="font-size:12px;line-height:16px;">₽ за м²</div>
-          </td>
-        </tr>
-
-      </table>
-    </td>
-  </tr>
-
-  <!-- КЕРАМОГРАНИТ -->
-  <tr>
-    <td class="px" style="padding:32px 32px 10px 32px;font-family:Georgia,'Times New Roman',serif;font-size:22px;line-height:28px;font-weight:bold;color:#23272b;">
-      Керамогранит
-    </td>
-  </tr>
-  <tr>
-    <td class="px" style="padding:0 32px;">
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" style="background:#ffffff;">
-
-        <tr>
-          <td style="padding:16px 18px;border-bottom:1px solid #e4e1da;font-family:Arial,Helvetica,sans-serif;">
-            <div style="font-size:17px;line-height:22px;font-weight:bold;color:#23272b;">Astaria Ice белый</div>
-            <div style="font-size:14px;line-height:20px;color:#6b7075;padding-top:2px;">450 × 450 × 8 мм, ГОСТ</div>
-            <div style="font-size:13px;line-height:18px;color:#6b7075;">М-квадрат (ProGRES Ceramica)</div>
-          </td>
-          <td width="118" align="center" bgcolor="#f2b705" style="width:118px;background:#f2b705;padding:12px 8px;border-bottom:1px solid #ffffff;font-family:Arial,Helvetica,sans-serif;color:#23272b;">
-            <div class="tag-price" style="font-size:30px;line-height:32px;font-weight:bold;">600</div>
-            <div style="font-size:12px;line-height:16px;">₽ за м²</div>
-          </td>
-        </tr>
-
-        <tr>
-          <td style="padding:16px 18px;border-bottom:1px solid #e4e1da;font-family:Arial,Helvetica,sans-serif;">
-            <div style="font-size:17px;line-height:22px;font-weight:bold;color:#23272b;">«Соль-перец», светло-серый, матовый</div>
-            <div style="font-size:14px;line-height:20px;color:#6b7075;padding-top:2px;">Технический, 300 × 300 × 7 мм</div>
-            <div style="font-size:13px;line-height:18px;color:#6b7075;">Квадро Декор</div>
-          </td>
-          <td width="118" align="center" bgcolor="#f2b705" style="width:118px;background:#f2b705;padding:12px 8px;border-bottom:1px solid #ffffff;font-family:Arial,Helvetica,sans-serif;color:#23272b;">
-            <div class="tag-price" style="font-size:30px;line-height:32px;font-weight:bold;">610</div>
-            <div style="font-size:12px;line-height:16px;">₽ за м²</div>
-          </td>
-        </tr>
-
-        <tr>
-          <td style="padding:16px 18px;font-family:Arial,Helvetica,sans-serif;">
-            <div style="font-size:17px;line-height:22px;font-weight:bold;color:#23272b;">Matera бежевый</div>
-            <div style="font-size:14px;line-height:20px;color:#6b7075;padding-top:2px;">597 × 597 × 10 мм, ГОСТ</div>
-            <div style="font-size:13px;line-height:18px;color:#6b7075;">М-квадрат (ProGRES Ceramica)</div>
-          </td>
-          <td width="118" align="center" bgcolor="#f2b705" style="width:118px;background:#f2b705;padding:12px 8px;font-family:Arial,Helvetica,sans-serif;color:#23272b;">
-            <div class="tag-price" style="font-size:30px;line-height:32px;font-weight:bold;">950</div>
-            <div style="font-size:12px;line-height:16px;">₽ за м²</div>
-          </td>
-        </tr>
-
-      </table>
-    </td>
-  </tr>
-
-  <!-- ПРИМЕЧАНИЕ -->
-  <tr>
-    <td class="px" style="padding:14px 32px 0 32px;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#6b7075;">
-      Цены указаны с НДС. Количество ограничено, остатки по каждой позиции уточняйте у менеджера.
-    </td>
-  </tr>
-
-  <!-- ПРЕИМУЩЕСТВА -->
-  <tr>
-    <td class="px" style="padding:30px 32px 6px 32px;">
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td class="benefit" width="33%" valign="top" style="padding-right:12px;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:20px;color:#4a4f55;">
-            <div style="font-size:15px;line-height:20px;font-weight:bold;color:#23272b;padding-bottom:3px;border-top:3px solid #23272b;padding-top:9px;">Работаем по счёту</div>
-            Оплата безналом для организаций
-          </td>
-          <td class="benefit" width="33%" valign="top" style="padding:0 6px;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:20px;color:#4a4f55;">
-            <div style="font-size:15px;line-height:20px;font-weight:bold;color:#23272b;padding-bottom:3px;border-top:3px solid #23272b;padding-top:9px;">Расчёт количества</div>
-            Посчитаем нужный объём под ваш объект бесплатно
-          </td>
-          <td class="benefit" width="33%" valign="top" style="padding-left:12px;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:20px;color:#4a4f55;">
-            <div style="font-size:15px;line-height:20px;font-weight:bold;color:#23272b;padding-bottom:3px;border-top:3px solid #23272b;padding-top:9px;">Фото и сертификаты</div>
-            Пришлём по любой позиции по запросу
-          </td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-
-  <!-- ПРИЗЫВ К ДЕЙСТВИЮ -->
-  <tr>
-    <td class="px" style="padding:24px 32px 8px 32px;">
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#23272b" style="background:#23272b;">
-        <tr>
-          <td style="padding:26px 26px 24px 26px;font-family:Arial,Helvetica,sans-serif;">
-            <div style="font-family:Georgia,'Times New Roman',serif;font-size:22px;line-height:28px;font-weight:bold;color:#ffffff;">
-              Нужна плитка на объект?
-            </div>
-            <div style="font-size:15px;line-height:22px;color:#c9c6be;padding:8px 0 18px 0;">
-              Назовите объём, подберём, зарезервируем и выставим счёт.
-            </div>
-            <table role="presentation" cellpadding="0" cellspacing="0" border="0">
-              <tr>
-                <td class="btn-cell" style="padding-right:10px;">
-                  <table role="presentation" cellpadding="0" cellspacing="0" border="0">
-                    <tr>
-                      <td bgcolor="#f2b705" style="background:#f2b705;">
-                        <a href="tel:+79052050900" style="display:block;padding:13px 22px;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:20px;font-weight:bold;color:#23272b;text-decoration:none;text-align:center;">Позвонить +7 905 205-09-00</a>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-                <td class="btn-cell">
-                  <table role="presentation" cellpadding="0" cellspacing="0" border="0">
-                    <tr>
-                      <td style="border:2px solid #f2b705;">
-                        <a href="https://t.me/flyroman" style="display:block;padding:11px 20px;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:20px;font-weight:bold;color:#f2b705;text-decoration:none;text-align:center;">Написать в Telegram</a>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
+          <td class="half" width="50%" valign="top" style="padding:0 0 12px 6px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" style="background:#ffffff;border:1px solid #deddd7;">
+              <tr><td style="padding:17px 18px;">
+                <a href="https://tfkeramika.ru/catalog/keramogranit-spb/" style="font-size:16px;line-height:22px;font-weight:bold;color:#1f2429;text-decoration:none;">Керамогранит&nbsp; →</a>
+                <div style="padding-top:5px;font-size:13px;line-height:19px;color:#687078;">Каталог для пола, стен и технических задач</div>
+              </td></tr>
             </table>
           </td>
         </tr>
       </table>
     </td>
   </tr>
-
-  <!-- СКЛАД -->
   <tr>
-    <td class="px" style="padding:26px 32px 6px 32px;font-family:Arial,Helvetica,sans-serif;">
-      <div style="font-family:Georgia,'Times New Roman',serif;font-size:20px;line-height:26px;font-weight:bold;color:#23272b;padding-bottom:8px;">Наш склад</div>
-      <div style="font-size:15px;line-height:23px;color:#4a4f55;">
-        Ленинградская область, Тосненский район, Тельмановское городское поселение, посёлок Войскорово, 14В<br>
-        Пн–Пт, с 08:00 до 18:00
-      </div>
-      <div style="padding-top:10px;font-size:15px;line-height:22px;">
-        <a href="https://yandex.ru/maps/?text=%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D0%B3%D1%80%D0%B0%D0%B4%D1%81%D0%BA%D0%B0%D1%8F%20%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C%2C%20%D0%92%D0%BE%D0%B9%D1%81%D0%BA%D0%BE%D1%80%D0%BE%D0%B2%D0%BE%2C%2014%D0%92" style="color:#23272b;font-weight:bold;">Открыть на карте</a>
-      </div>
+    <td class="px" style="padding:12px 32px 8px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" style="background:#ffffff;border:1px solid #deddd7;">
+        <tr><td style="padding:20px 22px;font-family:Arial,Helvetica,sans-serif;">
+          <div style="font-size:16px;line-height:22px;font-weight:bold;color:#1f2429;">Для покупки на объект</div>
+          <div style="padding-top:8px;font-size:14px;line-height:22px;color:#535a60;">
+            Работаем по безналичному счёту с НДС. Поможем рассчитать количество, согласовать самовывоз со склада в Войскорово или доставку по Санкт-Петербургу и Ленинградской области.
+          </div>
+          <div style="padding-top:12px;font-size:14px;line-height:22px;color:#535a60;">
+            <b style="color:#1f2429;">Как оформить:</b> выберите позиции в <a href="https://tfkeramika.ru/#prices" style="color:#1f2429;font-weight:bold;">каталоге сайта</a>, отправьте нам названия или артикулы — мы сверим остаток и подготовим счёт.
+          </div>
+        </td></tr>
+      </table>
     </td>
   </tr>
-
-  <!-- ПОДПИСЬ -->
   <tr>
-    <td class="px" style="padding:26px 32px 30px 32px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:22px;color:#4a4f55;">
-      С уважением,<br>
-      <b style="color:#23272b;">Роман Новожилов</b><br>
-      Менеджер по продажам, ООО «ТФ Керамика»<br>
-      <a href="tel:+79052050900" style="color:#23272b;text-decoration:none;">+7 905 205-09-00</a>,
-      <a href="mailto:novorom@mail.ru" style="color:#23272b;">novorom@mail.ru</a>
+    <td class="px" style="padding:18px 32px 8px;font-family:Arial,Helvetica,sans-serif;">
+      <div style="font-size:18px;line-height:24px;font-weight:bold;color:#1f2429;">Нужна помощь с подбором?</div>
+      <div style="padding-top:6px;font-size:14px;line-height:21px;color:#535a60;">Напишите или позвоните — поможем выбрать материал по размеру, объёму и задаче.</div>
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:15px;">
+        <tr>
+          <td style="padding-right:10px;padding-bottom:8px;">
+            <a href="https://t.me/flyroman" style="display:inline-block;padding:11px 16px;border:1px solid #1f2429;border-radius:4px;color:#1f2429;text-decoration:none;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:18px;font-weight:bold;">Написать в Telegram</a>
+          </td>
+          <td style="padding-bottom:8px;">
+            <a href="mailto:novorom@mail.ru" style="display:inline-block;padding:11px 16px;border:1px solid #c9c8c1;border-radius:4px;color:#1f2429;text-decoration:none;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:18px;font-weight:bold;">Написать на почту</a>
+          </td>
+        </tr>
+      </table>
     </td>
   </tr>
-
-  <!-- ПОДВАЛ -->
   <tr>
-    <td class="px" bgcolor="#e9e6df" style="background:#e9e6df;padding:18px 32px;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:18px;color:#6b7075;">
-      Вы получили это письмо как клиент ООО «ТФ Керамика». Цены и наличие актуальны на дату рассылки.<br>
-      Если не хотите получать наши предложения, <a href="#unsubscribe" style="color:#6b7075;">отпишитесь здесь</a> или ответьте на письмо словом «Отписаться».
+    <td class="px" style="padding:20px 32px 24px;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:21px;color:#687078;">
+      <b style="color:#1f2429;">Склад:</b> Ленинградская область, Тосненский район, посёлок Войскорово, 14В<br>
+      Пн–Пт, 09:00–18:00<br>
+      <a href="https://tfkeramika.ru/" style="color:#1f2429;font-weight:bold;">tfkeramika.ru</a> · <a href="tel:+79052050900" style="color:#1f2429;text-decoration:none;">+7 905 205-09-00</a> · <a href="mailto:novorom@mail.ru" style="color:#1f2429;">novorom@mail.ru</a><br>
+      <span style="display:block;padding-top:12px;">С уважением,<br><b style="color:#1f2429;">Роман Новожилов</b><br>Менеджер по продажам, ООО «ТФ Керамика»</span>
     </td>
   </tr>
-
+  <tr>
+    <td class="px" bgcolor="#e9e8e4" style="background:#e9e8e4;padding:16px 32px;font-family:Arial,Helvetica,sans-serif;font-size:11px;line-height:17px;color:#687078;">
+      Вы получили это письмо как клиент ООО «ТФ Керамика».<br>
+      Если не хотите получать наши предложения, <a href="#unsubscribe" style="color:#687078;">отпишитесь здесь</a> или ответьте на письмо словом «Отписаться».
+    </td>
+  </tr>
 </table>
-
 </td></tr>
 </table>
 </body>
