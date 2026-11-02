@@ -46,7 +46,7 @@ BREVO_USER = os.environ.get("BREVO_USER", "a5784a001@smtp-brevo.com")
 BREVO_PASS = os.environ.get('BREVO_PASS', '')
 
 SENDER_EMAIL = 'pasechnick616@gmail.com'
-SENDER_NAME  = 'ООО ТФ Керамика'
+SENDER_NAME  = 'Илтима'
 REPLY_TO     = 'novorom@mail.ru'
 
 SHEET_ID   = os.environ.get('SHEET_ID', '')
@@ -86,59 +86,65 @@ def is_send_window() -> bool:
 #  ПИСЬМО
 # ══════════════════════════════════════════════════════
 
-EMAIL_SUBJECT = 'Плитка и керамогранит в наличии в СПб от 400 ₽/м² — весь каталог ТФ Керамика'
+EMAIL_SUBJECT = 'Плитка и керамогранит в наличии в СПб от 400 ₽/м² — каталог Илтима'
 
 EMAIL_BODY_TEXT = """\
 Здравствуйте!
 
-Все наши остатки плитки и керамогранита, размеры, артикулы, сорта, наличие и цены собраны в каталоге ТФ Керамика:
-https://tfkeramika.ru/#prices
+Все наши остатки плитки и керамогранита, размеры, артикулы, сорта, наличие и цены собраны в каталоге Илтима:
+https://iltima.ru/#prices
 
 Керамическая плитка:
-https://tfkeramika.ru/catalog/keramicheskaya-plitka-spb/
+https://iltima.ru/catalog/keramicheskaya-plitka-spb/
 
 Керамогранит:
-https://tfkeramika.ru/catalog/keramogranit-spb/
+https://iltima.ru/catalog/keramogranit-spb/
 
 Отдельно рекомендуем:
 
 Bianco Белый — 450 × 450 × 8 мм, М-Квадрат, ГОСТ, артикул 731200
-В наличии: 6 708 м²
 Цена: 650 ₽/м² с НДС
-Карточка товара: https://tfkeramika.ru/products/bianco-belyy-450-450-8-mm-gost/
+Карточка товара: https://iltima.ru/products/bianco-belyy-450-450-8-mm-gost/
 
 Примеры позиций из каталога:
 
 Керамическая плитка:
 Риф Бежевый — 600 × 200 × 9 мм, Нефрит-Керамика, Стандарт — 400 ₽/м²
+https://iltima.ru/products/rif-bezhevyy-600-200-9-mm-standart/
 Гермес Коричневый — 400 × 250 × 8 мм, Нефрит-Керамика, Стандарт — 450 ₽/м²
+https://iltima.ru/products/germes-korichnevyy-400-250-8-mm-standart/
 Нарни Серый — 600 × 200 × 9 мм, Нефрит-Керамика, Стандарт — 450 ₽/м²
+https://iltima.ru/products/narni-seryy-600-200-9-mm-standart/
 Лия Бежевый — 600 × 300 × 9 мм, Нефрит-Керамика, Стандарт — 450 ₽/м²
+https://iltima.ru/products/liya-bezhevyy-600-300-9-mm-standart/
 
 Керамогранит:
 Astaria Ice Белый — 450 × 450 × 8 мм, М-Квадрат, ГОСТ — 650 ₽/м²
+https://iltima.ru/products/astaria-ice-belyy-450-450-8-mm-gost/
 Соль-Перец Светло-Серый Матовая — 300 × 300 × 7 мм, Квадро Декор — 610 ₽/м²
+https://iltima.ru/products/keramogranit-tekhnicheskiy-sol-perets-svetlo-seryy-matovaya-300-300-7-mm/
 Matera Бежевый — 600 × 600 × 10 мм, М-Квадрат, ГОСТ — 960 ₽/м²
+https://iltima.ru/products/matera-bezhevyy-600-600-10-mm-gost/
 
-Смотреть все остатки: https://tfkeramika.ru/#prices
+Смотреть все остатки: https://iltima.ru/#prices
 
 Цены и остатки могут меняться — перед заказом сверяйте их в каталоге:
-https://tfkeramika.ru/#prices
+https://iltima.ru/#prices
 
 Работаем по безналичному счёту с НДС. Поможем рассчитать количество для объекта, подтвердить актуальный остаток и согласовать самовывоз или доставку по Санкт-Петербургу и Ленинградской области.
 
-Склад: Ленинградская область, Тосненский район, посёлок Войскорово, 14В
+Склад: Янино, ул. Заводская, участок 37
 Пн–Пт, 09:00–18:00
 
-Посмотреть каталог: https://tfkeramika.ru/
+Посмотреть каталог: https://iltima.ru/
 Написать в Telegram: https://t.me/flyroman
 Написать на почту: novorom@mail.ru
-Заказать звонок: https://tfkeramika.ru/#callback
+Заказать звонок: https://iltima.ru/#callback
 Позвонить: +7 905 205-09-00
 
 С уважением,
 Роман Новожилов
-Менеджер по продажам, ООО «ТФ Керамика»
+Менеджер по продажам, Илтима
 
 Если не хотите получать наши предложения, ответьте на письмо словом «Отписаться».
 """
@@ -150,7 +156,7 @@ EMAIL_BODY_HTML = """\
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="x-apple-disable-message-reformatting">
-<title>Плитка и керамогранит в наличии — каталог ТФ Керамика</title>
+<title>Плитка и керамогранит в наличии — каталог Илтима</title>
 <style>
   body { margin:0; padding:0; background:#e9e8e4; }
   table { border-collapse:collapse; }
@@ -166,7 +172,7 @@ EMAIL_BODY_HTML = """\
 </head>
 <body style="margin:0;padding:0;background:#e9e8e4;">
 <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:#e9e8e4;font-size:1px;line-height:1px;">
-  Полный список плитки и керамогранита, размеры, артикулы, остатки и цены — на сайте ТФ Керамика.
+  Полный список плитки и керамогранита, размеры, артикулы, остатки и цены — на сайте Илтима.
 </div>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#e9e8e4">
 <tr><td align="center" style="padding:24px 12px;">
@@ -174,7 +180,7 @@ EMAIL_BODY_HTML = """\
   <tr><td height="7" bgcolor="#f2c400" style="height:7px;font-size:0;line-height:7px;">&nbsp;</td></tr>
   <tr>
     <td class="px" bgcolor="#1f2429" style="background:#1f2429;padding:20px 32px;color:#ffffff;font-family:Arial,Helvetica,sans-serif;">
-      <a href="https://tfkeramika.ru/" style="color:#ffffff;text-decoration:none;font-size:22px;line-height:28px;font-weight:bold;">ТФ Керамика</a>
+      <a href="https://iltima.ru/" style="color:#ffffff;text-decoration:none;font-size:22px;line-height:28px;font-weight:bold;">Илтима</a>
       <div style="padding-top:4px;color:#c7c9ca;font-size:13px;line-height:18px;">Склад плитки и керамогранита · Санкт-Петербург и Ленинградская область</div>
     </td>
   </tr>
@@ -187,7 +193,7 @@ EMAIL_BODY_HTML = """\
       </div>
       <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:22px;">
         <tr><td bgcolor="#f2c400" style="background:#f2c400;border-radius:5px;">
-          <a href="https://tfkeramika.ru/#prices" style="display:block;padding:14px 22px;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:20px;font-weight:bold;color:#1f2429;text-decoration:none;text-align:center;">Смотреть все остатки и цены&nbsp; →</a>
+          <a href="https://iltima.ru/#prices" style="display:block;padding:14px 22px;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:20px;font-weight:bold;color:#1f2429;text-decoration:none;text-align:center;">Смотреть все остатки и цены&nbsp; →</a>
         </td></tr>
       </table>
       <div style="padding-top:12px;font-size:13px;line-height:20px;color:#70777d;">Каталог обновляется по складским данным. Перед заказом мы подтвердим актуальное наличие и стоимость.</div>
@@ -201,7 +207,7 @@ EMAIL_BODY_HTML = """\
           <td class="half" width="50%" valign="top" style="padding:0 6px 12px 0;">
             <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" style="background:#ffffff;border:1px solid #deddd7;">
               <tr><td style="padding:17px 18px;">
-                <a href="https://tfkeramika.ru/catalog/keramicheskaya-plitka-spb/" style="font-size:16px;line-height:22px;font-weight:bold;color:#1f2429;text-decoration:none;">Керамическая плитка&nbsp; →</a>
+                <a href="https://iltima.ru/catalog/keramicheskaya-plitka-spb/" style="font-size:16px;line-height:22px;font-weight:bold;color:#1f2429;text-decoration:none;">Керамическая плитка&nbsp; →</a>
                 <div style="padding-top:5px;font-size:13px;line-height:19px;color:#687078;">Позиции, размеры, артикулы и наличие</div>
               </td></tr>
             </table>
@@ -209,7 +215,7 @@ EMAIL_BODY_HTML = """\
           <td class="half" width="50%" valign="top" style="padding:0 0 12px 6px;">
             <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" style="background:#ffffff;border:1px solid #deddd7;">
               <tr><td style="padding:17px 18px;">
-                <a href="https://tfkeramika.ru/catalog/keramogranit-spb/" style="font-size:16px;line-height:22px;font-weight:bold;color:#1f2429;text-decoration:none;">Керамогранит&nbsp; →</a>
+                <a href="https://iltima.ru/catalog/keramogranit-spb/" style="font-size:16px;line-height:22px;font-weight:bold;color:#1f2429;text-decoration:none;">Керамогранит&nbsp; →</a>
                 <div style="padding-top:5px;font-size:13px;line-height:19px;color:#687078;">Каталог для пола, стен и технических задач</div>
               </td></tr>
             </table>
@@ -223,16 +229,16 @@ EMAIL_BODY_HTML = """\
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#fff9d9" style="background:#fff9d9;border:1px solid #eadb8d;border-radius:6px;">
         <tr>
           <td width="142" valign="middle" style="width:142px;padding:14px;">
-            <a href="https://tfkeramika.ru/products/bianco-belyy-450-450-8-mm-gost/" style="display:block;">
-              <img src="https://tfkeramika.ru/img/photos/003.jpg" width="118" height="118" alt="Bianco Белый, керамогранит 450 × 450 мм" style="display:block;width:118px;height:118px;object-fit:cover;border:1px solid #deddd7;border-radius:5px;background:#ffffff;">
+            <a href="https://iltima.ru/products/bianco-belyy-450-450-8-mm-gost/" style="display:block;">
+              <img src="https://iltima.ru/img/photos/003.jpg" width="118" height="118" alt="Bianco Белый, керамогранит 450 × 450 мм" style="display:block;width:118px;height:118px;object-fit:cover;border:1px solid #deddd7;border-radius:5px;background:#ffffff;">
             </a>
           </td>
           <td valign="middle" style="padding:14px 16px 14px 0;font-family:Arial,Helvetica,sans-serif;">
             <div style="font-size:11px;line-height:16px;font-weight:bold;letter-spacing:.4px;color:#665500;">ПОПУЛЯРНАЯ ПОЗИЦИЯ</div>
-            <a href="https://tfkeramika.ru/products/bianco-belyy-450-450-8-mm-gost/" style="display:block;padding-top:3px;font-size:18px;line-height:23px;font-weight:bold;color:#1f2429;text-decoration:none;">Bianco Белый</a>
+            <a href="https://iltima.ru/products/bianco-belyy-450-450-8-mm-gost/" style="display:block;padding-top:3px;font-size:18px;line-height:23px;font-weight:bold;color:#1f2429;text-decoration:none;">Bianco Белый</a>
             <div style="padding-top:4px;font-size:13px;line-height:19px;color:#535a60;">Керамогранит · 450 × 450 × 8 мм<br>М-Квадрат · ГОСТ · артикул 731200</div>
-            <div style="padding-top:8px;font-size:14px;line-height:20px;color:#1f2429;"><b>В наличии 6 708 м²</b> · <b>650 ₽/м² с НДС</b></div>
-            <a href="https://tfkeramika.ru/products/bianco-belyy-450-450-8-mm-gost/" style="display:inline-block;margin-top:9px;padding:8px 12px;background:#1f2429;border-radius:4px;color:#ffffff;font-size:13px;line-height:17px;font-weight:bold;text-decoration:none;">Открыть карточку товара →</a>
+            <div style="padding-top:8px;font-size:14px;line-height:20px;color:#1f2429;"><b>650 ₽/м² с НДС</b></div>
+            <a href="https://iltima.ru/products/bianco-belyy-450-450-8-mm-gost/" style="display:inline-block;margin-top:9px;padding:8px 12px;background:#1f2429;border-radius:4px;color:#ffffff;font-size:13px;line-height:17px;font-weight:bold;text-decoration:none;">Открыть карточку товара →</a>
           </td>
         </tr>
       </table>
@@ -246,63 +252,63 @@ EMAIL_BODY_HTML = """\
         <tr><td style="padding:13px 16px;border-bottom:1px solid #ecebe7;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#535a60;">
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
             <td width="68" valign="middle" style="width:68px;padding-right:12px;">
-              <a href="https://tfkeramika.ru/products/rif-bezhevyy-600-200-9-mm-standart/" style="display:block;"><img src="https://tfkeramika.ru/img/photos/018.jpg" width="56" height="56" alt="Риф Бежевый" style="display:block;width:56px;height:56px;object-fit:cover;border:1px solid #deddd7;border-radius:4px;background:#ffffff;"></a>
+              <a href="https://iltima.ru/products/rif-bezhevyy-600-200-9-mm-standart/" style="display:block;"><img src="https://iltima.ru/img/photos/018.jpg" width="56" height="56" alt="Риф Бежевый" style="display:block;width:56px;height:56px;object-fit:cover;border:1px solid #deddd7;border-radius:4px;background:#ffffff;"></a>
             </td>
-            <td valign="middle" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#535a60;"><a href="https://tfkeramika.ru/products/rif-bezhevyy-600-200-9-mm-standart/" style="color:#1f2429;font-weight:bold;text-decoration:none;">Риф Бежевый</a> · 600 × 200 × 9 мм · Нефрит-Керамика, Стандарт <b style="color:#1f2429;">400 ₽/м²</b></td>
+            <td valign="middle" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#535a60;"><a href="https://iltima.ru/products/rif-bezhevyy-600-200-9-mm-standart/" style="color:#1f2429;font-weight:bold;text-decoration:none;">Риф Бежевый</a> · 600 × 200 × 9 мм · Нефрит-Керамика, Стандарт <b style="color:#1f2429;">400 ₽/м²</b></td>
           </tr></table>
         </td></tr>
         <tr><td style="padding:13px 16px;border-bottom:1px solid #ecebe7;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#535a60;">
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
             <td width="68" valign="middle" style="width:68px;padding-right:12px;">
-              <a href="https://tfkeramika.ru/products/germes-korichnevyy-400-250-8-mm-standart/" style="display:block;"><img src="https://tfkeramika.ru/img/photos/germes-korichnevyj.jpg" width="56" height="56" alt="Гермес Коричневый" style="display:block;width:56px;height:56px;object-fit:cover;border:1px solid #deddd7;border-radius:4px;background:#ffffff;"></a>
+              <a href="https://iltima.ru/products/germes-korichnevyy-400-250-8-mm-standart/" style="display:block;"><img src="https://iltima.ru/img/photos/germes-korichnevyj.jpg" width="56" height="56" alt="Гермес Коричневый" style="display:block;width:56px;height:56px;object-fit:cover;border:1px solid #deddd7;border-radius:4px;background:#ffffff;"></a>
             </td>
-            <td valign="middle" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#535a60;"><a href="https://tfkeramika.ru/products/germes-korichnevyy-400-250-8-mm-standart/" style="color:#1f2429;font-weight:bold;text-decoration:none;">Гермес Коричневый</a> · 400 × 250 × 8 мм · Нефрит-Керамика, Стандарт <b style="color:#1f2429;">450 ₽/м²</b></td>
+            <td valign="middle" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#535a60;"><a href="https://iltima.ru/products/germes-korichnevyy-400-250-8-mm-standart/" style="color:#1f2429;font-weight:bold;text-decoration:none;">Гермес Коричневый</a> · 400 × 250 × 8 мм · Нефрит-Керамика, Стандарт <b style="color:#1f2429;">450 ₽/м²</b></td>
           </tr></table>
         </td></tr>
         <tr><td style="padding:13px 16px;border-bottom:1px solid #ecebe7;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#535a60;">
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
             <td width="68" valign="middle" style="width:68px;padding-right:12px;">
-              <a href="https://tfkeramika.ru/products/narni-seryy-600-200-9-mm-standart/" style="display:block;"><img src="https://tfkeramika.ru/img/photos/041.jpg" width="56" height="56" alt="Нарни Серый" style="display:block;width:56px;height:56px;object-fit:cover;border:1px solid #deddd7;border-radius:4px;background:#ffffff;"></a>
+              <a href="https://iltima.ru/products/narni-seryy-600-200-9-mm-standart/" style="display:block;"><img src="https://iltima.ru/img/photos/041.jpg" width="56" height="56" alt="Нарни Серый" style="display:block;width:56px;height:56px;object-fit:cover;border:1px solid #deddd7;border-radius:4px;background:#ffffff;"></a>
             </td>
-            <td valign="middle" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#535a60;"><a href="https://tfkeramika.ru/products/narni-seryy-600-200-9-mm-standart/" style="color:#1f2429;font-weight:bold;text-decoration:none;">Нарни Серый</a> · 600 × 200 × 9 мм · Нефрит-Керамика, Стандарт <b style="color:#1f2429;">450 ₽/м²</b></td>
+            <td valign="middle" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#535a60;"><a href="https://iltima.ru/products/narni-seryy-600-200-9-mm-standart/" style="color:#1f2429;font-weight:bold;text-decoration:none;">Нарни Серый</a> · 600 × 200 × 9 мм · Нефрит-Керамика, Стандарт <b style="color:#1f2429;">450 ₽/м²</b></td>
           </tr></table>
         </td></tr>
         <tr><td style="padding:13px 16px;border-bottom:1px solid #ecebe7;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#535a60;">
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
             <td width="68" valign="middle" style="width:68px;padding-right:12px;">
-              <a href="https://tfkeramika.ru/products/liya-bezhevyy-600-300-9-mm-standart/" style="display:block;"><img src="https://tfkeramika.ru/img/photos/лия-бежевый.jpg" width="56" height="56" alt="Лия Бежевый" style="display:block;width:56px;height:56px;object-fit:cover;border:1px solid #deddd7;border-radius:4px;background:#ffffff;"></a>
+              <a href="https://iltima.ru/products/liya-bezhevyy-600-300-9-mm-standart/" style="display:block;"><img src="https://iltima.ru/img/photos/лия-бежевый.jpg" width="56" height="56" alt="Лия Бежевый" style="display:block;width:56px;height:56px;object-fit:cover;border:1px solid #deddd7;border-radius:4px;background:#ffffff;"></a>
             </td>
-            <td valign="middle" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#535a60;"><a href="https://tfkeramika.ru/products/liya-bezhevyy-600-300-9-mm-standart/" style="color:#1f2429;font-weight:bold;text-decoration:none;">Лия Бежевый</a> · 600 × 300 × 9 мм · Нефрит-Керамика, Стандарт <b style="color:#1f2429;">450 ₽/м²</b></td>
+            <td valign="middle" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#535a60;"><a href="https://iltima.ru/products/liya-bezhevyy-600-300-9-mm-standart/" style="color:#1f2429;font-weight:bold;text-decoration:none;">Лия Бежевый</a> · 600 × 300 × 9 мм · Нефрит-Керамика, Стандарт <b style="color:#1f2429;">450 ₽/м²</b></td>
           </tr></table>
         </td></tr>
         <tr><td style="padding:13px 16px;border-bottom:1px solid #ecebe7;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#535a60;">
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
             <td width="68" valign="middle" style="width:68px;padding-right:12px;">
-              <a href="https://tfkeramika.ru/products/astaria-ice-belyy-450-450-8-mm-gost/" style="display:block;"><img src="https://tfkeramika.ru/img/photos/005.jpg" width="56" height="56" alt="Astaria Ice Белый" style="display:block;width:56px;height:56px;object-fit:cover;border:1px solid #deddd7;border-radius:4px;background:#ffffff;"></a>
+              <a href="https://iltima.ru/products/astaria-ice-belyy-450-450-8-mm-gost/" style="display:block;"><img src="https://iltima.ru/img/photos/005.jpg" width="56" height="56" alt="Astaria Ice Белый" style="display:block;width:56px;height:56px;object-fit:cover;border:1px solid #deddd7;border-radius:4px;background:#ffffff;"></a>
             </td>
-            <td valign="middle" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#535a60;"><a href="https://tfkeramika.ru/products/astaria-ice-belyy-450-450-8-mm-gost/" style="color:#1f2429;font-weight:bold;text-decoration:none;">Astaria Ice Белый</a> · 450 × 450 × 8 мм · М-Квадрат, ГОСТ <b style="color:#1f2429;">650 ₽/м²</b></td>
+            <td valign="middle" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#535a60;"><a href="https://iltima.ru/products/astaria-ice-belyy-450-450-8-mm-gost/" style="color:#1f2429;font-weight:bold;text-decoration:none;">Astaria Ice Белый</a> · 450 × 450 × 8 мм · М-Квадрат, ГОСТ <b style="color:#1f2429;">650 ₽/м²</b></td>
           </tr></table>
         </td></tr>
         <tr><td style="padding:13px 16px;border-bottom:1px solid #ecebe7;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#535a60;">
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
             <td width="68" valign="middle" style="width:68px;padding-right:12px;">
-              <a href="https://tfkeramika.ru/products/keramogranit-tekhnicheskiy-sol-perets-svetlo-seryy-matovaya-300-300-7-mm/" style="display:block;"><img src="https://tfkeramika.ru/img/photos/037.jpg" width="56" height="56" alt="Соль-Перец Светло-Серый Матовая" style="display:block;width:56px;height:56px;object-fit:cover;border:1px solid #deddd7;border-radius:4px;background:#ffffff;"></a>
+              <a href="https://iltima.ru/products/keramogranit-tekhnicheskiy-sol-perets-svetlo-seryy-matovaya-300-300-7-mm/" style="display:block;"><img src="https://iltima.ru/img/photos/037.jpg" width="56" height="56" alt="Соль-Перец Светло-Серый Матовая" style="display:block;width:56px;height:56px;object-fit:cover;border:1px solid #deddd7;border-radius:4px;background:#ffffff;"></a>
             </td>
-            <td valign="middle" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#535a60;"><a href="https://tfkeramika.ru/products/keramogranit-tekhnicheskiy-sol-perets-svetlo-seryy-matovaya-300-300-7-mm/" style="color:#1f2429;font-weight:bold;text-decoration:none;">Соль-Перец Светло-Серый Матовая</a> · 300 × 300 × 7 мм · Квадро Декор <b style="color:#1f2429;">610 ₽/м²</b></td>
+            <td valign="middle" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#535a60;"><a href="https://iltima.ru/products/keramogranit-tekhnicheskiy-sol-perets-svetlo-seryy-matovaya-300-300-7-mm/" style="color:#1f2429;font-weight:bold;text-decoration:none;">Соль-Перец Светло-Серый Матовая</a> · 300 × 300 × 7 мм · Квадро Декор <b style="color:#1f2429;">610 ₽/м²</b></td>
           </tr></table>
         </td></tr>
         <tr><td style="padding:13px 16px;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#535a60;">
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
             <td width="68" valign="middle" style="width:68px;padding-right:12px;">
-              <a href="https://tfkeramika.ru/products/matera-bezhevyy-600-600-10-mm-gost/" style="display:block;"><img src="https://tfkeramika.ru/img/photos/026.jpg" width="56" height="56" alt="Matera Бежевый" style="display:block;width:56px;height:56px;object-fit:cover;border:1px solid #deddd7;border-radius:4px;background:#ffffff;"></a>
+              <a href="https://iltima.ru/products/matera-bezhevyy-600-600-10-mm-gost/" style="display:block;"><img src="https://iltima.ru/img/photos/026.jpg" width="56" height="56" alt="Matera Бежевый" style="display:block;width:56px;height:56px;object-fit:cover;border:1px solid #deddd7;border-radius:4px;background:#ffffff;"></a>
             </td>
-            <td valign="middle" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#535a60;"><a href="https://tfkeramika.ru/products/matera-bezhevyy-600-600-10-mm-gost/" style="color:#1f2429;font-weight:bold;text-decoration:none;">Matera Бежевый</a> · 600 × 600 × 10 мм · М-Квадрат, ГОСТ <b style="color:#1f2429;">960 ₽/м²</b></td>
+            <td valign="middle" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#535a60;"><a href="https://iltima.ru/products/matera-bezhevyy-600-600-10-mm-gost/" style="color:#1f2429;font-weight:bold;text-decoration:none;">Matera Бежевый</a> · 600 × 600 × 10 мм · М-Квадрат, ГОСТ <b style="color:#1f2429;">960 ₽/м²</b></td>
           </tr></table>
         </td></tr>
       </table>
       <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:14px;">
         <tr><td bgcolor="#f2c400" style="background:#f2c400;border-radius:5px;">
-          <a href="https://tfkeramika.ru/#prices" style="display:block;padding:12px 18px;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:19px;font-weight:bold;color:#1f2429;text-decoration:none;text-align:center;">Смотреть все остатки&nbsp; →</a>
+          <a href="https://iltima.ru/#prices" style="display:block;padding:12px 18px;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:19px;font-weight:bold;color:#1f2429;text-decoration:none;text-align:center;">Смотреть все остатки&nbsp; →</a>
         </td></tr>
       </table>
     </td>
@@ -313,10 +319,10 @@ EMAIL_BODY_HTML = """\
         <tr><td style="padding:20px 22px;font-family:Arial,Helvetica,sans-serif;">
           <div style="font-size:16px;line-height:22px;font-weight:bold;color:#1f2429;">Для покупки на объект</div>
           <div style="padding-top:8px;font-size:14px;line-height:22px;color:#535a60;">
-            Работаем по безналичному счёту с НДС. Поможем рассчитать количество, согласовать самовывоз со склада в Войскорово или доставку по Санкт-Петербургу и Ленинградской области.
+            Работаем по безналичному счёту с НДС. Поможем рассчитать количество, согласовать самовывоз со склада в Янино или доставку по Санкт-Петербургу и Ленинградской области.
           </div>
           <div style="padding-top:12px;font-size:14px;line-height:22px;color:#535a60;">
-            <b style="color:#1f2429;">Как оформить:</b> выберите позиции в <a href="https://tfkeramika.ru/#prices" style="color:#1f2429;font-weight:bold;">каталоге сайта</a>, отправьте нам названия или артикулы — мы сверим остаток и подготовим счёт.
+            <b style="color:#1f2429;">Как оформить:</b> выберите позиции в <a href="https://iltima.ru/#prices" style="color:#1f2429;font-weight:bold;">каталоге сайта</a>, отправьте нам названия или артикулы — мы сверим остаток и подготовим счёт.
           </div>
         </td></tr>
       </table>
@@ -335,7 +341,7 @@ EMAIL_BODY_HTML = """\
             <a href="mailto:novorom@mail.ru" style="display:inline-block;padding:11px 16px;border:1px solid #c9c8c1;border-radius:4px;color:#1f2429;text-decoration:none;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:18px;font-weight:bold;">Написать на почту</a>
           </td>
           <td style="padding:0 0 8px 10px;">
-            <a href="https://tfkeramika.ru/#callback" style="display:inline-block;padding:11px 16px;background:#f2c400;border:1px solid #f2c400;border-radius:4px;color:#1f2429;text-decoration:none;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:18px;font-weight:bold;">Заказать звонок</a>
+            <a href="https://iltima.ru/#callback" style="display:inline-block;padding:11px 16px;background:#f2c400;border:1px solid #f2c400;border-radius:4px;color:#1f2429;text-decoration:none;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:18px;font-weight:bold;">Заказать звонок</a>
           </td>
         </tr>
       </table>
@@ -343,15 +349,15 @@ EMAIL_BODY_HTML = """\
   </tr>
   <tr>
     <td class="px" style="padding:20px 32px 24px;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:21px;color:#687078;">
-      <b style="color:#1f2429;">Склад:</b> Ленинградская область, Тосненский район, посёлок Войскорово, 14В<br>
+      <b style="color:#1f2429;">Склад:</b> Янино, ул. Заводская, участок 37<br>
       Пн–Пт, 09:00–18:00<br>
-      <a href="https://tfkeramika.ru/" style="color:#1f2429;font-weight:bold;">tfkeramika.ru</a> · <a href="tel:+79052050900" style="color:#1f2429;text-decoration:none;">+7 905 205-09-00</a> · <a href="mailto:novorom@mail.ru" style="color:#1f2429;">novorom@mail.ru</a><br>
-      <span style="display:block;padding-top:12px;">С уважением,<br><b style="color:#1f2429;">Роман Новожилов</b><br>Менеджер по продажам, ООО «ТФ Керамика»</span>
+      <a href="https://iltima.ru/" style="color:#1f2429;font-weight:bold;">iltima.ru</a> · <a href="tel:+79052050900" style="color:#1f2429;text-decoration:none;">+7 905 205-09-00</a> · <a href="mailto:novorom@mail.ru" style="color:#1f2429;">novorom@mail.ru</a><br>
+      <span style="display:block;padding-top:12px;">С уважением,<br><b style="color:#1f2429;">Роман Новожилов</b><br>Менеджер по продажам, Илтима</span>
     </td>
   </tr>
   <tr>
     <td class="px" bgcolor="#e9e8e4" style="background:#e9e8e4;padding:16px 32px;font-family:Arial,Helvetica,sans-serif;font-size:11px;line-height:17px;color:#687078;">
-      Вы получили это письмо как клиент ООО «ТФ Керамика».<br>
+      Вы получили это письмо как клиент Илтима.<br>
       Если не хотите получать наши предложения, <a href="#unsubscribe" style="color:#687078;">отпишитесь здесь</a> или ответьте на письмо словом «Отписаться».
     </td>
   </tr>
@@ -361,6 +367,37 @@ EMAIL_BODY_HTML = """\
 </body>
 </html>
 """
+
+# ══════════════════════════════════════════════════════
+#  ПОИСКОВЫЕ ЗАПРОСЫ
+# ══════════════════════════════════════════════════════
+
+SEARCH_QUERIES = [
+    'строительная компания Санкт-Петербург сайт контакты email',
+    'дизайнер интерьера СПб официальный сайт email',
+    'проектировщик жилых домов Санкт-Петербург контакты',
+    'ремонт квартир СПб компания сайт email',
+    'архитектурное бюро Санкт-Петербург email',
+    'строительство домов Ленинградская область контакты',
+    'отделочные работы СПб фирма email',
+    'дизайн интерьера Ленинградская область студия сайт',
+    'генподрядчик строительство СПб email сайт',
+    'ремонтно-строительная компания СПб контакты',
+]
+
+HEADERS = {
+    'User-Agent': (
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
+        'AppleWebKit/537.36 (KHTML, like Gecko) '
+        'Chrome/122.0.0.0 Safari/537.36'
+    )
+}
+
+SKIP_PATTERNS = [
+    'example', 'test', 'noreply', 'no-reply', 'donotreply',
+    'support', 'admin', 'postmaster', 'webmaster', 'spam',
+    'mailer-daemon', 'bounce', 'abuse'
+]
 
 # ══════════════════════════════════════════════════════
 #  GOOGLE SHEETS
